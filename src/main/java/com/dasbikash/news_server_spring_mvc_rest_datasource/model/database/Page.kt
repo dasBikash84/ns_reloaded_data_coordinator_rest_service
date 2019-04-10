@@ -13,6 +13,8 @@
 
 package com.dasbikash.news_server_spring_mvc_rest_datasource.model.database
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonProperty
 import javax.persistence.*
 
 @Entity
@@ -23,18 +25,25 @@ data class Page(
 
         @ManyToOne(targetEntity = Newspaper::class,fetch = FetchType.EAGER)
         @JoinColumn(name="newsPaperId")
+        @JsonIgnore
         var newspaper: Newspaper?=null,
 
         var parentPageId: String?=null,
         var name: String?=null,
 
+        @Column(name="linkFormat", columnDefinition="text")
+        @JsonIgnore
+        var linkFormat:String? = null,
+
+        @JsonIgnore
         var active: Boolean = true,
 
         @OneToMany(fetch = FetchType.LAZY,mappedBy = "page",targetEntity = Article::class)
+        @JsonIgnore
         var articleList: List<Article>?=null,
 
         @Transient
-        var hasChild:Boolean? = null
+        var hasChild:Boolean = false
 
 ):NsSpringRestDbEntity{
     companion object {
@@ -45,8 +54,21 @@ data class Page(
     }
 
     @Transient
+    @JsonProperty(value = "topLevelPage")
     fun isTopLevelPage():Boolean{
         return parentPageId == TOP_LEVEL_PAGE_PARENT_ID
+    }
+
+    @Transient
+    @JsonProperty(value = "newsPaperId")
+    fun getNewsPaperId():String{
+        return newspaper?.id ?: ""
+    }
+
+    @Transient
+    @JsonProperty(value = "hasData")
+    fun hasData():Boolean{
+        return linkFormat !=null
     }
 
     override fun toString(): String {

@@ -3,7 +3,6 @@ package com.dasbikash.news_server_spring_mvc_rest_datasource.repositories
 import com.dasbikash.news_server_spring_mvc_rest_datasource.model.database.Newspaper
 import com.dasbikash.news_server_spring_mvc_rest_datasource.model.database.Page
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Temporal
 
 interface PageRepository : JpaRepository<Page, String>{
 
@@ -17,4 +16,6 @@ interface PageRepository : JpaRepository<Page, String>{
                                                      active:Boolean=true):List<Page>
 
     fun findPagesByParentPageIdAndActive(parentPageId: String,active: Boolean=true):List<Page>
+
+    fun findAllByActive(active: Boolean = true): List<Page>
 }

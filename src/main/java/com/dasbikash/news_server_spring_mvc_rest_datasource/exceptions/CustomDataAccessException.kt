@@ -1,7 +1,5 @@
 package com.dasbikash.news_server_spring_mvc_rest_datasource.exceptions
 
-import java.lang.RuntimeException
-
 open class CustomDataAccessException : RuntimeException {
     constructor() : super()
     constructor(message: String?) : super(message)

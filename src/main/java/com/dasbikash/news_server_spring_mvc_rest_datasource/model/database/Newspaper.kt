@@ -33,6 +33,7 @@ data class Newspaper(
         @JsonIgnore
         var language: Language?=null,
 
+        @JsonIgnore
         var active: Boolean=true,
 
         @OneToMany(fetch = FetchType.LAZY,mappedBy = "newspaper",targetEntity = Page::class)
