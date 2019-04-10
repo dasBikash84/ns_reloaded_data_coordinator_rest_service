@@ -17,6 +17,7 @@
     <properties>
         <java.version>1.8</java.version>
         <kotlin.version>1.3.21</kotlin.version>
+        <start-class>com.dasbikash.news_server_spring_mvc_rest_datasource.NewsServerSpringMvcRestDatasourceApplication</start-class>
     </properties>
 
     <dependencies>
@@ -51,11 +52,11 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -67,10 +68,16 @@
             <artifactId>kotlin-reflect</artifactId>
             <version>1.3.21</version>
         </dependency>
-
+<!--
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
         <dependency>
@@ -82,10 +89,15 @@
     </dependencies>
 
     <build>
+        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.dasbikash.news_server_spring_mvc_rest_datasource.NewsServerSpringMvcRestDatasourceApplication</mainClass>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>

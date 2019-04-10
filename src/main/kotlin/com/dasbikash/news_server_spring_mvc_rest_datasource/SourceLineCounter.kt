@@ -35,7 +35,6 @@ object SourceLineCounter {
         when (countMode) {
             SourceLineCounter.COUNT_MODE.ALL, SourceLineCounter.COUNT_MODE.ABSOLUTE_ALL -> file = File("src/")
             SourceLineCounter.COUNT_MODE.EXCLUDE_TEST_FILES -> file = File("src/main/")
-            else -> return
         }
 
         if (file.exists() && file.isDirectory && file.canExecute()) {
