@@ -31,7 +31,10 @@ data class Page(
         var active: Boolean = true,
 
         @OneToMany(fetch = FetchType.LAZY,mappedBy = "page",targetEntity = Article::class)
-        var articleList: List<Article>?=null
+        var articleList: List<Article>?=null,
+
+        @Transient
+        var hasChild:Boolean? = null
 
 ){
     companion object {
@@ -47,7 +50,7 @@ data class Page(
     }
 
     override fun toString(): String {
-        return "Page(id='$id', newspaper=${newspaper?.name}, parentPageId=$parentPageId, name=$name, active=$active)"
+        return "Page(id='$id', newspaper=${newspaper?.name}, parentPageId=$parentPageId, name=$name, active=$active,hasChild = $hasChild)"
     }
 
 

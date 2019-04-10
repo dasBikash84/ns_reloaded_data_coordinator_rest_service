@@ -13,6 +13,8 @@
 
 package com.dasbikash.news_server_spring_mvc_rest_datasource.model.database
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonProperty
 import javax.persistence.*
 
 @Entity
@@ -23,20 +25,33 @@ data class Newspaper(
 
         @ManyToOne(targetEntity = Country::class,fetch = FetchType.EAGER)
         @JoinColumn(name="countryName")
+        @JsonIgnore
         var country: Country?=null,
 
         @ManyToOne(targetEntity = Language::class,fetch = FetchType.EAGER)
         @JoinColumn(name="languageId")
+        @JsonIgnore
         var language: Language?=null,
 
         var active: Boolean=true,
 
         @OneToMany(fetch = FetchType.LAZY,mappedBy = "newspaper",targetEntity = Page::class)
+        @JsonIgnore
         var pageList: List<Page>?=null
 
 
 ) {
         override fun toString(): String {
                 return "Newspaper(id='$id', name=$name, country=$country, language=$language, active=$active)"
+        }
+        @Transient
+        @JsonProperty("countryName")
+        fun getNewsPaperCountryId():String{
+                return country?.name ?: ""
+        }
+        @Transient
+        @JsonProperty("languageId")
+        fun getNewsPaperLanguageId():String{
+                return language?.id ?: ""
         }
 }

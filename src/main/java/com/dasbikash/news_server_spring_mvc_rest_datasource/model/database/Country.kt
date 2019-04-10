@@ -13,6 +13,7 @@
 
 package com.dasbikash.news_server_spring_mvc_rest_datasource.model.database
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -22,6 +23,7 @@ data class Country (
         var countryCode: String?=null,
         var timeZone: String?=null,
         @OneToMany(targetEntity = Newspaper::class,mappedBy = "country",fetch = FetchType.LAZY)
+        @JsonIgnore
         var newsPapers:List<Newspaper>? = null
 ){
         override fun toString(): String {

@@ -13,6 +13,9 @@
 
 package com.dasbikash.news_server_spring_mvc_rest_datasource.model.database
 
+import org.springframework.stereotype.Service
+
+@Service
 object DatabaseTableNames {
     const val COUNTRY_TABLE_NAME = "countries";
     const val LANGUAGE_TABLE_NAME = "languages";
