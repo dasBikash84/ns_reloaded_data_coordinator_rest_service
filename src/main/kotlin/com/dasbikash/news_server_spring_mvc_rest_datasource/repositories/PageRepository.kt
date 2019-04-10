@@ -15,7 +15,7 @@ interface PageRepository : JpaRepository<Page, String>{
                                                      parentPageId: String= TOP_LEVEL_PAGE_PARENT_ID,
                                                      active:Boolean=true):List<Page>
 
-    fun findPagesByParentPageIdAndActive(parentPageId: String,active: Boolean=true):List<Page>
+    fun findPagesByParentPageIdAndActiveOrderByIdAsc(parentPageId: String, active: Boolean=true):List<Page>
 
     fun findAllByActive(active: Boolean = true): List<Page>
 }

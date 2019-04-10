@@ -6,4 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 
-interface ArticleRepository : JpaRepository<Article, String>
+interface ArticleRepository : JpaRepository<Article, String>{
+    //fun findAllByPageIdAndArticleTextIsNotNullOrderByPublicationTSDescModificationTSDescModifiedDesc(pageId: String):List<Article>
+    fun findAllByPageAndArticleTextIsNotNullOrderByPublicationTSDescModificationTSDescModifiedDesc(page: Page):List<Article>
+}

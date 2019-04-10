@@ -18,7 +18,7 @@ constructor( val pageRepository: PageRepository,val newspaperRepository: Newspap
             .asSequence()
             .map {
                 if (it.isTopLevelPage()){
-                    if (pageRepository.findPagesByParentPageIdAndActive(it.id).size>0){
+                    if (pageRepository.findPagesByParentPageIdAndActiveOrderByIdAsc(it.id).size>0){
                         it.hasChild = true
                     }
                 }
@@ -42,7 +42,7 @@ constructor( val pageRepository: PageRepository,val newspaperRepository: Newspap
             findTopLevelPagesForNewsPaper(newspaperOptional.get())
                 .asSequence()
                 .map {
-                    if (pageRepository.findPagesByParentPageIdAndActive(it.id).size>0){
+                    if (pageRepository.findPagesByParentPageIdAndActiveOrderByIdAsc(it.id).size>0){
                         it.hasChild = true
                     }
                 it
@@ -54,6 +54,6 @@ constructor( val pageRepository: PageRepository,val newspaperRepository: Newspap
     }
 
     fun getAllChildPagesForTopLevelPage(pageId: String): List<Page> {
-        return pageRepository.findPagesByParentPageIdAndActive(pageId)
+        return pageRepository.findPagesByParentPageIdAndActiveOrderByIdAsc(pageId)
     }
 }

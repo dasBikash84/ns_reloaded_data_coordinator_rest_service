@@ -20,7 +20,7 @@ constructor(val articleService: ArticleService) {
     var maxPageSize: Int = 10
 
     @GetMapping("/page-id/{pageId}")
-    fun getLatestArticlesForPage(@PathVariable pageId: String,@RequestParam("article_count") articleCount:Int?): ResponseEntity<List<Article>> {
+    fun getLatestArticlesByPageId(@PathVariable pageId: String, @RequestParam("article_count") articleCount:Int?): ResponseEntity<List<Article>> {
 
         var pageSize = defaultPageSize
 
@@ -30,7 +30,7 @@ constructor(val articleService: ArticleService) {
                 else -> pageSize = it
             }
         }
-        return RestControllerUtills.listEntityToResponseEntity(articleService.getLatestArticlesForPage(pageId,pageSize))
+        return RestControllerUtills.listEntityToResponseEntity(articleService.getArticlesByPageId(pageId,pageSize))
     }
 
     @GetMapping("/page-id/{pageId}/last-article-id/{lastArticleId}")
@@ -46,5 +46,10 @@ constructor(val articleService: ArticleService) {
             }
         }
         return RestControllerUtills.listEntityToResponseEntity(articleService.getArticlesForPageAfterLast(pageId,pageSize,lastArticleId))
+    }
+
+    @GetMapping("/top-level-page-id/{topLevelPageId}/latest-article")
+    fun getLatestArticleForTopLevelPage(@PathVariable topLevelPageId:String):ResponseEntity<Article>{
+        return RestControllerUtills.entityToResponseEntity(articleService.getLatestArticleForTopLevelPage(topLevelPageId))
     }
 }

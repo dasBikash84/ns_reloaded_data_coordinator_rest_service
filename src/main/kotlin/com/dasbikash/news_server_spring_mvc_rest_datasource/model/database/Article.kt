@@ -15,6 +15,7 @@ package com.dasbikash.news_server_spring_mvc_rest_datasource.model.database
 
 import com.dasbikash.news_server_parser.model.ArticleImage
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.*
 import javax.persistence.*
 import kotlin.collections.ArrayList
@@ -48,8 +49,15 @@ data class Article(
         @Column(columnDefinition = "text")
         var previewImageLink: String? = null
 ):NsSpringRestDbEntity{
+        @Transient
+        private var pageId:String? =null
+
         override fun toString(): String {
                 return "Article(id='$id', page=${page?.name}, title=$title, modificationTS=$modificationTS, publicationTS=$publicationTS, " +
                         "articleText=${articleText ?: ""}, imageLinkList=$imageLinkList, previewImageLink=$previewImageLink)"
+        }
+        @JsonProperty(value = "pageId")
+        fun getPageId():String?{
+                return page?.id
         }
 }
