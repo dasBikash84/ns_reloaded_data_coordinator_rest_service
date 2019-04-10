@@ -1,6 +1,6 @@
 package com.dasbikash.news_server_spring_mvc_rest_datasource.exceptions
 
-open class CustomDataNotFoundException : RuntimeException {
+open class DataNotFoundException : RuntimeException {
     constructor() : super()
     constructor(message: String?) : super(message)
     constructor(message: String?, cause: Throwable?) : super(message, cause)

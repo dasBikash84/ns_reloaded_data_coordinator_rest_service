@@ -14,6 +14,7 @@
 package com.dasbikash.news_server_spring_mvc_rest_datasource.model.database
 
 import com.dasbikash.news_server_parser.model.ArticleImage
+import com.fasterxml.jackson.annotation.JsonIgnore
 import java.util.*
 import javax.persistence.*
 import kotlin.collections.ArrayList
@@ -23,15 +24,18 @@ import kotlin.collections.ArrayList
 @Table(name = DatabaseTableNames.ARTICLE_TABLE_NAME)
 data class Article(
         @Id
-        var id: String="",
+        var id: String?=null,
 
         @ManyToOne(targetEntity = Page::class, fetch = FetchType.EAGER)
         @JoinColumn(name = "pageId")
+        @JsonIgnore
         var page: Page? = null,
 
         var title: String? = null,
         var modificationTS: Date? = null,
         var publicationTS: Date? = null,
+//        @JsonIgnore
+        var modified: Date? = null,
 
         @Column(columnDefinition = "text")
         var articleText: String? = null,
@@ -46,6 +50,6 @@ data class Article(
 ):NsSpringRestDbEntity{
         override fun toString(): String {
                 return "Article(id='$id', page=${page?.name}, title=$title, modificationTS=$modificationTS, publicationTS=$publicationTS, " +
-                        "articleText=$articleText, imageLinkList=$imageLinkList, previewImageLink=$previewImageLink)"
+                        "articleText=${articleText ?: ""}, imageLinkList=$imageLinkList, previewImageLink=$previewImageLink)"
         }
 }

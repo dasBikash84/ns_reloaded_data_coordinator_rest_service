@@ -1,7 +1,7 @@
 package com.dasbikash.news_server_spring_mvc_rest_datasource.advice
 
 import com.dasbikash.news_server_spring_mvc_rest_datasource.exceptions.CustomDataAccessException
-import com.dasbikash.news_server_spring_mvc_rest_datasource.exceptions.CustomDataNotFoundException
+import com.dasbikash.news_server_spring_mvc_rest_datasource.exceptions.DataNotFoundException
 import com.dasbikash.news_server_spring_mvc_rest_datasource.exceptions.NewsPaperNotFoundByIdException
 import com.dasbikash.news_server_spring_mvc_rest_datasource.exceptions.NewsPaperNotFoundByNameException
 import org.springframework.http.HttpStatus
@@ -29,8 +29,8 @@ class NewsPaperNotFoundAdvice {
         return ResponseEntity.notFound().build()
     }
 
-    @ExceptionHandler(CustomDataNotFoundException::class)
-    fun dataAccessExceptionHandler(ex:CustomDataNotFoundException):ResponseEntity<Unit>{
+    @ExceptionHandler(DataNotFoundException::class)
+    fun dataAccessExceptionHandler(ex:DataNotFoundException):ResponseEntity<Unit>{
         return ResponseEntity.notFound().build()
     }
 }

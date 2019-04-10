@@ -1,4 +1,4 @@
-package com.dasbikash.news_server_spring_mvc_rest_datasource.repositories
+package com.dasbikash.news_server_spring_mvc_rest_datasource.rest_controllers
 
 import com.dasbikash.news_server_spring_mvc_rest_datasource.model.database.Page
 import com.dasbikash.news_server_spring_mvc_rest_datasource.services.PageService

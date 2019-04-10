@@ -20,16 +20,6 @@ constructor(private val newsPaperService: NewsPaperService) {
         return RestControllerUtills.listEntityToResponseEntity(newsPaperService.getAllActiveNewsPapers())
     }
 
-    /*@GetMapping("/all")
-    fun getAllNewsPapers():ResponseEntity<List<Newspaper>>{
-        return RestControllerUtills.listEntityToResponseEntity(newsPaperService.getAllNewsPapers())
-    }
-
-    @GetMapping("/id/{id}")
-    fun getNewPaperById(@PathVariable("id") id:String):ResponseEntity<Newspaper>{
-        return RestControllerUtills.entityToResponseEntity(newsPaperService.getNewPaperById(id))
-    }*/
-
     @GetMapping("/country-name/{countryName}")
     fun getNewPaperByCountryName(@PathVariable("countryName") countryName:String):ResponseEntity<List<Newspaper>>{
         return RestControllerUtills.listEntityToResponseEntity(newsPaperService.getAllNewPaperByCountryName(countryName))
