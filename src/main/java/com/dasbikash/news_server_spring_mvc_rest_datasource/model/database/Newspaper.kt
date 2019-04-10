@@ -40,7 +40,7 @@ data class Newspaper(
         var pageList: List<Page>?=null
 
 
-) {
+):NsSpringRestDbEntity{
         override fun toString(): String {
                 return "Newspaper(id='$id', name=$name, country=$country, language=$language, active=$active)"
         }

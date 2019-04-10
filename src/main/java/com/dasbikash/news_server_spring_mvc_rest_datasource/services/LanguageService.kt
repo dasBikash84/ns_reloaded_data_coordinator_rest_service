@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class LanguageService(@Autowired val languageRepository: LanguageRepository) {
+
     fun getAllLanguages(): List<Language> {
         return languageRepository.findAll()
     }

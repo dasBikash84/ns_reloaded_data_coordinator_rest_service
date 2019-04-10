@@ -6,5 +6,4 @@ import java.util.*
 
 interface NewspaperRepository : JpaRepository<Newspaper, String>{
     fun findAllByActive(active:Boolean=true):List<Newspaper>
-    fun findByName(name: String): Optional<Newspaper>
 }

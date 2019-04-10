@@ -43,7 +43,7 @@ data class Article(
 
         @Column(columnDefinition = "text")
         var previewImageLink: String? = null
-){
+):NsSpringRestDbEntity{
         override fun toString(): String {
                 return "Article(id='$id', page=${page?.name}, title=$title, modificationTS=$modificationTS, publicationTS=$publicationTS, " +
                         "articleText=$articleText, imageLinkList=$imageLinkList, previewImageLink=$previewImageLink)"

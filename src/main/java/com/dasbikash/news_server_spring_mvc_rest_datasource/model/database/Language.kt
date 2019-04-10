@@ -24,7 +24,7 @@ data class Language(
         @OneToMany(targetEntity = Newspaper::class, mappedBy = "language", fetch = FetchType.LAZY)
         @JsonIgnore
         var newsPapers: List<Newspaper>? = null
-) {
+):NsSpringRestDbEntity{
     override fun toString(): String {
         return "Language(id='$id', name=$name)"
     }

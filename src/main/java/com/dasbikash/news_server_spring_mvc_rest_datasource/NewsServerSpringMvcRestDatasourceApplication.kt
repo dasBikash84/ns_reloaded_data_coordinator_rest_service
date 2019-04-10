@@ -18,7 +18,6 @@ open class NewsServerSpringMvcRestDatasourceApplication : CommandLineRunner {
     }
 
     companion object {
-
         @JvmStatic
         fun main(args: Array<String>) {
             SpringApplication.run(NewsServerSpringMvcRestDatasourceApplication::class.java, *args)

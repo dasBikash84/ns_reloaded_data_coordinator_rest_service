@@ -25,7 +25,7 @@ data class Country (
         @OneToMany(targetEntity = Newspaper::class,mappedBy = "country",fetch = FetchType.LAZY)
         @JsonIgnore
         var newsPapers:List<Newspaper>? = null
-){
+):NsSpringRestDbEntity{
         override fun toString(): String {
                 return "Country(name='$name', countryCode=$countryCode, timeZone=$timeZone)"
         }

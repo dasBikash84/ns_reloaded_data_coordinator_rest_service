@@ -36,7 +36,7 @@ data class Page(
         @Transient
         var hasChild:Boolean? = null
 
-){
+):NsSpringRestDbEntity{
     companion object {
         @JvmField
         val TOP_LEVEL_PAGE_PARENT_ID = "PAGE_ID_0"
