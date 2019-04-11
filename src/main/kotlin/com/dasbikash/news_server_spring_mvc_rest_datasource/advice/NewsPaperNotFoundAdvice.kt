@@ -33,4 +33,9 @@ class NewsPaperNotFoundAdvice {
     fun dataAccessExceptionHandler(ex:DataNotFoundException):ResponseEntity<Unit>{
         return ResponseEntity.notFound().build()
     }
+
+    /*@ExceptionHandler(Throwable::class)
+    fun genExceptionHandler(ex:Throwable):ResponseEntity<Unit>{
+        return ResponseEntity.notFound().build()
+    }*/
 }

@@ -59,7 +59,7 @@ class ArticleService
     fun getArticlesByPageId(pageId: String, pageSize:Int, lastArticleId:String?=null): List<Article> {
 
         val pageOptional = pageRepository.findById(pageId)
-        if (!pageOptional.isPresent){
+        if (!pageOptional.isPresent || !pageOptional.get().hasData()){
             throw DataNotFoundException()
         }
         val page = pageOptional.get()

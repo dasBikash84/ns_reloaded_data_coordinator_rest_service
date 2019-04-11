@@ -27,7 +27,7 @@ constructor(val articleService: ArticleService) {
         articleCount?.let {
             when{
                 it>=maxPageSize -> pageSize = maxPageSize
-                else -> pageSize = it
+                it>0 -> pageSize = it
             }
         }
         return RestControllerUtills.listEntityToResponseEntity(articleService.getArticlesByPageId(pageId,pageSize))
@@ -42,7 +42,7 @@ constructor(val articleService: ArticleService) {
         articleCount?.let {
             when{
                 it>=maxPageSize -> pageSize = maxPageSize
-                else -> pageSize = it
+                it>0 -> pageSize = it
             }
         }
         return RestControllerUtills.listEntityToResponseEntity(articleService.getArticlesForPageAfterLast(pageId,pageSize,lastArticleId))
