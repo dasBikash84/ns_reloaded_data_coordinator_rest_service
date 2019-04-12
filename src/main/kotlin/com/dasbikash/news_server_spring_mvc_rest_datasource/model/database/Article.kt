@@ -33,7 +33,9 @@ data class Article(
         var page: Page? = null,
 
         var title: String? = null,
+        @JsonIgnore
         var modificationTS: Date? = null,
+        @JsonIgnore
         var publicationTS: Date? = null,
 //        @JsonIgnore
         var modified: Date? = null,
@@ -52,6 +54,8 @@ data class Article(
         @Transient
         private var pageId:String? =null
 
+
+
         override fun toString(): String {
                 return "Article(id='$id', page=${page?.name}, title=$title, modificationTS=$modificationTS, publicationTS=$publicationTS, " +
                         "articleText=${articleText ?: ""}, imageLinkList=$imageLinkList, previewImageLink=$previewImageLink)"
@@ -59,5 +63,25 @@ data class Article(
         @JsonProperty(value = "pageId")
         fun getPageId():String?{
                 return page?.id
+        }
+        @JsonProperty(value = "modificationTime")
+        fun getModificationTime():Long{
+                var modificationTime = Calendar.getInstance()
+                this.page?.newspaper?.country?.let {
+                        val timezone: TimeZone = TimeZone.getTimeZone(this.page?.newspaper?.country?.timeZone)
+                        modificationTime = Calendar.getInstance(timezone)
+                }
+                modificationTime.time = this.modificationTS
+                return modificationTime.timeInMillis
+        }
+        @JsonProperty(value = "publicationTime")
+        fun getPublicationTime():Long{
+                var publicationTime = Calendar.getInstance()
+                this.page?.newspaper?.country?.let {
+                        val timezone: TimeZone = TimeZone.getTimeZone(this.page?.newspaper?.country?.timeZone)
+                        publicationTime = Calendar.getInstance(timezone)
+                }
+                publicationTime.time = this.publicationTS
+                return publicationTime.timeInMillis
         }
 }
