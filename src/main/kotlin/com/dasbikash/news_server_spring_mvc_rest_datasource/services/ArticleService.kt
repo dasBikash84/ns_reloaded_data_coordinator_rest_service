@@ -14,13 +14,18 @@ class ArticleService
 @Autowired constructor(val pageRepository: PageRepository,val articleRepository: ArticleRepository) {
 
     private fun getArticlesByPage(page: Page, pageSize:Int, lastArticleId:String?=null): List<Article> {
+
         val article = Article()
         article.page = page
         val exampleArticle = org.springframework.data.domain.Example.of(article)
 
         val retrivedData =  articleRepository.findAll(exampleArticle)
 
-        val firstArticle = retrivedData.first { it.articleText!=null }
+        if(retrivedData.isEmpty()){
+            throw DataNotFoundException()
+        }
+
+        val firstArticle = retrivedData.asSequence().first { it.articleText!=null }
         if (firstArticle == null) {throw DataNotFoundException()}
 
         val sort:Sort
@@ -34,10 +39,6 @@ class ArticleService
 
         var articleSequence
                 =  articleRepository.findAll(exampleArticle,sort).asSequence().filter { it.articleText !=null }
-        /*var articleSequence
-                =  articleRepository
-                        .findAllByPageAndArticleTextIsNotNullOrderByPublicationTSDescModificationTSDescModifiedDesc(page)
-                        .asSequence()*/
 
 
         if (lastArticleId!=null){
