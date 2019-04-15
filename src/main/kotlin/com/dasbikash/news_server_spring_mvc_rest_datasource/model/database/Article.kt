@@ -71,8 +71,10 @@ data class Article(
                         val timezone: TimeZone = TimeZone.getTimeZone(this.page?.newspaper?.country?.timeZone)
                         modificationTime = Calendar.getInstance(timezone)
                 }
-                modificationTime.time = this.modificationTS
-                return modificationTime.timeInMillis
+                modificationTS?.let {
+                        modificationTime.time = this.modificationTS
+                        return modificationTime.timeInMillis
+                } ?: return 0L
         }
         @JsonProperty(value = "publicationTime")
         fun getPublicationTime():Long{
@@ -81,7 +83,9 @@ data class Article(
                         val timezone: TimeZone = TimeZone.getTimeZone(this.page?.newspaper?.country?.timeZone)
                         publicationTime = Calendar.getInstance(timezone)
                 }
-                publicationTime.time = this.publicationTS
-                return publicationTime.timeInMillis
+                publicationTS?.let {
+                        publicationTime.time = this.publicationTS
+                        return publicationTime.timeInMillis
+                } ?: return 0L
         }
 }
