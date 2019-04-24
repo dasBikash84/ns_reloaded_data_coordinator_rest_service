@@ -53,6 +53,12 @@ class ArticleService
                 .toCollection(articles)
 
         if (articles.size == 0) {throw DataNotFoundException()}
+        articles.asSequence()
+                .forEach {
+                    if(it.previewImageLink == null && it.imageLinkList.size>0){
+                        it.previewImageLink = it.imageLinkList.first().link
+                    }
+                }
 
         return articles
     }
@@ -84,6 +90,14 @@ class ArticleService
         }else{
             page = pageRepository.findPagesByParentPageIdAndActiveOrderByIdAsc(topLevelPage.id).first()
         }
-        return articleRepository.findAllByPageAndArticleTextIsNotNullOrderByPublicationTSDescModificationTSDescModifiedDesc(page).first()
+        val articleList = articleRepository.findAllByPageAndArticleTextIsNotNullOrderByPublicationTSDescModificationTSDescModifiedDesc(page)
+        if (articleList.size == 0){
+            return null
+        }
+        val article = articleList.first()
+        if(article.previewImageLink == null && article.imageLinkList.size>0){
+            article.previewImageLink = article.imageLinkList.first().link
+        }
+        return article
     }
 }
