@@ -25,7 +25,7 @@ import kotlin.collections.ArrayList
 @Table(name = DatabaseTableNames.ARTICLE_TABLE_NAME)
 data class Article(
         @Id
-        var id: String?=null,
+        var id: String? = null,
 
         @ManyToOne(targetEntity = Page::class, fetch = FetchType.EAGER)
         @JoinColumn(name = "pageId")
@@ -50,42 +50,51 @@ data class Article(
 
         @Column(columnDefinition = "text")
         var previewImageLink: String? = null
-):NsSpringRestDbEntity{
-        @Transient
-        private var pageId:String? =null
+) : NsSpringRestDbEntity {
+    @Transient
+    private var pageId: String? = null
 
 
+    override fun toString(): String {
+        return "Article(id='$id', page=${page?.name}, title=$title, modificationTS=$modificationTS, publicationTS=$publicationTS, " +
+                "articleText=${articleText ?: ""}, imageLinkList=$imageLinkList, previewImageLink=$previewImageLink)"
+    }
 
-        override fun toString(): String {
-                return "Article(id='$id', page=${page?.name}, title=$title, modificationTS=$modificationTS, publicationTS=$publicationTS, " +
-                        "articleText=${articleText ?: ""}, imageLinkList=$imageLinkList, previewImageLink=$previewImageLink)"
+    @JsonProperty(value = "pageId")
+    fun getPageId(): String? {
+        return page?.id
+    }
+
+    /*@JsonProperty(value = "modificationTime")
+    fun getModificationTime():Long{
+            var modificationTime = Calendar.getInstance()
+            this.page?.newspaper?.country?.let {
+                    val timezone: TimeZone = TimeZone.getTimeZone(this.page?.newspaper?.country?.timeZone)
+                    modificationTime = Calendar.getInstance(timezone)
+            }
+            modificationTS?.let {
+                    modificationTime.time = this.modificationTS
+                    return modificationTime.timeInMillis
+            } ?: return 0L
+    }*/
+    @JsonProperty(value = "publicationTime")
+    fun getPublicationTime(): Date {
+        var publicationTime = Calendar.getInstance()
+        this.page?.newspaper?.country?.let {
+            val timezone: TimeZone = TimeZone.getTimeZone(this.page?.newspaper?.country?.timeZone)
+            publicationTime = Calendar.getInstance(timezone)
         }
-        @JsonProperty(value = "pageId")
-        fun getPageId():String?{
-                return page?.id
+        if (publicationTS != null) {
+            publicationTime.time = this.publicationTS
+        } else if(modificationTS!=null){
+            publicationTime.time = this.modificationTS
+        } else{
+            publicationTime.time = modified
         }
-        @JsonProperty(value = "modificationTime")
-        fun getModificationTime():Long{
-                var modificationTime = Calendar.getInstance()
-                this.page?.newspaper?.country?.let {
-                        val timezone: TimeZone = TimeZone.getTimeZone(this.page?.newspaper?.country?.timeZone)
-                        modificationTime = Calendar.getInstance(timezone)
-                }
-                modificationTS?.let {
-                        modificationTime.time = this.modificationTS
-                        return modificationTime.timeInMillis
-                } ?: return 0L
-        }
-        @JsonProperty(value = "publicationTime")
-        fun getPublicationTime():Long{
-                var publicationTime = Calendar.getInstance()
-                this.page?.newspaper?.country?.let {
-                        val timezone: TimeZone = TimeZone.getTimeZone(this.page?.newspaper?.country?.timeZone)
-                        publicationTime = Calendar.getInstance(timezone)
-                }
-                publicationTS?.let {
-                        publicationTime.time = this.publicationTS
-                        return publicationTime.timeInMillis
-                } ?: return 0L
-        }
+        /*publicationTS?.let {
+            publicationTime.time = this.publicationTS
+            return publicationTime.time//.timeInMillis
+        }*/
+        return publicationTime.time
+    }
 }
