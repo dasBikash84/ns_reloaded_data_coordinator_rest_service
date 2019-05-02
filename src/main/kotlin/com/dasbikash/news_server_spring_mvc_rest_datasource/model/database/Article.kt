@@ -25,6 +25,9 @@ import kotlin.collections.ArrayList
 @Table(name = DatabaseTableNames.ARTICLE_TABLE_NAME)
 data class Article(
         @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @JsonIgnore
+        var serial:Int?=null,
         var id: String? = null,
 
         @ManyToOne(targetEntity = Page::class, fetch = FetchType.EAGER)
@@ -37,8 +40,6 @@ data class Article(
         var modificationTS: Date? = null,
         @JsonIgnore
         var publicationTS: Date? = null,
-//        @JsonIgnore
-        var modified: Date? = null,
 
         @Column(columnDefinition = "text")
         var articleText: String? = null,
@@ -65,18 +66,6 @@ data class Article(
         return page?.id
     }
 
-    /*@JsonProperty(value = "modificationTime")
-    fun getModificationTime():Long{
-            var modificationTime = Calendar.getInstance()
-            this.page?.newspaper?.country?.let {
-                    val timezone: TimeZone = TimeZone.getTimeZone(this.page?.newspaper?.country?.timeZone)
-                    modificationTime = Calendar.getInstance(timezone)
-            }
-            modificationTS?.let {
-                    modificationTime.time = this.modificationTS
-                    return modificationTime.timeInMillis
-            } ?: return 0L
-    }*/
     @JsonProperty(value = "publicationTime")
     fun getPublicationTime(): Date {
         var publicationTime = Calendar.getInstance()
@@ -86,15 +75,9 @@ data class Article(
         }
         if (publicationTS != null) {
             publicationTime.time = this.publicationTS
-        } else if(modificationTS!=null){
+        } else /*if(modificationTS!=null)*/{
             publicationTime.time = this.modificationTS
-        } else{
-            publicationTime.time = modified
         }
-        /*publicationTS?.let {
-            publicationTime.time = this.publicationTS
-            return publicationTime.time//.timeInMillis
-        }*/
         return publicationTime.time
     }
 }

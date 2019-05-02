@@ -90,7 +90,7 @@ class ArticleService
         }else{
             page = pageRepository.findPagesByParentPageIdAndActiveOrderByIdAsc(topLevelPage.id).first()
         }
-        val articleList = articleRepository.findAllByPageAndArticleTextIsNotNullOrderByPublicationTSDescModificationTSDescModifiedDesc(page)
+        val articleList = articleRepository.findAllByPageAndArticleTextIsNotNullOrderByPublicationTSDescModificationTSDesc(page)
         if (articleList.size == 0){
             return null
         }
