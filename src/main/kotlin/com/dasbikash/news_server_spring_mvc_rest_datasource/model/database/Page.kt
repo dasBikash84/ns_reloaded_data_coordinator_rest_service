@@ -31,19 +31,12 @@ data class Page(
         var parentPageId: String?=null,
         var name: String?=null,
 
-        @Column(name="linkFormat", columnDefinition="text")
-        @JsonIgnore
-        var linkFormat:String? = null,
-
         @JsonIgnore
         var active: Boolean = true,
 
         @OneToMany(fetch = FetchType.LAZY,mappedBy = "page",targetEntity = Article::class)
         @JsonIgnore
-        var articleList: List<Article>?=null,
-
-        @Transient
-        var hasChild:Boolean = false
+        var articleList: List<Article>?=null
 
 ):NsSpringRestDbEntity{
     companion object {
@@ -52,23 +45,14 @@ data class Page(
         @JvmField
         val DEFAULT_LINK_TRAILING_FORMAT = "page_num"
     }
-
-    @Transient
-    @JsonProperty(value = "topLevelPage")
-    fun isTopLevelPage():Boolean{
-        return parentPageId == TOP_LEVEL_PAGE_PARENT_ID
-    }
+    var hasData: Boolean?=null
+    var hasChild: Boolean?=null
+    var topLevelPage: Boolean?=null
 
     @Transient
     @JsonProperty(value = "newsPaperId")
     fun getNewsPaperId():String{
         return newspaper?.id ?: ""
-    }
-
-    @Transient
-    @JsonProperty(value = "hasData")
-    fun hasData():Boolean{
-        return linkFormat !=null
     }
 
     override fun toString(): String {

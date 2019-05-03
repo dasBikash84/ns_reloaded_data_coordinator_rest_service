@@ -17,7 +17,7 @@ constructor( val pageRepository: PageRepository,val newspaperRepository: Newspap
             .findAllByActive()
             .asSequence()
             .map {
-                if (it.isTopLevelPage()){
+                if (it.topLevelPage!!){
                     if (pageRepository.findPagesByParentPageIdAndActiveOrderByIdAsc(it.id).size>0){
                         it.hasChild = true
                     }
