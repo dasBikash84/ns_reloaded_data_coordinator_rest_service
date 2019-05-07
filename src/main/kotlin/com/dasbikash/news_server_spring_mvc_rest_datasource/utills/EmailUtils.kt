@@ -4,21 +4,29 @@ package com.dasbikash.news_server_spring_mvc_rest_datasource.utills
 import com.dasbikash.news_server_spring_mvc_rest_datasource.model.EmailAuth
 import com.dasbikash.news_server_spring_mvc_rest_datasource.model.EmailTargets
 import com.google.gson.Gson
+import java.io.File
 import java.io.FileReader
+import java.io.InputStreamReader
 import java.util.*
 import javax.mail.*
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
+import jdk.nashorn.internal.runtime.ScriptingFunctions.readLine
+import java.io.BufferedReader
+import org.springframework.core.io.ClassPathResource
+import java.io.IOException
+
+
 
 object EmailUtils {
-    private val emailAuth: EmailAuth
-    private val emailTargets: EmailTargets
+    val emailAuth: EmailAuth
+    val emailTargets: EmailTargets
 
     init {
-        val authReader = FileReader("src/main/resources/email_details_auth.json")
+        val authReader = InputStreamReader(javaClass.getResourceAsStream("/email_details_auth.json"))
         emailAuth = Gson().fromJson(authReader, EmailAuth::class.java)
 
-        val targetReader = FileReader("src/main/resources/email_details_targets.json")
+        val targetReader = InputStreamReader(javaClass.getResourceAsStream("/email_details_targets.json"))
         emailTargets = Gson().fromJson(targetReader, EmailTargets::class.java)
     }
 
