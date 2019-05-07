@@ -1,9 +1,6 @@
 package com.dasbikash.news_server_spring_mvc_rest_datasource.advice
 
-import com.dasbikash.news_server_spring_mvc_rest_datasource.exceptions.CustomDataAccessException
-import com.dasbikash.news_server_spring_mvc_rest_datasource.exceptions.DataNotFoundException
-import com.dasbikash.news_server_spring_mvc_rest_datasource.exceptions.NewsPaperNotFoundByIdException
-import com.dasbikash.news_server_spring_mvc_rest_datasource.exceptions.NewsPaperNotFoundByNameException
+import com.dasbikash.news_server_spring_mvc_rest_datasource.exceptions.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -32,6 +29,16 @@ class NewsPaperNotFoundAdvice {
     @ExceptionHandler(DataNotFoundException::class)
     fun dataAccessExceptionHandler(ex:DataNotFoundException):ResponseEntity<Unit>{
         return ResponseEntity.notFound().build()
+    }
+
+    @ExceptionHandler(IllegalRequestBodyException::class)
+    fun dataAccessExceptionHandler(ex:IllegalRequestBodyException):ResponseEntity<Unit>{
+        return ResponseEntity.badRequest().build()
+    }
+
+    @ExceptionHandler(InternalError::class)
+    fun internalErrorHandler(ex:InternalError):ResponseEntity<Unit>{
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
     }
 
     /*@ExceptionHandler(Throwable::class)

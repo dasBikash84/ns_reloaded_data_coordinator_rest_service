@@ -29,4 +29,5 @@ object DatabaseTableNames {
     const val ERROR_LOG_TABLE_NAME = "exception_log";
     const val ARTICLE_UPLOAD_LOG_TABLE_NAME = "article_upload_log";
     const val GENERAL_LOG_TABLE_NAME = "general_log";
+    const val AUTH_TOKEN_TABLE_NAME = "tokens";
 }
