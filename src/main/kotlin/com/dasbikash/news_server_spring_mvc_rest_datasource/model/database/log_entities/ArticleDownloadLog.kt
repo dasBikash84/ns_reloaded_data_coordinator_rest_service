@@ -11,22 +11,22 @@
  * limitations under the License.
  */
 
-package com.dasbikash.news_server_spring_mvc_rest_datasource.model.database
+package com.dasbikash.news_server_spring_mvc_rest_datasource.model.database.log_entities
 
-import com.fasterxml.jackson.annotation.JsonIgnore
+import com.dasbikash.news_server_spring_mvc_rest_datasource.model.database.DatabaseTableNames
+import org.hibernate.annotations.UpdateTimestamp
+import java.util.*
 import javax.persistence.*
 
 @Entity
-@Table(name = DatabaseTableNames.COUNTRY_TABLE_NAME)
-data class Country (
-        @Id var name: String="",
-        var countryCode: String?=null,
-        var timeZone: String?=null,
-        @OneToMany(targetEntity = Newspaper::class,mappedBy = "country",fetch = FetchType.LAZY)
-        @JsonIgnore
-        var newsPapers:List<Newspaper>? = null
-):DataCoordinatorRestEntity{
-        override fun toString(): String {
-                return "Country(name='$name', countryCode=$countryCode, timeZone=$timeZone)"
-        }
+@Table(name = DatabaseTableNames.ARTICLE_DOWNLOAD_LOG_TABLE_NAME)
+class ArticleDownloadLog() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Int? = null
+    @Column(columnDefinition = "text")
+    var logMessage: String?=null
+    var parents: String?=null
+    @UpdateTimestamp
+    var created: Date? = null
 }

@@ -13,10 +13,10 @@ import org.springframework.context.annotation.PropertySources;
                 @PropertySource("classpath:spring_mvc_rest.properties")
         }
     )
-public class NewsServerSpringMvcRestDatasourceApplication {
+public class NewsServerDataCoordinatorRestApplication {
 
     public static void main(String[] args) {
         ApplicationContext applicationContext =
-                SpringApplication.run(NewsServerSpringMvcRestDatasourceApplication.class, args);
+                SpringApplication.run(NewsServerDataCoordinatorRestApplication.class, args);
     }
 }

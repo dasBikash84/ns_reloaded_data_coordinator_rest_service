@@ -45,7 +45,7 @@ data class Article(
 
         @Column(columnDefinition = "text")
         var previewImageLink: String? = null
-) : NsSpringRestDbEntity {
+) : DataCoordinatorRestEntity {
     @Transient
     private var pageId: String? = null
 

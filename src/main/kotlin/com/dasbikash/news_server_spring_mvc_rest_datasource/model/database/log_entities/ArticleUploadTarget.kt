@@ -11,21 +11,9 @@
  * limitations under the License.
  */
 
-package com.dasbikash.news_server_spring_mvc_rest_datasource.model.database
+package com.dasbikash.news_server_spring_mvc_rest_datasource.model.database.log_entities
 
-import com.fasterxml.jackson.annotation.JsonIgnore
-import javax.persistence.*
 
-@Entity
-@Table(name = DatabaseTableNames.LANGUAGE_TABLE_NAME)
-data class Language(
-        @Id var id: String = "",
-        var name: String? = null,
-        @OneToMany(targetEntity = Newspaper::class, mappedBy = "language", fetch = FetchType.LAZY)
-        @JsonIgnore
-        var newsPapers: List<Newspaper>? = null
-):DataCoordinatorRestEntity{
-    override fun toString(): String {
-        return "Language(id='$id', name=$name)"
-    }
+enum class ArticleUploadTarget {
+    REAL_TIME_DB,FIRE_STORE_DB,MONGO_REST_SERVICE
 }

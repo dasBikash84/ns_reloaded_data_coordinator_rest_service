@@ -11,22 +11,16 @@
  * limitations under the License.
  */
 
-package com.dasbikash.news_server_spring_mvc_rest_datasource.model.database
+package com.dasbikash.news_server_spring_mvc_rest_datasource.model.database.log_entities
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
-@Table(name = DatabaseTableNames.COUNTRY_TABLE_NAME)
-data class Country (
-        @Id var name: String="",
-        var countryCode: String?=null,
-        var timeZone: String?=null,
-        @OneToMany(targetEntity = Newspaper::class,mappedBy = "country",fetch = FetchType.LAZY)
-        @JsonIgnore
-        var newsPapers:List<Newspaper>? = null
-):DataCoordinatorRestEntity{
-        override fun toString(): String {
-                return "Country(name='$name', countryCode=$countryCode, timeZone=$timeZone)"
-        }
+@Table(name = "general_log")
+class GeneralLog() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Int? = null
+    @Column(columnDefinition = "text")
+    var logMessage: String? = null
 }

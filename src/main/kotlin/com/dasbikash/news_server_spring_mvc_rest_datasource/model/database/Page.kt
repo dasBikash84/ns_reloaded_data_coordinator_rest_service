@@ -38,7 +38,7 @@ data class Page(
         @JsonIgnore
         var articleList: List<Article>?=null
 
-):NsSpringRestDbEntity{
+):DataCoordinatorRestEntity{
     companion object {
         @JvmField
         val TOP_LEVEL_PAGE_PARENT_ID = "PAGE_ID_0"
