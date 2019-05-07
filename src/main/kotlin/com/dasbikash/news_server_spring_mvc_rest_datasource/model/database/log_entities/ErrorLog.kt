@@ -13,20 +13,25 @@
 
 package com.dasbikash.news_server_spring_mvc_rest_datasource.model.database.log_entities
 
+import com.dasbikash.news_server_spring_mvc_rest_datasource.model.database.DataCoordinatorRestEntity
+import com.dasbikash.news_server_spring_mvc_rest_datasource.model.database.DatabaseTableNames
+import java.util.*
 import javax.persistence.*
 
 @Entity
-@Table(name = "exception_log")
-class ErrorLog() {
+@Table(name = DatabaseTableNames.ERROR_LOG_TABLE_NAME)
+class ErrorLog(): DataCoordinatorRestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Int = 0
+    var id: Int?=null
     var exceptionClassFullName: String? = null
-    var exceptionClassSimpleName: String? = null
+    @Enumerated(value = EnumType.STRING)
+    var exceptionClassSimpleName: ExceptionClassNames? = null
     @Column(columnDefinition = "text")
     var exceptionCause: String? = null
     @Column(columnDefinition = "text")
     var exceptionMessage: String? = null
     @Column(columnDefinition = "text")
     var stackTrace: String? = null
+    var created: Date? = null
 }

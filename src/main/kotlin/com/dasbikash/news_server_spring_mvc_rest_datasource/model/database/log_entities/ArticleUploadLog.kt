@@ -13,16 +13,23 @@
 
 package com.dasbikash.news_server_spring_mvc_rest_datasource.model.database.log_entities
 
+import com.dasbikash.news_server_spring_mvc_rest_datasource.model.database.DataCoordinatorRestEntity
+import com.dasbikash.news_server_spring_mvc_rest_datasource.model.database.DatabaseTableNames
+import java.util.*
 import javax.persistence.*
 
 @Entity
-@Table(name = "article_upload_log")
-class ArticleUploadLog() {
+@Table(name = DatabaseTableNames.ARTICLE_UPLOAD_LOG_TABLE_NAME)
+class ArticleUploadLog():DataCoordinatorRestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int? = null
+
+    @Column(columnDefinition = "enum('REAL_TIME_DB','FIRE_STORE_DB','MONGO_REST_SERVICE')")
     @Enumerated(EnumType.STRING)
     var uploadTarget: ArticleUploadTarget? = null
+
     @Column(columnDefinition = "text")
     var logMessage: String? = null
+    var created: Date?=null
 }

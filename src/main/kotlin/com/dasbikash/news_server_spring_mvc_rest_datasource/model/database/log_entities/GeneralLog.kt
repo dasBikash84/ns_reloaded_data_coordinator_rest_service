@@ -13,14 +13,18 @@
 
 package com.dasbikash.news_server_spring_mvc_rest_datasource.model.database.log_entities
 
+import com.dasbikash.news_server_spring_mvc_rest_datasource.model.database.DataCoordinatorRestEntity
+import com.dasbikash.news_server_spring_mvc_rest_datasource.model.database.DatabaseTableNames
+import java.util.*
 import javax.persistence.*
 
 @Entity
-@Table(name = "general_log")
-class GeneralLog() {
+@Table(name = DatabaseTableNames.GENERAL_LOG_TABLE_NAME)
+class GeneralLog():DataCoordinatorRestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int? = null
     @Column(columnDefinition = "text")
     var logMessage: String? = null
+    var created: Date?=null
 }

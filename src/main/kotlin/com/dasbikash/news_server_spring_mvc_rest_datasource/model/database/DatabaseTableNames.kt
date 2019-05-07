@@ -26,4 +26,7 @@ object DatabaseTableNames {
     const val SETTINGS_UPLOAD_LOG_TABLE_NAME = "settings_upload_log";
     const val ARTICLE_UPLOADER_STATUS_CHANGE_LOG_TABLE_NAME = "article_uploader_status_change_log";
     const val ARTICLE_DOWNLOAD_LOG_TABLE_NAME = "article_download_log";
+    const val ERROR_LOG_TABLE_NAME = "exception_log";
+    const val ARTICLE_UPLOAD_LOG_TABLE_NAME = "article_upload_log";
+    const val GENERAL_LOG_TABLE_NAME = "general_log";
 }

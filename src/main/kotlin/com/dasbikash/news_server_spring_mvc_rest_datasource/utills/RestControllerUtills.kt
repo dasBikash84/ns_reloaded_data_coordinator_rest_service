@@ -5,11 +5,11 @@ import com.dasbikash.news_server_spring_mvc_rest_datasource.model.database.DataC
 import org.springframework.http.ResponseEntity
 
 object RestControllerUtills {
-    fun <T : DataCoordinatorRestEntity> listEntityToResponseEntity(entiryList: List<T>): ResponseEntity<List<T>> {
-        if (entiryList.isEmpty()) {
+    fun <T : DataCoordinatorRestEntity> listEntityToResponseEntity(entityList: List<T>): ResponseEntity<List<T>> {
+        if (entityList.isEmpty()) {
             throw DataNotFoundException()
         }
-        return ResponseEntity.ok(entiryList)
+        return ResponseEntity.ok(entityList)
     }
 
     fun <T : DataCoordinatorRestEntity> entityToResponseEntity(entity: T?): ResponseEntity<T> {
