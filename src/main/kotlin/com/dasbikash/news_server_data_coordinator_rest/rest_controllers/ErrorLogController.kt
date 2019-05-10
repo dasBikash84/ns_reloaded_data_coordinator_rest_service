@@ -1,6 +1,9 @@
 package com.dasbikash.news_server_data_coordinator_rest.rest_controllers
 
+import com.dasbikash.news_server_data_coordinator_rest.model.LogEntryDeleteRequest
+import com.dasbikash.news_server_data_coordinator_rest.model.LogEntryDeleteRequestFormat
 import com.dasbikash.news_server_data_coordinator_rest.model.database.log_entities.ErrorLog
+import com.dasbikash.news_server_data_coordinator_rest.services.AuthTokenService
 import com.dasbikash.news_server_data_coordinator_rest.services.ErrorLogService
 import com.dasbikash.news_server_data_coordinator_rest.utills.RestControllerUtills
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,7 +14,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("error-logs")
 class ErrorLogController @Autowired
-constructor(val errorLogService: ErrorLogService) {
+constructor(val errorLogService: ErrorLogService,
+            val restControllerUtills: RestControllerUtills) {
 
     @Value("\${log.default_page_size}")
     var defaultPageSize: Int = 10
@@ -28,7 +32,7 @@ constructor(val errorLogService: ErrorLogService) {
                 it>0            -> pageSize = it
             }
         }
-        return RestControllerUtills.listEntityToResponseEntity(errorLogService.getLatestErrorLogs(pageSize))
+        return restControllerUtills.listEntityToResponseEntity(errorLogService.getLatestErrorLogs(pageSize))
     }
 
     @GetMapping("/before/error-log-id/{log-id}")
@@ -42,6 +46,16 @@ constructor(val errorLogService: ErrorLogService) {
                 it>0            -> pageSize = it
             }
         }
-        return RestControllerUtills.listEntityToResponseEntity(errorLogService.getErrorLogsBeforeGivenId(lastErrorLogId,pageSize))
+        return restControllerUtills.listEntityToResponseEntity(errorLogService.getErrorLogsBeforeGivenId(lastErrorLogId,pageSize))
+    }
+
+    @DeleteMapping("request_log_delete_token_generation")
+    fun generateLogDeletionToken(): ResponseEntity<LogEntryDeleteRequestFormat> {
+        return restControllerUtills.generateLogDeleteToken(this::class.java)
+    }
+
+    @DeleteMapping("")
+    fun deleteErrorLogs(@RequestBody logEntryDeleteRequest: LogEntryDeleteRequest?): ResponseEntity<List<ErrorLog>> {
+        return restControllerUtills.deleteLogEntries(errorLogService,logEntryDeleteRequest)
     }
 }

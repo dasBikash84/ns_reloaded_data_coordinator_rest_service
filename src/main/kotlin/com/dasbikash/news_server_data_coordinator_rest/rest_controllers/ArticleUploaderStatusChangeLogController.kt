@@ -20,7 +20,8 @@ import java.util.*
 @RequestMapping("article-uploader-status-change-logs")
 class ArticleUploaderStatusChangeLogController @Autowired
 constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChangeLogService,
-            val authTokenService: AuthTokenService) {
+            val authTokenService: AuthTokenService,
+            val restControllerUtills: RestControllerUtills) {
 
     @Value("\${log.default_page_size}")
     var defaultPageSize: Int = 10
@@ -37,7 +38,7 @@ constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChan
                 it>0            -> pageSize = it
             }
         }
-        return RestControllerUtills.listEntityToResponseEntity(articleUploaderStatusChangeLogService.getLatestArticleUploaderStatusChangeLogs(pageSize))
+        return restControllerUtills.listEntityToResponseEntity(articleUploaderStatusChangeLogService.getLatestArticleUploaderStatusChangeLogs(pageSize))
     }
 
     @GetMapping("/before/article-uploader-status-change-log-id/{log-id}")
@@ -51,7 +52,7 @@ constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChan
                 it>0            -> pageSize = it
             }
         }
-        return RestControllerUtills.listEntityToResponseEntity(articleUploaderStatusChangeLogService
+        return restControllerUtills.listEntityToResponseEntity(articleUploaderStatusChangeLogService
                                                                     .getArticleUploaderStatusChangeLogsBeforeGivenId(lastStatusChangeLogId,pageSize))
     }
 
@@ -59,7 +60,7 @@ constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChan
     fun generateStatusChangeToken():ResponseEntity<ArticleUploaderStatusChangeRequestFormat>{
         val newToken = authTokenService.getNewAuthToken()
         EmailUtils.emailAuthTokenToAdmin(newToken,this::class.java)
-        return RestControllerUtills.entityToResponseEntity(ArticleUploaderStatusChangeRequestFormat())
+        return restControllerUtills.entityToResponseEntity(ArticleUploaderStatusChangeRequestFormat())
     }
 
     @PostMapping("status_change_request")
@@ -77,7 +78,7 @@ constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChan
                     status = articleUploaderStatusChangeRequest.status,
                     articleDataUploaderTarget = articleUploaderStatusChangeRequest.articleUploadTarget)
             articleUploaderStatusChangeLogService.save(statusData)
-            return RestControllerUtills.entityToResponseEntity(articleUploaderStatusChangeRequest)
+            return restControllerUtills.entityToResponseEntity(articleUploaderStatusChangeRequest)
         }catch (ex:Exception){
             throw InternalError()
         }

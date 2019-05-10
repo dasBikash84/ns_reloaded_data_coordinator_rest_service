@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class GeneralLogService @Autowired constructor(val generalLogRepository: GeneralLogRepository){
+class GeneralLogService @Autowired constructor(val generalLogRepository: GeneralLogRepository):DeletableLogService<GeneralLog>{
     fun getLatestGeneralLogs(pageSize: Int): List<GeneralLog> {
         return generalLogRepository.getLatestGeneralLogs(pageSize)
     }
@@ -19,18 +19,18 @@ class GeneralLogService @Autowired constructor(val generalLogRepository: General
         }
         return generalLogRepository.getSettingsUpdateLogsBeforeGivenId(lastGeneralLog.get().id!!,pageSize)
     }
-    fun getOldestGeneralLogs(pageSize: Int): List<GeneralLog> {
-        return generalLogRepository.getOldestGeneralLogs(pageSize)
+    override fun getOldestLogs(pageSize: Int): List<GeneralLog> {
+        return generalLogRepository.getOldestLogs(pageSize)
     }
 
-    fun getGeneralLogsAfterGivenId(lastGeneralLogId: Int, pageSize: Int): List<GeneralLog> {
+    override fun getLogsAfterGivenId(lastGeneralLogId: Int, pageSize: Int): List<GeneralLog> {
         val lastGeneralLog = generalLogRepository.findById(lastGeneralLogId)
         if (!lastGeneralLog.isPresent){
             throw DataNotFoundException()
         }
-        return generalLogRepository.getGeneralLogsAfterGivenId(lastGeneralLog.get().id!!,pageSize)
+        return generalLogRepository.getLogsAfterGivenId(lastGeneralLog.get().id!!,pageSize)
     }
-    fun delete(generalLog: GeneralLog){
+    override fun delete(generalLog: GeneralLog){
         generalLogRepository.delete(generalLog)
     }
 }

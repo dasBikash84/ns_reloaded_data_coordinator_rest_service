@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("countries")
 class CountryController @Autowired
-constructor(private val countryService: CountryService) {
+constructor(private val countryService: CountryService,
+            val restControllerUtills: RestControllerUtills) {
 
     @GetMapping(value = arrayOf("","/"))
     fun getAllActiveNewsPapers():ResponseEntity<List<Country>>{
-        return RestControllerUtills.listEntityToResponseEntity(countryService.getAllCountries())
+        return restControllerUtills.listEntityToResponseEntity(countryService.getAllCountries())
     }
 
 }

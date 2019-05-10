@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class ErrorLogService @Autowired constructor(val errorLogRepository: ErrorLogRepository){
+class ErrorLogService @Autowired constructor(val errorLogRepository: ErrorLogRepository)
+    :DeletableLogService<ErrorLog>{
     fun getLatestErrorLogs(pageSize: Int): List<ErrorLog> {
         return errorLogRepository.getLatestErrorLogs(pageSize)
     }
@@ -18,5 +19,20 @@ class ErrorLogService @Autowired constructor(val errorLogRepository: ErrorLogRep
             throw DataNotFoundException()
         }
         return errorLogRepository.getErrorLogsBeforeGivenId(lastErrorLog.get().id!!,pageSize)
+    }
+
+    override fun getOldestLogs(pageSize: Int): List<ErrorLog> {
+        return errorLogRepository.getOldestLogs(pageSize)
+    }
+
+    override fun getLogsAfterGivenId(lastErrorLogId: Int, pageSize: Int): List<ErrorLog> {
+        val lastErrorLog = errorLogRepository.findById(lastErrorLogId)
+        if (!lastErrorLog.isPresent){
+            throw DataNotFoundException()
+        }
+        return errorLogRepository.getLogsAfterGivenId(lastErrorLog.get().id!!,pageSize)
+    }
+    override fun delete(errorLog: ErrorLog){
+        errorLogRepository.delete(errorLog)
     }
 }

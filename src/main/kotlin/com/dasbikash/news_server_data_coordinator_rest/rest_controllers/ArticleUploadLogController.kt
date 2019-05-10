@@ -1,5 +1,7 @@
 package com.dasbikash.news_server_data_coordinator_rest.rest_controllers
 
+import com.dasbikash.news_server_data_coordinator_rest.model.LogEntryDeleteRequest
+import com.dasbikash.news_server_data_coordinator_rest.model.LogEntryDeleteRequestFormat
 import com.dasbikash.news_server_data_coordinator_rest.model.database.log_entities.ArticleUploadLog
 import com.dasbikash.news_server_data_coordinator_rest.services.ArticleUploadLogService
 import com.dasbikash.news_server_data_coordinator_rest.utills.RestControllerUtills
@@ -11,7 +13,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("article-upload-logs")
 class ArticleUploadLogController @Autowired
-constructor(val articleUploadLogService: ArticleUploadLogService) {
+constructor(val articleUploadLogService: ArticleUploadLogService,
+            val restControllerUtills: RestControllerUtills) {
 
     @Value("\${log.default_page_size}")
     var defaultPageSize: Int = 10
@@ -28,7 +31,7 @@ constructor(val articleUploadLogService: ArticleUploadLogService) {
                 it>0            -> pageSize = it
             }
         }
-        return RestControllerUtills.listEntityToResponseEntity(articleUploadLogService.getLatestArticleUploadLogs(pageSize))
+        return restControllerUtills.listEntityToResponseEntity(articleUploadLogService.getLatestArticleUploadLogs(pageSize))
     }
 
     @GetMapping("/before/article-upload-log-id/{log-id}")
@@ -42,6 +45,16 @@ constructor(val articleUploadLogService: ArticleUploadLogService) {
                 it>0            -> pageSize = it
             }
         }
-        return RestControllerUtills.listEntityToResponseEntity(articleUploadLogService.getArticleUploadLogsBeforeGivenId(lastArticleUploadLogId,pageSize))
+        return restControllerUtills.listEntityToResponseEntity(articleUploadLogService.getArticleUploadLogsBeforeGivenId(lastArticleUploadLogId,pageSize))
+    }
+
+    @DeleteMapping("request_log_delete_token_generation")
+    fun generateLogDeletionToken(): ResponseEntity<LogEntryDeleteRequestFormat> {
+        return restControllerUtills.generateLogDeleteToken(this::class.java)
+    }
+
+    @DeleteMapping("")
+    fun deleteErrorLogs(@RequestBody logEntryDeleteRequest: LogEntryDeleteRequest?): ResponseEntity<List<ArticleUploadLog>> {
+        return restControllerUtills.deleteLogEntries(articleUploadLogService,logEntryDeleteRequest)
     }
 }

@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("articles")
 class ArticleController @Autowired
-constructor(val articleService: ArticleService) {
+constructor(val articleService: ArticleService,
+            val restControllerUtills: RestControllerUtills) {
 
     @Value("\${article.default_page_size}")
     var defaultPageSize: Int = 5
@@ -30,7 +31,7 @@ constructor(val articleService: ArticleService) {
                 it>0 -> pageSize = it
             }
         }
-        return RestControllerUtills.listEntityToResponseEntity(articleService.getArticlesByPageId(pageId,pageSize))
+        return restControllerUtills.listEntityToResponseEntity(articleService.getArticlesByPageId(pageId,pageSize))
     }
 
     @GetMapping("/page-id/{pageId}/last-article-id/{lastArticleId}")
@@ -45,11 +46,11 @@ constructor(val articleService: ArticleService) {
                 it>0 -> pageSize = it
             }
         }
-        return RestControllerUtills.listEntityToResponseEntity(articleService.getArticlesForPageAfterLast(pageId,pageSize,lastArticleId))
+        return restControllerUtills.listEntityToResponseEntity(articleService.getArticlesForPageAfterLast(pageId,pageSize,lastArticleId))
     }
 
     @GetMapping("/top-level-page-id/{topLevelPageId}/latest-article")
     fun getLatestArticleForTopLevelPage(@PathVariable topLevelPageId:String):ResponseEntity<Article>{
-        return RestControllerUtills.entityToResponseEntity(articleService.getLatestArticleForTopLevelPage(topLevelPageId))
+        return restControllerUtills.entityToResponseEntity(articleService.getLatestArticleForTopLevelPage(topLevelPageId))
     }
 }

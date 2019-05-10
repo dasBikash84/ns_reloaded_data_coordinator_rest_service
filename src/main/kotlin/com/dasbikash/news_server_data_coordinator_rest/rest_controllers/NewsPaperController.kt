@@ -13,20 +13,21 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("newspapers")
 class NewsPaperController @Autowired
-constructor(private val newsPaperService: NewsPaperService) {
+constructor(private val newsPaperService: NewsPaperService,
+            val restControllerUtills: RestControllerUtills) {
 
     @GetMapping(value = arrayOf("","/"))
     fun getAllActiveNewsPapers():ResponseEntity<List<Newspaper>>{
-        return RestControllerUtills.listEntityToResponseEntity(newsPaperService.getAllActiveNewsPapers())
+        return restControllerUtills.listEntityToResponseEntity(newsPaperService.getAllActiveNewsPapers())
     }
 
     @GetMapping("/country-name/{countryName}")
     fun getNewPaperByCountryName(@PathVariable("countryName") countryName:String):ResponseEntity<List<Newspaper>>{
-        return RestControllerUtills.listEntityToResponseEntity(newsPaperService.getAllNewPaperByCountryName(countryName))
+        return restControllerUtills.listEntityToResponseEntity(newsPaperService.getAllNewPaperByCountryName(countryName))
     }
 
     @GetMapping("/language-id/{languageId}")
     fun getNewPaperByLanguageId(@PathVariable("languageId") languageId:String):ResponseEntity<List<Newspaper>>{
-        return RestControllerUtills.listEntityToResponseEntity(newsPaperService.getAllNewPaperByLanguageId(languageId))
+        return restControllerUtills.listEntityToResponseEntity(newsPaperService.getAllNewPaperByLanguageId(languageId))
     }
 }

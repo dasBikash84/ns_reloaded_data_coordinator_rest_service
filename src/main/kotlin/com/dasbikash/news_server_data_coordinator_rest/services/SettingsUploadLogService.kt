@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class SettingsUploadLogService @Autowired constructor(val settingsUploadLogRepository: SettingsUploadLogRepository){
+class SettingsUploadLogService @Autowired constructor(val settingsUploadLogRepository: SettingsUploadLogRepository)
+    :DeletableLogService<SettingsUploadLog>{
     fun getLatestSettingsUploadLogs(pageSize: Int): List<SettingsUploadLog> {
         return settingsUploadLogRepository.getLatestSettingsUploadLogs(pageSize)
     }
@@ -18,5 +19,17 @@ class SettingsUploadLogService @Autowired constructor(val settingsUploadLogRepos
             throw DataNotFoundException()
         }
         return settingsUploadLogRepository.getSettingsUpdateLogsBeforeGivenId(lastSettingsUploadLog.get().id!!,pageSize)
+    }
+
+    override fun getOldestLogs(pageSize: Int): List<SettingsUploadLog> {
+        return settingsUploadLogRepository.getOldestLogs(pageSize)
+    }
+
+    override fun getLogsAfterGivenId(lastLogId: Int, pageSize: Int): List<SettingsUploadLog> {
+        return settingsUploadLogRepository.getLogsAfterGivenId(lastLogId,pageSize)
+    }
+
+    override fun delete(logEntry: SettingsUploadLog) {
+        settingsUploadLogRepository.delete(logEntry)
     }
 }

@@ -1,5 +1,7 @@
 package com.dasbikash.news_server_data_coordinator_rest.rest_controllers
 
+import com.dasbikash.news_server_data_coordinator_rest.model.LogEntryDeleteRequest
+import com.dasbikash.news_server_data_coordinator_rest.model.LogEntryDeleteRequestFormat
 import com.dasbikash.news_server_data_coordinator_rest.model.database.log_entities.SettingsUpdateLog
 import com.dasbikash.news_server_data_coordinator_rest.services.SettingsUpdateLogService
 import com.dasbikash.news_server_data_coordinator_rest.utills.RestControllerUtills
@@ -11,7 +13,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("settings-update-logs")
 class SettingsUpdateLogController @Autowired
-constructor(val settingsUpdateLogService: SettingsUpdateLogService) {
+constructor(val settingsUpdateLogService: SettingsUpdateLogService,
+            val restControllerUtills: RestControllerUtills) {
 
     @Value("\${log.default_page_size}")
     var defaultPageSize: Int = 10
@@ -28,7 +31,7 @@ constructor(val settingsUpdateLogService: SettingsUpdateLogService) {
                 it>0            -> pageSize = it
             }
         }
-        return RestControllerUtills.listEntityToResponseEntity(settingsUpdateLogService.getLatestSettingsUpdateLogs(pageSize))
+        return restControllerUtills.listEntityToResponseEntity(settingsUpdateLogService.getLatestSettingsUpdateLogs(pageSize))
     }
 
     @GetMapping("/before/settings-update-log-id/{log-id}")
@@ -42,6 +45,16 @@ constructor(val settingsUpdateLogService: SettingsUpdateLogService) {
                 it>0            -> pageSize = it
             }
         }
-        return RestControllerUtills.listEntityToResponseEntity(settingsUpdateLogService.getSettingsUpdateLogsBeforeGivenId(lastErrorLogId,pageSize))
+        return restControllerUtills.listEntityToResponseEntity(settingsUpdateLogService.getSettingsUpdateLogsBeforeGivenId(lastErrorLogId,pageSize))
+    }
+
+    @DeleteMapping("request_log_delete_token_generation")
+    fun generateLogDeletionToken(): ResponseEntity<LogEntryDeleteRequestFormat> {
+        return restControllerUtills.generateLogDeleteToken(this::class.java)
+    }
+
+    @DeleteMapping("")
+    fun deleteErrorLogs(@RequestBody logEntryDeleteRequest: LogEntryDeleteRequest?): ResponseEntity<List<SettingsUpdateLog>> {
+        return restControllerUtills.deleteLogEntries(settingsUpdateLogService,logEntryDeleteRequest)
     }
 }

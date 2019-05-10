@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class ArticleDownloadLogService @Autowired constructor(val articleDownloadLogRepository: ArticleDownloadLogRepository){
+class ArticleDownloadLogService @Autowired constructor(val articleDownloadLogRepository: ArticleDownloadLogRepository)
+    :DeletableLogService<ArticleDownloadLog>{
     fun getLatestArticleDownloadLogs(pageSize: Int): List<ArticleDownloadLog> {
         return articleDownloadLogRepository.getLatestArticleDownloadLogs(pageSize)
     }
@@ -18,5 +19,17 @@ class ArticleDownloadLogService @Autowired constructor(val articleDownloadLogRep
             throw DataNotFoundException()
         }
         return articleDownloadLogRepository.getArticleDownloadLogsBeforeGivenId(lastArticleDownloadLog.get().id!!,pageSize)
+    }
+
+    override fun getOldestLogs(pageSize: Int): List<ArticleDownloadLog> {
+        return articleDownloadLogRepository.getOldestLogs(pageSize)
+    }
+
+    override fun getLogsAfterGivenId(lastLogId: Int, pageSize: Int): List<ArticleDownloadLog> {
+        return articleDownloadLogRepository.getLogsAfterGivenId(lastLogId,pageSize)
+    }
+
+    override fun delete(logEntry: ArticleDownloadLog) {
+        articleDownloadLogRepository.delete(logEntry)
     }
 }

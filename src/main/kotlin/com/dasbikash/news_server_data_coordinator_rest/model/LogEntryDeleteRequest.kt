@@ -15,9 +15,9 @@ class LogEntryDeleteRequest(
 
 class LogEntryDeleteRequestFormat (
         val authToken:String = "Emailed token",
-        val targetLogId: String = "Log id for entry delete from specific location. " +
+        val targetLogId: String = "Log id for entry deletion from specific location. " +
                                     "Oldest entry will be deleted for null",
         val entryDeleteCount: String = "Log enrty delete count. " +
-                                        "Max:${LogEntryDeleteRequest.MAX_ENTRY_DELETE_LIMIT}"+
+                                        "Max:${LogEntryDeleteRequest.MAX_ENTRY_DELETE_LIMIT}. "+
                                         "Default:${LogEntryDeleteRequest.DEFAULT_ENTRY_DELETE_COUNT}"
 ): DataCoordinatorRestEntity

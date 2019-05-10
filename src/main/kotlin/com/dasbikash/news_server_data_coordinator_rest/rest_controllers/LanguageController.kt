@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("languages")
 class LanguageController @Autowired
-constructor(private val languageService: LanguageService) {
+constructor(private val languageService: LanguageService,
+            val restControllerUtills: RestControllerUtills) {
 
     @GetMapping(value = arrayOf("","/"))
     fun getAllActiveNewsPapers():ResponseEntity<List<Language>>{
-        return RestControllerUtills.listEntityToResponseEntity(languageService.getAllLanguages())
+        return restControllerUtills.listEntityToResponseEntity(languageService.getAllLanguages())
     }
 
 }

@@ -12,25 +12,26 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("pages")
-class PageController (@Autowired val pageService: PageService){
+class PageController (@Autowired val pageService: PageService,
+                      val restControllerUtills: RestControllerUtills){
 
     @GetMapping(value = arrayOf("","/"))
     fun getAllActivePages():ResponseEntity<List<Page>>{
-        return RestControllerUtills.listEntityToResponseEntity(
+        return restControllerUtills.listEntityToResponseEntity(
                 pageService.getAllActivePages()
         )
     }
 
     @GetMapping("/newspaper-id/{newsPaperId}/top-level-pages")
     fun getAllTopLevelPagesForNewsPaper(@PathVariable("newsPaperId") newsPaperId:String):ResponseEntity<List<Page>>{
-        return RestControllerUtills.listEntityToResponseEntity(
+        return restControllerUtills.listEntityToResponseEntity(
                 pageService.getAllTopLevelPagesForNewsPaper(newsPaperId)
         )
     }
 
     @GetMapping("/top-level-page-id/{pageId}")
     fun getAllChildPagesForTopLevelPage(@PathVariable("pageId") pageId:String):ResponseEntity<List<Page>>{
-        return RestControllerUtills.listEntityToResponseEntity(
+        return restControllerUtills.listEntityToResponseEntity(
                 pageService.getAllChildPagesForTopLevelPage(pageId)
         )
     }
