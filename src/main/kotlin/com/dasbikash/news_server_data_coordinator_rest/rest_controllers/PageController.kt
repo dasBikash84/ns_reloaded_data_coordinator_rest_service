@@ -1,5 +1,6 @@
 package com.dasbikash.news_server_data_coordinator_rest.rest_controllers
 
+import com.dasbikash.news_server_data_coordinator_rest.model.Pages
 import com.dasbikash.news_server_data_coordinator_rest.model.database.Page
 import com.dasbikash.news_server_data_coordinator_rest.services.PageService
 import com.dasbikash.news_server_data_coordinator_rest.utills.RestControllerUtills
@@ -16,23 +17,20 @@ class PageController (@Autowired val pageService: PageService,
                       val restControllerUtills: RestControllerUtills){
 
     @GetMapping(value = arrayOf("","/"))
-    fun getAllActivePages():ResponseEntity<List<Page>>{
-        return restControllerUtills.listEntityToResponseEntity(
-                pageService.getAllActivePages()
-        )
+    fun getAllActivePages():ResponseEntity<Pages>{
+        return restControllerUtills.entityToResponseEntity(Pages(
+                pageService.getAllActivePages()))
     }
 
     @GetMapping("/newspaper-id/{newsPaperId}/top-level-pages")
-    fun getAllTopLevelPagesForNewsPaper(@PathVariable("newsPaperId") newsPaperId:String):ResponseEntity<List<Page>>{
-        return restControllerUtills.listEntityToResponseEntity(
-                pageService.getAllTopLevelPagesForNewsPaper(newsPaperId)
-        )
+    fun getAllTopLevelPagesForNewsPaper(@PathVariable("newsPaperId") newsPaperId:String):ResponseEntity<Pages>{
+        return restControllerUtills.entityToResponseEntity(Pages(
+                pageService.getAllTopLevelPagesForNewsPaper(newsPaperId)))
     }
 
     @GetMapping("/top-level-page-id/{pageId}")
-    fun getAllChildPagesForTopLevelPage(@PathVariable("pageId") pageId:String):ResponseEntity<List<Page>>{
-        return restControllerUtills.listEntityToResponseEntity(
-                pageService.getAllChildPagesForTopLevelPage(pageId)
-        )
+    fun getAllChildPagesForTopLevelPage(@PathVariable("pageId") pageId:String):ResponseEntity<Pages>{
+        return restControllerUtills.entityToResponseEntity(Pages(
+                pageService.getAllChildPagesForTopLevelPage(pageId)))
     }
 }

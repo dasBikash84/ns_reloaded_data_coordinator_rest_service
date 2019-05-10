@@ -1,5 +1,6 @@
 package com.dasbikash.news_server_data_coordinator_rest.rest_controllers
 
+import com.dasbikash.news_server_data_coordinator_rest.model.Countries
 import com.dasbikash.news_server_data_coordinator_rest.model.database.Country
 import com.dasbikash.news_server_data_coordinator_rest.services.CountryService
 import com.dasbikash.news_server_data_coordinator_rest.utills.RestControllerUtills
@@ -16,8 +17,8 @@ constructor(private val countryService: CountryService,
             val restControllerUtills: RestControllerUtills) {
 
     @GetMapping(value = arrayOf("","/"))
-    fun getAllActiveNewsPapers():ResponseEntity<List<Country>>{
-        return restControllerUtills.listEntityToResponseEntity(countryService.getAllCountries())
+    fun getAllActiveNewsPapers():ResponseEntity<Countries>{
+        return restControllerUtills.entityToResponseEntity(Countries(countryService.getAllCountries()))
     }
 
 }

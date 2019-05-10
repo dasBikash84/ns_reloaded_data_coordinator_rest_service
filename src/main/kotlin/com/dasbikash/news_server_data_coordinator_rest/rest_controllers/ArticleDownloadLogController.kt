@@ -1,5 +1,6 @@
 package com.dasbikash.news_server_data_coordinator_rest.rest_controllers
 
+import com.dasbikash.news_server_data_coordinator_rest.model.ArticleDownloadLogs
 import com.dasbikash.news_server_data_coordinator_rest.model.LogEntryDeleteRequest
 import com.dasbikash.news_server_data_coordinator_rest.model.LogEntryDeleteRequestFormat
 import com.dasbikash.news_server_data_coordinator_rest.model.database.log_entities.ArticleDownloadLog
@@ -23,7 +24,7 @@ constructor(val articleDownloadLogService: ArticleDownloadLogService,
     var maxPageSize: Int = 50
 
     @GetMapping("")
-    fun getLatestArticleDownloadLogs(@RequestParam("page-size") pageSizeRequest:Int?): ResponseEntity<List<ArticleDownloadLog>> {
+    fun getLatestArticleDownloadLogs(@RequestParam("page-size") pageSizeRequest:Int?): ResponseEntity<ArticleDownloadLogs> {
         var pageSize = defaultPageSize
         pageSizeRequest?.let {
             when{
@@ -31,13 +32,14 @@ constructor(val articleDownloadLogService: ArticleDownloadLogService,
                 it>0            -> pageSize = it
             }
         }
-        return restControllerUtills.listEntityToResponseEntity(articleDownloadLogService.getLatestArticleDownloadLogs(pageSize))
+        return restControllerUtills.entityToResponseEntity(
+                        ArticleDownloadLogs(articleDownloadLogService.getLatestArticleDownloadLogs(pageSize)))
     }
 
     @GetMapping("/before/article-download-log-id/{log-id}")
     fun getArticleDownloadLogsBeforeGivenId(@RequestParam("page-size") pageSizeRequest:Int?,
                                         @PathVariable("log-id") lastArticleDownloadLogId:Int)
-            : ResponseEntity<List<ArticleDownloadLog>> {
+            : ResponseEntity<ArticleDownloadLogs> {
         var pageSize = defaultPageSize
         pageSizeRequest?.let {
             when{
@@ -45,7 +47,8 @@ constructor(val articleDownloadLogService: ArticleDownloadLogService,
                 it>0            -> pageSize = it
             }
         }
-        return restControllerUtills.listEntityToResponseEntity(articleDownloadLogService.getArticleDownloadLogsBeforeGivenId(lastArticleDownloadLogId,pageSize))
+        return restControllerUtills.entityToResponseEntity(
+                        ArticleDownloadLogs(articleDownloadLogService.getArticleDownloadLogsBeforeGivenId(lastArticleDownloadLogId,pageSize)))
     }
 
     @DeleteMapping("request_log_delete_token_generation")
@@ -54,7 +57,8 @@ constructor(val articleDownloadLogService: ArticleDownloadLogService,
     }
 
     @DeleteMapping("")
-    fun deleteErrorLogs(@RequestBody logEntryDeleteRequest: LogEntryDeleteRequest?): ResponseEntity<List<ArticleDownloadLog>> {
-        return restControllerUtills.deleteLogEntries(articleDownloadLogService,logEntryDeleteRequest)
+    fun deleteErrorLogs(@RequestBody logEntryDeleteRequest: LogEntryDeleteRequest?): ResponseEntity<ArticleDownloadLogs> {
+        return restControllerUtills.entityToResponseEntity(ArticleDownloadLogs(
+                restControllerUtills.deleteLogEntries(articleDownloadLogService,logEntryDeleteRequest)))
     }
 }

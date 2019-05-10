@@ -1,5 +1,6 @@
 package com.dasbikash.news_server_data_coordinator_rest.rest_controllers
 
+import com.dasbikash.news_server_data_coordinator_rest.model.GeneralLogs
 import com.dasbikash.news_server_data_coordinator_rest.model.LogEntryDeleteRequest
 import com.dasbikash.news_server_data_coordinator_rest.model.LogEntryDeleteRequestFormat
 import com.dasbikash.news_server_data_coordinator_rest.model.database.DataCoordinatorRestEntity
@@ -26,7 +27,7 @@ constructor(val generalLogService: GeneralLogService,
     var maxPageSize: Int = 50
 
     @GetMapping("")
-    fun getLatestGeneralLogs(@RequestParam("page-size") pageSizeRequest: Int?): ResponseEntity<List<GeneralLog>> {
+    fun getLatestGeneralLogs(@RequestParam("page-size") pageSizeRequest: Int?): ResponseEntity<GeneralLogs> {
         var pageSize = defaultPageSize
         pageSizeRequest?.let {
             when {
@@ -34,13 +35,13 @@ constructor(val generalLogService: GeneralLogService,
                 it > 0 -> pageSize = it
             }
         }
-        return restControllerUtills.listEntityToResponseEntity(generalLogService.getLatestGeneralLogs(pageSize))
+        return restControllerUtills.entityToResponseEntity(GeneralLogs(generalLogService.getLatestGeneralLogs(pageSize)))
     }
 
     @GetMapping("/before/general-log-id/{log-id}")
     fun getGeneralLogsBeforeGivenId(@RequestParam("page-size") pageSizeRequest: Int?,
                                     @PathVariable("log-id") lastGeneralLogId: Int)
-            : ResponseEntity<List<GeneralLog>> {
+            : ResponseEntity<GeneralLogs> {
         var pageSize = defaultPageSize
         pageSizeRequest?.let {
             when {
@@ -48,7 +49,8 @@ constructor(val generalLogService: GeneralLogService,
                 it > 0 -> pageSize = it
             }
         }
-        return restControllerUtills.listEntityToResponseEntity(generalLogService.getGeneralLogsBeforeGivenId(lastGeneralLogId, pageSize))
+        return restControllerUtills.entityToResponseEntity(GeneralLogs(
+                generalLogService.getGeneralLogsBeforeGivenId(lastGeneralLogId, pageSize)))
     }
 
     @DeleteMapping("request_log_delete_token_generation")
@@ -57,7 +59,8 @@ constructor(val generalLogService: GeneralLogService,
     }
 
     @DeleteMapping("")
-    fun deleteGeneralLogs(@RequestBody logEntryDeleteRequest: LogEntryDeleteRequest?): ResponseEntity<List<GeneralLog>> {
-        return restControllerUtills.deleteLogEntries(generalLogService,logEntryDeleteRequest)
+    fun deleteGeneralLogs(@RequestBody logEntryDeleteRequest: LogEntryDeleteRequest?): ResponseEntity<GeneralLogs> {
+        return restControllerUtills.entityToResponseEntity(GeneralLogs(
+                restControllerUtills.deleteLogEntries(generalLogService,logEntryDeleteRequest)))
     }
 }

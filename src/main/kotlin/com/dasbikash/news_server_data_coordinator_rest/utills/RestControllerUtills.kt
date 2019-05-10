@@ -44,7 +44,7 @@ constructor(val authTokenService: AuthTokenService) {
 
     fun <T : DataCoordinatorRestEntity> deleteLogEntries(deletableLogService: DeletableLogService<T>,
                                                          logEntryDeleteRequest: LogEntryDeleteRequest?)
-            : ResponseEntity<List<T>> {
+            : List<T> {
 
         validateLogEntryDeleteRequest(logEntryDeleteRequest)
         authTokenService.invalidateAuthToken(logEntryDeleteRequest!!.authToken!!)
@@ -81,6 +81,6 @@ constructor(val authTokenService: AuthTokenService) {
         logEntriesForDeletion.asSequence().forEach {
             deletableLogService.delete(it)
         }
-        return listEntityToResponseEntity(logEntriesForDeletion)
+        return logEntriesForDeletion
     }
 }

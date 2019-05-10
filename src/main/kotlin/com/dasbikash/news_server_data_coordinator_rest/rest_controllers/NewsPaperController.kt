@@ -1,5 +1,6 @@
 package com.dasbikash.news_server_data_coordinator_rest.rest_controllers
 
+import com.dasbikash.news_server_data_coordinator_rest.model.Newspapers
 import com.dasbikash.news_server_data_coordinator_rest.model.database.Newspaper
 import com.dasbikash.news_server_data_coordinator_rest.services.NewsPaperService
 import com.dasbikash.news_server_data_coordinator_rest.utills.RestControllerUtills
@@ -17,17 +18,20 @@ constructor(private val newsPaperService: NewsPaperService,
             val restControllerUtills: RestControllerUtills) {
 
     @GetMapping(value = arrayOf("","/"))
-    fun getAllActiveNewsPapers():ResponseEntity<List<Newspaper>>{
-        return restControllerUtills.listEntityToResponseEntity(newsPaperService.getAllActiveNewsPapers())
+    fun getAllActiveNewsPapers():ResponseEntity<Newspapers>{
+        return restControllerUtills.entityToResponseEntity(Newspapers(
+                newsPaperService.getAllActiveNewsPapers()))
     }
 
     @GetMapping("/country-name/{countryName}")
-    fun getNewPaperByCountryName(@PathVariable("countryName") countryName:String):ResponseEntity<List<Newspaper>>{
-        return restControllerUtills.listEntityToResponseEntity(newsPaperService.getAllNewPaperByCountryName(countryName))
+    fun getNewPaperByCountryName(@PathVariable("countryName") countryName:String):ResponseEntity<Newspapers>{
+        return restControllerUtills.entityToResponseEntity(Newspapers(
+                newsPaperService.getAllNewPaperByCountryName(countryName)))
     }
 
     @GetMapping("/language-id/{languageId}")
-    fun getNewPaperByLanguageId(@PathVariable("languageId") languageId:String):ResponseEntity<List<Newspaper>>{
-        return restControllerUtills.listEntityToResponseEntity(newsPaperService.getAllNewPaperByLanguageId(languageId))
+    fun getNewPaperByLanguageId(@PathVariable("languageId") languageId:String):ResponseEntity<Newspapers>{
+        return restControllerUtills.entityToResponseEntity(Newspapers(
+                        newsPaperService.getAllNewPaperByLanguageId(languageId)))
     }
 }

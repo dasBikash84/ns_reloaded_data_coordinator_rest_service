@@ -1,5 +1,6 @@
 package com.dasbikash.news_server_data_coordinator_rest.rest_controllers
 
+import com.dasbikash.news_server_data_coordinator_rest.model.Languages
 import com.dasbikash.news_server_data_coordinator_rest.model.database.Language
 import com.dasbikash.news_server_data_coordinator_rest.services.LanguageService
 import com.dasbikash.news_server_data_coordinator_rest.utills.RestControllerUtills
@@ -16,8 +17,8 @@ constructor(private val languageService: LanguageService,
             val restControllerUtills: RestControllerUtills) {
 
     @GetMapping(value = arrayOf("","/"))
-    fun getAllActiveNewsPapers():ResponseEntity<List<Language>>{
-        return restControllerUtills.listEntityToResponseEntity(languageService.getAllLanguages())
+    fun getAllActiveNewsPapers():ResponseEntity<Languages>{
+        return restControllerUtills.entityToResponseEntity(Languages(languageService.getAllLanguages()))
     }
 
 }

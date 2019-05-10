@@ -2,6 +2,7 @@ package com.dasbikash.news_server_data_coordinator_rest.rest_controllers
 
 import com.dasbikash.news_server_data_coordinator_rest.exceptions.DataNotFoundException
 import com.dasbikash.news_server_data_coordinator_rest.exceptions.IllegalRequestBodyException
+import com.dasbikash.news_server_data_coordinator_rest.model.ArticleUploaderStatusChangeLogs
 import com.dasbikash.news_server_data_coordinator_rest.model.ArticleUploaderStatusChangeRequest
 import com.dasbikash.news_server_data_coordinator_rest.model.ArticleUploaderStatusChangeRequestFormat
 import com.dasbikash.news_server_data_coordinator_rest.model.database.AuthToken
@@ -30,7 +31,7 @@ constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChan
     var maxPageSize: Int = 50
 
     @GetMapping("")
-    fun getLatestArticleUploaderStatusChangeLogs(@RequestParam("page-size") pageSizeRequest:Int?): ResponseEntity<List<ArticleUploaderStatusChangeLog>> {
+    fun getLatestArticleUploaderStatusChangeLogs(@RequestParam("page-size") pageSizeRequest:Int?): ResponseEntity<ArticleUploaderStatusChangeLogs> {
         var pageSize = defaultPageSize
         pageSizeRequest?.let {
             when{
@@ -38,13 +39,14 @@ constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChan
                 it>0            -> pageSize = it
             }
         }
-        return restControllerUtills.listEntityToResponseEntity(articleUploaderStatusChangeLogService.getLatestArticleUploaderStatusChangeLogs(pageSize))
+        return restControllerUtills.entityToResponseEntity(
+                ArticleUploaderStatusChangeLogs(articleUploaderStatusChangeLogService.getLatestArticleUploaderStatusChangeLogs(pageSize)))
     }
 
     @GetMapping("/before/article-uploader-status-change-log-id/{log-id}")
     fun getArticleUploaderStatusChangeLogsBeforeGivenId(@RequestParam("page-size") pageSizeRequest:Int?,
                                         @PathVariable("log-id") lastStatusChangeLogId:Int)
-            : ResponseEntity<List<ArticleUploaderStatusChangeLog>> {
+            : ResponseEntity<ArticleUploaderStatusChangeLogs> {
         var pageSize = defaultPageSize
         pageSizeRequest?.let {
             when{
@@ -52,8 +54,8 @@ constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChan
                 it>0            -> pageSize = it
             }
         }
-        return restControllerUtills.listEntityToResponseEntity(articleUploaderStatusChangeLogService
-                                                                    .getArticleUploaderStatusChangeLogsBeforeGivenId(lastStatusChangeLogId,pageSize))
+        return restControllerUtills.entityToResponseEntity(ArticleUploaderStatusChangeLogs(
+                articleUploaderStatusChangeLogService.getArticleUploaderStatusChangeLogsBeforeGivenId(lastStatusChangeLogId,pageSize)))
     }
 
     @GetMapping("request_status_change_token_generation")

@@ -1,5 +1,6 @@
 package com.dasbikash.news_server_data_coordinator_rest.rest_controllers
 
+import com.dasbikash.news_server_data_coordinator_rest.model.ErrorLogs
 import com.dasbikash.news_server_data_coordinator_rest.model.LogEntryDeleteRequest
 import com.dasbikash.news_server_data_coordinator_rest.model.LogEntryDeleteRequestFormat
 import com.dasbikash.news_server_data_coordinator_rest.model.database.log_entities.ErrorLog
@@ -24,7 +25,7 @@ constructor(val errorLogService: ErrorLogService,
     var maxPageSize: Int = 50
 
     @GetMapping("")
-    fun getLatestErrorLogs(@RequestParam("page-size") pageSizeRequest:Int?): ResponseEntity<List<ErrorLog>> {
+    fun getLatestErrorLogs(@RequestParam("page-size") pageSizeRequest:Int?): ResponseEntity<ErrorLogs> {
         var pageSize = defaultPageSize
         pageSizeRequest?.let {
             when{
@@ -32,13 +33,13 @@ constructor(val errorLogService: ErrorLogService,
                 it>0            -> pageSize = it
             }
         }
-        return restControllerUtills.listEntityToResponseEntity(errorLogService.getLatestErrorLogs(pageSize))
+        return restControllerUtills.entityToResponseEntity(ErrorLogs(errorLogService.getLatestErrorLogs(pageSize)))
     }
 
     @GetMapping("/before/error-log-id/{log-id}")
     fun getErrorLogsBeforeGivenId(@RequestParam("page-size") pageSizeRequest:Int?,
                                         @PathVariable("log-id") lastErrorLogId:Int)
-            : ResponseEntity<List<ErrorLog>> {
+            : ResponseEntity<ErrorLogs> {
         var pageSize = defaultPageSize
         pageSizeRequest?.let {
             when{
@@ -46,7 +47,8 @@ constructor(val errorLogService: ErrorLogService,
                 it>0            -> pageSize = it
             }
         }
-        return restControllerUtills.listEntityToResponseEntity(errorLogService.getErrorLogsBeforeGivenId(lastErrorLogId,pageSize))
+        return restControllerUtills.entityToResponseEntity(ErrorLogs(
+                        errorLogService.getErrorLogsBeforeGivenId(lastErrorLogId,pageSize)))
     }
 
     @DeleteMapping("request_log_delete_token_generation")
@@ -55,7 +57,8 @@ constructor(val errorLogService: ErrorLogService,
     }
 
     @DeleteMapping("")
-    fun deleteErrorLogs(@RequestBody logEntryDeleteRequest: LogEntryDeleteRequest?): ResponseEntity<List<ErrorLog>> {
-        return restControllerUtills.deleteLogEntries(errorLogService,logEntryDeleteRequest)
+    fun deleteErrorLogs(@RequestBody logEntryDeleteRequest: LogEntryDeleteRequest?): ResponseEntity<ErrorLogs> {
+        return restControllerUtills.entityToResponseEntity(ErrorLogs(
+                restControllerUtills.deleteLogEntries(errorLogService,logEntryDeleteRequest)))
     }
 }
