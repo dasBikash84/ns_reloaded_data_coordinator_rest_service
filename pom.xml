@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.dasbikash</groupId>
-    <artifactId>news_server_spring_mvc_rest_datasource</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>news_server_spring_mvc_rest_datasource</name>
+    <artifactId>data_coordinator_rest</artifactId>
+    <version>1.0.0</version>
+    <name>Data Coordinator Rest Service</name>
     <description>News Server Spring MVC powered REST End Point</description>
 
     <properties>

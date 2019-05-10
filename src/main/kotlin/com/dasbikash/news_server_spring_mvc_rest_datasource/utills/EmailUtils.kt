@@ -23,7 +23,7 @@ object EmailUtils {
     val emailTargets: EmailTargets
 
     init {
-        val authReader = InputStreamReader(javaClass.getResourceAsStream("/email_details_auth.json"))
+        val authReader = InputStreamReader(javaClass.getResourceAsStream("/email_details_auth.jsoqan"))
         emailAuth = Gson().fromJson(authReader, EmailAuth::class.java)
 
         val targetReader = InputStreamReader(javaClass.getResourceAsStream("/email_details_targets.json"))
