@@ -19,4 +19,18 @@ class GeneralLogService @Autowired constructor(val generalLogRepository: General
         }
         return generalLogRepository.getSettingsUpdateLogsBeforeGivenId(lastGeneralLog.get().id!!,pageSize)
     }
+    fun getOldestGeneralLogs(pageSize: Int): List<GeneralLog> {
+        return generalLogRepository.getOldestGeneralLogs(pageSize)
+    }
+
+    fun getGeneralLogsAfterGivenId(lastGeneralLogId: Int, pageSize: Int): List<GeneralLog> {
+        val lastGeneralLog = generalLogRepository.findById(lastGeneralLogId)
+        if (!lastGeneralLog.isPresent){
+            throw DataNotFoundException()
+        }
+        return generalLogRepository.getGeneralLogsAfterGivenId(lastGeneralLog.get().id!!,pageSize)
+    }
+    fun delete(generalLog: GeneralLog){
+        generalLogRepository.delete(generalLog)
+    }
 }

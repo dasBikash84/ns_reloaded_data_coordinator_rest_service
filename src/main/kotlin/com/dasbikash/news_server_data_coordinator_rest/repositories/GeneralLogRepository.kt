@@ -13,4 +13,12 @@ interface GeneralLogRepository : JpaRepository<GeneralLog, Int>{
     @Query(value = "SELECT * FROM ${DatabaseTableNames.GENERAL_LOG_TABLE_NAME} WHERE id < :lastGeneralLogId order by id DESC limit :pageSize",
             nativeQuery = true)
     fun getSettingsUpdateLogsBeforeGivenId(lastGeneralLogId: Int, pageSize: Int): List<GeneralLog>
+
+    @Query(value = "SELECT * FROM ${DatabaseTableNames.GENERAL_LOG_TABLE_NAME} order by id ASC limit :pageSize",
+            nativeQuery = true)
+    fun getOldestGeneralLogs(pageSize: Int): List<GeneralLog>
+
+    @Query(value = "SELECT * FROM ${DatabaseTableNames.GENERAL_LOG_TABLE_NAME} WHERE id < :lastGeneralLogId order by id ASC limit :pageSize",
+            nativeQuery = true)
+    fun getGeneralLogsAfterGivenId(lastGeneralLogId: Int, pageSize: Int): List<GeneralLog>
 }

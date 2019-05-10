@@ -21,7 +21,7 @@ class AuthTokenService @Autowired constructor(val authTokenRepository: AuthToken
         }
     }
 
-    fun invalidateAuthToken(tokenId: String):Boolean{
+    fun invalidateAuthToken(tokenId: String){
         try {
             val token = authTokenRepository.findById(tokenId).get()
             if (token.expiresOn < Date()){
@@ -29,7 +29,6 @@ class AuthTokenService @Autowired constructor(val authTokenRepository: AuthToken
             }
             token.expiresOn = Date()
             authTokenRepository.save(token)
-            return true
         }catch (ex:Exception){
             throw IllegalRequestBodyException(ex)
         }
