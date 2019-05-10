@@ -6,7 +6,7 @@
 * Database access Api: `Spring JPA`
 * REST framework: `Spring MVC` and `Spring Boot`.
 
-### This rest service supports following operations. Details are [here](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/REST_END_POINT%20details.md) file:
+### This rest service supports following operations. Details are [here](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/REST_END_POINT%20details.md):
 
 * Get and Delete for [`General Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/GeneralLog.kt) entries.
 * Get and Delete for [`Error Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/ErrorLog.kt) entries.
