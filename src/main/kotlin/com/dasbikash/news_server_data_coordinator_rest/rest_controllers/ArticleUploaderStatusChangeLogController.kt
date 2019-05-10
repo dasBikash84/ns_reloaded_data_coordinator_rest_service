@@ -7,6 +7,7 @@ import com.dasbikash.news_server_data_coordinator_rest.model.ArticleUploaderStat
 import com.dasbikash.news_server_data_coordinator_rest.model.database.AuthToken
 import com.dasbikash.news_server_data_coordinator_rest.model.database.log_entities.ArticleUploaderStatusChangeLog
 import com.dasbikash.news_server_data_coordinator_rest.services.ArticleUploaderStatusChangeLogService
+import com.dasbikash.news_server_data_coordinator_rest.services.AuthTokenService
 import com.dasbikash.news_server_data_coordinator_rest.utills.EmailUtils
 import com.dasbikash.news_server_data_coordinator_rest.utills.RestControllerUtills
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,7 +19,8 @@ import java.util.*
 @RestController
 @RequestMapping("article-uploader-status-change-logs")
 class ArticleUploaderStatusChangeLogController @Autowired
-constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChangeLogService) {
+constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChangeLogService,
+            val authTokenService: AuthTokenService) {
 
     @Value("\${log.default_page_size}")
     var defaultPageSize: Int = 10
@@ -55,13 +57,8 @@ constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChan
 
     @GetMapping("request_status_change_token_generation")
     fun generateStatusChangeToken():ResponseEntity<ArticleUploaderStatusChangeRequestFormat>{
-        val newToken = AuthToken()
-        articleUploaderStatusChangeLogService.saveAuthToken(newToken)
-        try {
-            EmailUtils.sendEmail("New Article Uploader Status Change Token","Token:\t${newToken.token}\nExpires on: ${newToken.expiresOn}")
-        }catch (ex:Exception){
-            throw DataNotFoundException()
-        }
+        val newToken = authTokenService.getNewAuthToken()
+        EmailUtils.emailAuthTokenToAdmin(newToken,this::class.java)
         return RestControllerUtills.entityToResponseEntity(ArticleUploaderStatusChangeRequestFormat())
     }
 
@@ -74,21 +71,11 @@ constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChan
                 articleUploaderStatusChangeRequest.status == null ){
             throw IllegalRequestBodyException()
         }
-        println("Going to read token")
-        val readToken = articleUploaderStatusChangeLogService
-                                            .findAuthTokenByTokenValue(articleUploaderStatusChangeRequest.authToken)
-        if (!readToken.isPresent || readToken.get().expiresOn < Date()){
-            throw IllegalRequestBodyException()
-        }
-        println("Valid Token")
-
-        val statusData = ArticleUploaderStatusChangeLog(
-                            status = articleUploaderStatusChangeRequest.status,
-                            articleDataUploaderTarget = articleUploaderStatusChangeRequest.articleUploadTarget)
+        authTokenService.invalidateAuthToken(articleUploaderStatusChangeRequest.authToken)
         try {
-            val authToken = readToken.get()
-            authToken.expiresOn = Date()
-            articleUploaderStatusChangeLogService.saveAuthToken(authToken)
+            val statusData = ArticleUploaderStatusChangeLog(
+                    status = articleUploaderStatusChangeRequest.status,
+                    articleDataUploaderTarget = articleUploaderStatusChangeRequest.articleUploadTarget)
             articleUploaderStatusChangeLogService.save(statusData)
             return RestControllerUtills.entityToResponseEntity(articleUploaderStatusChangeRequest)
         }catch (ex:Exception){

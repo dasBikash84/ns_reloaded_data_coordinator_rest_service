@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
-class NewsPaperNotFoundAdvice {
+class DataCoordinatorRestErrorAdvice {
 
     @ExceptionHandler(NewsPaperNotFoundByIdException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

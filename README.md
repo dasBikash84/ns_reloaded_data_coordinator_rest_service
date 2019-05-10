@@ -14,6 +14,6 @@
 * Get and Delete for [`Article Upload Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/ArticleUploadLog.kt) entries.
 * Get and Delete for [`Settings Update Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/SettingsUpdateLog.kt) entries.
 * Get and Delete for [`Settings Upload Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/SettingsUploadLog.kt) entries.
-* Get and Post for [`Article Uploader Status Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/ArticleUploaderStatusChangeLog.kt) entries.
+* Get and Post for [`Article Uploader Status Change Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/ArticleUploaderStatusChangeLog.kt) entries.
 
 ##### All `Delete` and `Post` operations has to be performed via *OTP*. For detailes check [here](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/REST_END_POINT%20details.md)

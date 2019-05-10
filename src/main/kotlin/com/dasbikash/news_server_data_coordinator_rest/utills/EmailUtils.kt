@@ -1,8 +1,10 @@
 package com.dasbikash.news_server_data_coordinator_rest.utills
 
 
+import com.dasbikash.news_server_data_coordinator_rest.exceptions.EmailSendingException
 import com.dasbikash.news_server_data_coordinator_rest.model.EmailAuth
 import com.dasbikash.news_server_data_coordinator_rest.model.EmailTargets
+import com.dasbikash.news_server_data_coordinator_rest.model.database.AuthToken
 import com.google.gson.Gson
 import java.io.InputStreamReader
 import java.util.*
@@ -16,11 +18,15 @@ object EmailUtils {
     val emailTargets: EmailTargets
 
     init {
-        val authReader = InputStreamReader(javaClass.getResourceAsStream("/email_details_auth.jsoqan"))
+        val authReader = InputStreamReader(javaClass.getResourceAsStream("/email_details_auth.json"))
         emailAuth = Gson().fromJson(authReader, EmailAuth::class.java)
 
         val targetReader = InputStreamReader(javaClass.getResourceAsStream("/email_details_targets.json"))
         emailTargets = Gson().fromJson(targetReader, EmailTargets::class.java)
+    }
+
+    fun <T> emailAuthTokenToAdmin(authToken: AuthToken,requetingClass:Class<T>){
+        sendEmail("New Token for ${requetingClass.simpleName}","Token:\t${authToken.token}\nExpires on: ${authToken.expiresOn}")
     }
 
     fun sendEmail(subject:String,body:String):Boolean{
@@ -47,11 +53,11 @@ object EmailUtils {
             message.setText(body)
 
             Transport.send(message)
-            return true
         } catch (e: MessagingException) {
             e.printStackTrace()
-            return false
+            throw EmailSendingException(e)
         }
+        return true
     }
 
     private fun setEmailRecipients(message: MimeMessage) {
