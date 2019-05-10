@@ -17,7 +17,7 @@
     <properties>
         <java.version>1.8</java.version>
         <kotlin.version>1.3.21</kotlin.version>
-        <start-class>com.dasbikash.news_server_spring_mvc_rest_datasource.NewsServerDataCoordinatorRestApplication
+        <start-class>com.dasbikash.news_server_data_coordinator_rest.NewsServerDataCoordinatorRestApplication
         </start-class>
     </properties>
 
@@ -125,7 +125,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>
-                        com.dasbikash.news_server_spring_mvc_rest_datasource.NewsServerDataCoordinatorRestApplication
+                        com.dasbikash.news_server_data_coordinator_rest.NewsServerDataCoordinatorRestApplication
                     </mainClass>
                 </configuration>
             </plugin>
