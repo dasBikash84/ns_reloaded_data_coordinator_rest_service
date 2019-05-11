@@ -22,7 +22,7 @@
   * Path: http://localhost:8099/general-logs/request_log_delete_token_generation
   * Response: [`LogEntryDeleteRequestFormat`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/LogEntryDeleteRequest.kt) 
   (and generated token will be emailed to authorized email addresses) or 
-  [`HttpStatus.INTERNAL_SERVER_ERROR`](https://docs.spring.io/spring-framework/docs/curhttps://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/HttpStatus.html#INTERNAL_SERVER_ERRORrent/javadoc-api/org/springframework/http/HttpStatus.html#INTERNAL_SERVER_ERROR) for failure.
+  [`HttpStatus.INTERNAL_SERVER_ERROR`](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/HttpStatus.html#INTERNAL_SERVER_ERROR) for failure.
 <a name="log_delete_request"></a>   
 * For *General Log* entries deletion:
   * Type: `DELETE`
