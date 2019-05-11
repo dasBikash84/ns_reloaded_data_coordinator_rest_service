@@ -35,19 +35,19 @@
 * For latest *Error Log* entries:
     * Type: `GET`
     * Path: http://localhost:8099/error-logs
-    * Path Param & Response: Format same as [`General Log`]("#latest_log") but for `Error Log`
+    * Path Param & Response: Format same as [`General Log`](#latest_log) but for `Error Log`
      
 * For *Error Log* entries Before Given Id:
     * Type: `GET`
     * Path: http://localhost:8099/error-logs/before/error-log-id/{log-id}
-    * Path Variable, Path Param & Response: Format same as [`General Log`]("#log_before_given_id") but for `Error Log`.  
+    * Path Variable, Path Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Error Log`.  
     
 * For *Error Log* entries deletion token generation request:
     * Type: `DELETE`
     * Path: http://localhost:8099/error-logs/request_log_delete_token_generation
-    * Response: Format same as [`General Log`]("#request_log_delete_token_generation") but for `Error Log`. 
+    * Response: Format same as [`General Log`](#request_log_delete_token_generation) but for `Error Log`. 
     
 * For *Error Log* entries deletion:
     * Type: `DELETE`
     * Path: http://localhost:8099/error-logs 
-    * Response: Format same as [`General Log`]("#log_delete_request") but for `Error Log`. 
+    * Response: Format same as [`General Log`](#log_delete_request) but for `Error Log`. 
