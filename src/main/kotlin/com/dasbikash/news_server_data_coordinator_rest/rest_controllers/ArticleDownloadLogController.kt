@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("article-download-logs")
+@RequestMapping(" ")
 class ArticleDownloadLogController @Autowired
 constructor(val articleDownloadLogService: ArticleDownloadLogService,
             val restControllerUtills: RestControllerUtills) {

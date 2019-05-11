@@ -1,11 +1,9 @@
 package com.dasbikash.news_server_data_coordinator_rest.rest_controllers
 
-import com.dasbikash.news_server_data_coordinator_rest.exceptions.DataNotFoundException
 import com.dasbikash.news_server_data_coordinator_rest.exceptions.IllegalRequestBodyException
 import com.dasbikash.news_server_data_coordinator_rest.model.ArticleUploaderStatusChangeLogs
 import com.dasbikash.news_server_data_coordinator_rest.model.ArticleUploaderStatusChangeRequest
 import com.dasbikash.news_server_data_coordinator_rest.model.ArticleUploaderStatusChangeRequestFormat
-import com.dasbikash.news_server_data_coordinator_rest.model.database.AuthToken
 import com.dasbikash.news_server_data_coordinator_rest.model.database.log_entities.ArticleUploaderStatusChangeLog
 import com.dasbikash.news_server_data_coordinator_rest.services.ArticleUploaderStatusChangeLogService
 import com.dasbikash.news_server_data_coordinator_rest.services.AuthTokenService
@@ -15,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.util.*
 
 @RestController
 @RequestMapping("article-uploader-status-change-logs")

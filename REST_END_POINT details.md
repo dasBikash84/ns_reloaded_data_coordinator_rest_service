@@ -1,13 +1,13 @@
 ### REST service End point details:
 
-#### [`General Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/rest_controllers/GeneralLogController.kt) endpoints:
+#### [`General Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/GeneralLog.kt) [*endpoints*](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/rest_controllers/GeneralLogController.kt):
 
 <a name="latest_log"></a>  
 * For latest *General Log* entries:
    * Type: `GET`
    * Path: http://localhost:8099/general-logs
    * Path Param: page-size(result-count) | optional | Default 10 | Max 50
-   * Response: A list of latest *General Log* entries if any or [`HttpStatus.NOT_FOUND`](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/HttpStatus.html#NOT_FOUND).
+   * Response: A [`list`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/OutputWrappers.kt) of latest *General Log* entries if any or [`HttpStatus.NOT_FOUND`](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/HttpStatus.html#NOT_FOUND).
 <a name="log_before_given_id"></a>    
 * For *General Log* entries Before Given Id:
   * Type: `GET`
@@ -31,7 +31,7 @@
   * Response: List of deleted *General Log* entries or 
   [`HttpStatus.BAD_REQUEST`](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/HttpStatus.html#BAD_REQUEST) for invalid `LogEntryDeleteRequest`.
   
-#### [`Error Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/ErrorLog.kt) endpoints:
+#### [`Error Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/ErrorLog.kt) [*endpoints*](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/rest_controllers/ErrorLogController.kt):
 * For latest *Error Log* entries:
     * Type: `GET`
     * Path: http://localhost:8099/error-logs
@@ -51,3 +51,113 @@
     * Type: `DELETE`
     * Path: http://localhost:8099/error-logs 
     * Response: Format same as [`General Log`](#log_delete_request) but for `Error Log`. 
+    
+  
+#### [`Article Upload Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/ArticleUploadLog.kt) [*endpoints*](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/rest_controllers/ArticleUploadLogController.kt):
+* For latest *Article Upload Log* entries:
+    * Type: `GET`
+    * Path: http://localhost:8099/article-upload-logs
+    * Path Param & Response: Format same as [`General Log`](#latest_log) but for `Article Upload Log`
+     
+* For *Article Upload Log* entries Before Given Id:
+    * Type: `GET`
+    * Path: http://localhost:8099/article-upload-logs/before/article-upload-log-id/{log-id}
+    * Path Variable, Path Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Article Upload Log`.  
+    
+* For *Article Upload Log* entries deletion token generation request:
+    * Type: `DELETE`
+    * Path: http://localhost:8099/article-upload-logs/request_log_delete_token_generation
+    * Response: Format same as [`General Log`](#request_log_delete_token_generation) but for `Article Upload Log`. 
+    
+* For *Article Upload Log* entries deletion:
+    * Type: `DELETE`
+    * Path: http://localhost:8099/article-upload-logs 
+    * Response: Format same as [`General Log`](#log_delete_request) but for `Article Upload Log`. 
+    
+#### [`Article Download Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/ArticleDownloadLog.kt) [*endpoints*](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/rest_controllers/ArticleDownloadLogController.kt):
+* For latest *Article Download Log* entries:
+    * Type: `GET`
+    * Path: http://localhost:8099/article-download-logs
+    * Path Param & Response: Format same as [`General Log`](#latest_log) but for `Article Download Log`
+     
+* For *Article Download Log* entries Before Given Id:
+    * Type: `GET`
+    * Path: http://localhost:8099/article-download-logs/before/article-download-log-id/{log-id}
+    * Path Variable, Path Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Article Download Log`.  
+    
+* For *Article Download Log* entries deletion token generation request:
+    * Type: `DELETE`
+    * Path: http://localhost:8099/article-download-logs/request_log_delete_token_generation
+    * Response: Format same as [`General Log`](#request_log_delete_token_generation) but for `Article Download Log`. 
+    
+* For *Article Download Log* entries deletion:
+    * Type: `DELETE` 
+    * Path: http://localhost:8099/article-download-logs 
+    * Response: Format same as [`General Log`](#log_delete_request) but for `Article Download Log`. 
+    
+#### [`Settings Update Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/SettingsUpdateLog.kt) [*endpoints*](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/rest_controllers/SettingsUpdateLogController.kt):
+* For latest *Settings Update Log* entries:
+    * Type: `GET`
+    * Path: http://localhost:8099/settings-update-logs
+    * Path Param & Response: Format same as [`General Log`](#latest_log) but for `Settings Update Log`
+     
+* For *Settings Update Log* entries Before Given Id:
+    * Type: `GET`
+    * Path: http://localhost:8099/settings-update-logs/before/settings-update-log-id/{log-id}
+    * Path Variable, Path Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Settings Update Log`.  
+    
+* For *Settings Update Log* entries deletion token generation request:
+    * Type: `DELETE`
+    * Path: http://localhost:8099/settings-update-logs/request_log_delete_token_generation
+    * Response: Format same as [`General Log`](#request_log_delete_token_generation) but for `Settings Update Log`. 
+    
+* For *Settings Update Log* entries deletion:
+    * Type: `DELETE` 
+    * Path: http://localhost:8099/settings-update-logs 
+    * Response: Format same as [`General Log`](#log_delete_request) but for `Settings Update Log`. 
+    
+#### [`Settings Upload Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/SettingsUploadLog.kt) [*endpoints*](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/rest_controllers/SettingsUploadLogController.kt):
+* For latest *Settings Upload Log* entries:
+    * Type: `GET`
+    * Path: http://localhost:8099/settings-upload-logs
+    * Path Param & Response: Format same as [`General Log`](#latest_log) but for `Settings Upload Log`
+     
+* For *Settings Upload Log* entries Before Given Id:
+    * Type: `GET`
+    * Path: http://localhost:8099/settings-upload-logs/before/settings-upload-log-id/{log-id}
+    * Path Variable, Path Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Settings Upload Log`.  
+    
+* For *Settings Upload Log* entries deletion token generation request:
+    * Type: `DELETE`
+    * Path: http://localhost:8099/settings-upload-logs/request_log_delete_token_generation
+    * Response: Format same as [`General Log`](#request_log_delete_token_generation) but for `Settings Upload Log`. 
+    
+* For *Settings Upload Log* entries deletion:
+    * Type: `DELETE` 
+    * Path: http://localhost:8099/settings-upload-logs 
+    * Response: Format same as [`General Log`](#log_delete_request) but for `Settings Upload Log`.
+    
+#### [`Article Uploader Status Change Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/ArticleUploaderStatusChangeLog.kt) [*endpoints*](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/rest_controllers/ArticleUploaderStatusChangeLogController.kt):
+* For latest *Article Uploader Status Change Log* entries:
+    * Type: `GET`
+    * Path: http://localhost:8099/article-uploader-status-change-logs
+    * Path Param & Response: Format same as [`General Log`](#latest_log) but for `Article Uploader Status Change Log`
+     
+* For *Article Uploader Status Change Log* entries Before Given Id:
+    * Type: `GET`
+    * Path: http://localhost:8099/article-uploader-status-change-logs/before/article-uploader-status-change-log-id/{log-id}
+    * Path Variable, Path Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Article Uploader Status Change Log`.  
+    
+* For *Article Uploader Status Change Log* entry insert token generation request:
+    * Type: `GET`
+    * Path: http://localhost:8099/article-uploader-status-change-logs/request_status_change_token_generation
+    * Response: [`ArticleUploaderStatusChangeRequestFormat`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/ArticleUploaderStatusChangeRequest.kt) 
+                  (and generated token will be emailed to authorized email addresses) or 
+                  `HttpStatus.INTERNAL_SERVER_ERROR` for failure. 
+    
+* For *Article Uploader Status Change Log* entries deletion:
+    * Type: `POST` 
+    * Path: http://localhost:8099/article-uploader-status-change-logs/status_change_request 
+  * RequestBody : [`ArticleUploaderStatusChangeRequest`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/ArticleUploaderStatusChangeRequest.kt)
+  * Response: Inserted *Article Uploader Status Change Log* entry or `HttpStatus.BAD_REQUEST` for invalid `ArticleUploaderStatusChangeRequest`.
+    
