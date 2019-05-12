@@ -5,15 +5,15 @@
 <a name="latest_log"></a>  
 * For latest *General Log* entries:
    * Type: `GET`
-   * Path: http://localhost:8099/general-logs
-   * Path Param: page-size(result-count) | optional | Default 10 | Max 50
+   * Path: http://localhost:8099/general-logs?page-size={page-size}
+   * Query Param: page-size(result-count) | optional | Default 10 | Max 50
    * Response: A [`list`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/OutputWrappers.kt) of latest *General Log* entries if any or [`HttpStatus.NOT_FOUND`](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/HttpStatus.html#NOT_FOUND).
 <a name="log_before_given_id"></a>    
 * For *General Log* entries Before Given Id:
   * Type: `GET`
-  * Path: http://localhost:8099/general-logs/before/general-log-id/{log-id}
-  * Path Variable: *log-id* (id of last *General Log* entry)
-  * Path Param: page-size(result-count) | optional | Default 10 | Max 50
+  * Path: http://localhost:8099/general-logs/before/general-log-id/{log-id}?page-size={page-size}
+  * Path Param: *log-id* (id of last *General Log* entry)
+  * Query Param: page-size(result-count) | optional | Default 10 | Max 50
   * Response: A list of latest *General Log* entries if any or `HttpStatus.NOT_FOUND` for invalid *log-id*.
   
 <a name="request_log_delete_token_generation"></a>   
@@ -34,13 +34,13 @@
 #### [`Error Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/ErrorLog.kt) [*endpoints*](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/rest_controllers/ErrorLogController.kt):
 * For latest *Error Log* entries:
     * Type: `GET`
-    * Path: http://localhost:8099/error-logs
-    * Path Param & Response: Format same as [`General Log`](#latest_log) but for `Error Log`
+    * Path: http://localhost:8099/error-logs?page-size={page-size}
+    * Query Param & Response: Format same as [`General Log`](#latest_log) but for `Error Log`
      
 * For *Error Log* entries Before Given Id:
     * Type: `GET`
-    * Path: http://localhost:8099/error-logs/before/error-log-id/{log-id}
-    * Path Variable, Path Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Error Log`.  
+    * Path: http://localhost:8099/error-logs/before/error-log-id/{log-id}?page-size={page-size}
+    * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Error Log`.  
     
 * For *Error Log* entries deletion token generation request:
     * Type: `DELETE`
@@ -56,13 +56,13 @@
 #### [`Article Upload Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/ArticleUploadLog.kt) [*endpoints*](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/rest_controllers/ArticleUploadLogController.kt):
 * For latest *Article Upload Log* entries:
     * Type: `GET`
-    * Path: http://localhost:8099/article-upload-logs
-    * Path Param & Response: Format same as [`General Log`](#latest_log) but for `Article Upload Log`
+    * Path: http://localhost:8099/article-upload-logs?page-size={page-size}
+    * Query Param & Response: Format same as [`General Log`](#latest_log) but for `Article Upload Log`
      
 * For *Article Upload Log* entries Before Given Id:
     * Type: `GET`
-    * Path: http://localhost:8099/article-upload-logs/before/article-upload-log-id/{log-id}
-    * Path Variable, Path Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Article Upload Log`.  
+    * Path: http://localhost:8099/article-upload-logs/before/article-upload-log-id/{log-id}?page-size={page-size}
+    * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Article Upload Log`.  
     
 * For *Article Upload Log* entries deletion token generation request:
     * Type: `DELETE`
@@ -77,13 +77,13 @@
 #### [`Article Download Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/ArticleDownloadLog.kt) [*endpoints*](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/rest_controllers/ArticleDownloadLogController.kt):
 * For latest *Article Download Log* entries:
     * Type: `GET`
-    * Path: http://localhost:8099/article-download-logs
-    * Path Param & Response: Format same as [`General Log`](#latest_log) but for `Article Download Log`
+    * Path: http://localhost:8099/article-download-logs?page-size={page-size}
+    * Query Param & Response: Format same as [`General Log`](#latest_log) but for `Article Download Log`
      
 * For *Article Download Log* entries Before Given Id:
     * Type: `GET`
-    * Path: http://localhost:8099/article-download-logs/before/article-download-log-id/{log-id}
-    * Path Variable, Path Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Article Download Log`.  
+    * Path: http://localhost:8099/article-download-logs/before/article-download-log-id/{log-id}?page-size={page-size}
+    * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Article Download Log`.  
     
 * For *Article Download Log* entries deletion token generation request:
     * Type: `DELETE`
@@ -98,13 +98,13 @@
 #### [`Settings Update Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/SettingsUpdateLog.kt) [*endpoints*](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/rest_controllers/SettingsUpdateLogController.kt):
 * For latest *Settings Update Log* entries:
     * Type: `GET`
-    * Path: http://localhost:8099/settings-update-logs
-    * Path Param & Response: Format same as [`General Log`](#latest_log) but for `Settings Update Log`
+    * Path: http://localhost:8099/settings-update-logs?page-size={page-size}
+    * Query Param & Response: Format same as [`General Log`](#latest_log) but for `Settings Update Log`
      
 * For *Settings Update Log* entries Before Given Id:
     * Type: `GET`
-    * Path: http://localhost:8099/settings-update-logs/before/settings-update-log-id/{log-id}
-    * Path Variable, Path Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Settings Update Log`.  
+    * Path: http://localhost:8099/settings-update-logs/before/settings-update-log-id/{log-id}?page-size={page-size}
+    * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Settings Update Log`.  
     
 * For *Settings Update Log* entries deletion token generation request:
     * Type: `DELETE`
@@ -119,13 +119,13 @@
 #### [`Settings Upload Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/SettingsUploadLog.kt) [*endpoints*](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/rest_controllers/SettingsUploadLogController.kt):
 * For latest *Settings Upload Log* entries:
     * Type: `GET`
-    * Path: http://localhost:8099/settings-upload-logs
-    * Path Param & Response: Format same as [`General Log`](#latest_log) but for `Settings Upload Log`
+    * Path: http://localhost:8099/settings-upload-logs?page-size={page-size}
+    * Query Param & Response: Format same as [`General Log`](#latest_log) but for `Settings Upload Log`
      
 * For *Settings Upload Log* entries Before Given Id:
     * Type: `GET`
-    * Path: http://localhost:8099/settings-upload-logs/before/settings-upload-log-id/{log-id}
-    * Path Variable, Path Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Settings Upload Log`.  
+    * Path: http://localhost:8099/settings-upload-logs/before/settings-upload-log-id/{log-id}?page-size={page-size}
+    * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Settings Upload Log`.  
     
 * For *Settings Upload Log* entries deletion token generation request:
     * Type: `DELETE`
@@ -140,13 +140,13 @@
 #### [`Article Uploader Status Change Log`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/database/log_entities/ArticleUploaderStatusChangeLog.kt) [*endpoints*](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/rest_controllers/ArticleUploaderStatusChangeLogController.kt):
 * For latest *Article Uploader Status Change Log* entries:
     * Type: `GET`
-    * Path: http://localhost:8099/article-uploader-status-change-logs
-    * Path Param & Response: Format same as [`General Log`](#latest_log) but for `Article Uploader Status Change Log`
+    * Path: http://localhost:8099/article-uploader-status-change-logs?page-size={page-size}
+    * Query Param & Response: Format same as [`General Log`](#latest_log) but for `Article Uploader Status Change Log`
      
 * For *Article Uploader Status Change Log* entries Before Given Id:
     * Type: `GET`
-    * Path: http://localhost:8099/article-uploader-status-change-logs/before/article-uploader-status-change-log-id/{log-id}
-    * Path Variable, Path Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Article Uploader Status Change Log`.  
+    * Path: http://localhost:8099/article-uploader-status-change-logs/before/article-uploader-status-change-log-id/{log-id}?page-size={page-size}
+    * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Article Uploader Status Change Log`.  
     
 * For *Article Uploader Status Change Log* entry insert token generation request:
     * Type: `GET`
