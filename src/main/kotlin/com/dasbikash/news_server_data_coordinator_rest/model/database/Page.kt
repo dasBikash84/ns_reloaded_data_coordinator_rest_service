@@ -50,7 +50,7 @@ data class Page(
     var topLevelPage: Boolean?=null
 
     @Transient
-    @JsonProperty(value = "newsPaperId")
+    @JsonProperty(value = "newspaperId")
     fun getNewsPaperId():String{
         return newspaper?.id ?: ""
     }
