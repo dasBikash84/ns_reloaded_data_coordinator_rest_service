@@ -50,3 +50,7 @@ class Newspapers(
 class Pages(
         val pages:List<Page>
 ): DataCoordinatorRestEntity
+
+class PageGroups(
+        val pageGroupMap:Map<String,PageGroup>
+): DataCoordinatorRestEntity
