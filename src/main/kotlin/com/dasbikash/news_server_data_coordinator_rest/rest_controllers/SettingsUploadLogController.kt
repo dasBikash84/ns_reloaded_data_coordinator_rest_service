@@ -36,7 +36,7 @@ constructor(val settingsUploadLogService: SettingsUploadLogService,
                 settingsUploadLogService.getLatestSettingsUploadLogs(pageSize)))
     }
 
-    @GetMapping("/before/settings-upload-log-id/{log-id}")
+    @GetMapping("/before/{log-id}")
     fun getSettingsUploadLogsBeforeGivenId(@RequestParam("page-size") pageSizeRequest:Int?,
                                         @PathVariable("log-id") lastErrorLogId:Int)
             : ResponseEntity<SettingsUploadLogs> {
@@ -49,6 +49,21 @@ constructor(val settingsUploadLogService: SettingsUploadLogService,
         }
         return restControllerUtills.entityToResponseEntity(SettingsUploadLogs(
                         settingsUploadLogService.getSettingsUploadLogsBeforeGivenId(lastErrorLogId,pageSize)))
+    }
+
+    @GetMapping("/after/{log-id}")
+    fun getSettingsUploadLogsAfterGivenId(@RequestParam("page-size") pageSizeRequest:Int?,
+                                        @PathVariable("log-id") lastErrorLogId:Int)
+            : ResponseEntity<SettingsUploadLogs> {
+        var pageSize = defaultPageSize
+        pageSizeRequest?.let {
+            when{
+                it>=maxPageSize -> pageSize = maxPageSize
+                it>0            -> pageSize = it
+            }
+        }
+        return restControllerUtills.entityToResponseEntity(SettingsUploadLogs(
+                        settingsUploadLogService.getLogsAfterGivenId(lastErrorLogId,pageSize)))
     }
 
     @DeleteMapping("request_log_delete_token_generation")

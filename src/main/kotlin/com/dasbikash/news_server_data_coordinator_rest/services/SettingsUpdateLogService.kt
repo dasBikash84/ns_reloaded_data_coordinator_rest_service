@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service
 class SettingsUpdateLogService @Autowired constructor(val settingsUpdateLogRepository: SettingsUpdateLogRepository)
     :DeletableLogService<SettingsUpdateLog>{
     fun getLatestSettingsUpdateLogs(pageSize: Int): List<SettingsUpdateLog> {
-        return settingsUpdateLogRepository.getLatestSettingsUpdateLogs(pageSize)
+        val settingsUpdateLogs = settingsUpdateLogRepository.getLatestSettingsUpdateLogs(pageSize)
+        if (settingsUpdateLogs.isEmpty()){
+            throw DataNotFoundException()
+        }
+        return settingsUpdateLogs
     }
 
     fun getSettingsUpdateLogsBeforeGivenId(lastErrorLogId: Int, pageSize: Int): List<SettingsUpdateLog> {

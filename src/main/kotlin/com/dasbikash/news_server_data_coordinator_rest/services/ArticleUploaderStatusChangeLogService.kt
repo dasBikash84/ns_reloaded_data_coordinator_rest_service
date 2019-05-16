@@ -25,6 +25,14 @@ constructor(val articleUploaderStatusChangeLogRepository: ArticleUploaderStatusC
         return articleUploaderStatusChangeLogRepository.getArticleDownloadLogsBeforeGivenId(lastStatusChangeLog.get().id!!,pageSize)
     }
 
+    fun getArticleUploaderStatusChangeLogsAfterGivenId(lastStatusChangeLogId: Int, pageSize: Int): List<ArticleUploaderStatusChangeLog> {
+        val lastStatusChangeLog = articleUploaderStatusChangeLogRepository.findById(lastStatusChangeLogId)
+        if (!lastStatusChangeLog.isPresent){
+            throw DataNotFoundException()
+        }
+        return articleUploaderStatusChangeLogRepository.getArticleDownloadLogsAfterGivenId(lastStatusChangeLog.get().id!!,pageSize)
+    }
+
     fun saveAuthToken(authToken: AuthToken):AuthToken{
         return authTokenRepository.save(authToken)
     }

@@ -14,4 +14,8 @@ interface ArticleUploaderStatusChangeLogRepository : JpaRepository<ArticleUpload
     @Query(value = "SELECT * FROM ${DatabaseTableNames.ARTICLE_UPLOADER_STATUS_CHANGE_LOG_TABLE_NAME} WHERE id < :lastStatusChangeLogId order by id DESC limit :pageSize",
             nativeQuery = true)
     fun getArticleDownloadLogsBeforeGivenId(lastStatusChangeLogId: Int, pageSize: Int): List<ArticleUploaderStatusChangeLog>
+
+    @Query(value = "SELECT * FROM ${DatabaseTableNames.ARTICLE_UPLOADER_STATUS_CHANGE_LOG_TABLE_NAME} WHERE id >= :lastStatusChangeLogId order by id ASC limit :pageSize",
+            nativeQuery = true)
+    fun getArticleDownloadLogsAfterGivenId(lastStatusChangeLogId: Int, pageSize: Int): List<ArticleUploaderStatusChangeLog>
 }

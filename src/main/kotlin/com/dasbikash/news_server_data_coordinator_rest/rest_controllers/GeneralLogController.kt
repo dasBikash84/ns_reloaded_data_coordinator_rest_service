@@ -38,7 +38,7 @@ constructor(val generalLogService: GeneralLogService,
         return restControllerUtills.entityToResponseEntity(GeneralLogs(generalLogService.getLatestGeneralLogs(pageSize)))
     }
 
-    @GetMapping("/before/general-log-id/{log-id}")
+    @GetMapping("/before/{log-id}")
     fun getGeneralLogsBeforeGivenId(@RequestParam("page-size") pageSizeRequest: Int?,
                                     @PathVariable("log-id") lastGeneralLogId: Int)
             : ResponseEntity<GeneralLogs> {
@@ -51,6 +51,21 @@ constructor(val generalLogService: GeneralLogService,
         }
         return restControllerUtills.entityToResponseEntity(GeneralLogs(
                 generalLogService.getGeneralLogsBeforeGivenId(lastGeneralLogId, pageSize)))
+    }
+
+    @GetMapping("/after/{log-id}")
+    fun getGeneralLogsAfterGivenId(@RequestParam("page-size") pageSizeRequest: Int?,
+                                    @PathVariable("log-id") lastGeneralLogId: Int)
+            : ResponseEntity<GeneralLogs> {
+        var pageSize = defaultPageSize
+        pageSizeRequest?.let {
+            when {
+                it >= maxPageSize -> pageSize = maxPageSize
+                it > 0 -> pageSize = it
+            }
+        }
+        return restControllerUtills.entityToResponseEntity(GeneralLogs(
+                generalLogService.getLogsAfterGivenId(lastGeneralLogId, pageSize)))
     }
 
     @DeleteMapping("request_log_delete_token_generation")

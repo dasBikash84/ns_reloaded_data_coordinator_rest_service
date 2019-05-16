@@ -9,9 +9,16 @@
    * Query Param: page-size(result-count) | optional | Default 10 | Max 50
    * Response: A [`list`](https://github.com/dasBikash84/ns_reloaded_data_coordinator_rest_service/blob/master/src/main/kotlin/com/dasbikash/news_server_data_coordinator_rest/model/OutputWrappers.kt) of latest *General Log* entries if any or [`HttpStatus.NOT_FOUND`](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/HttpStatus.html#NOT_FOUND).
 <a name="log_before_given_id"></a>    
-* For *General Log* entries Before Given Id:
+* For *General Log* entries `Before` Given Id:
   * Type: `GET`
-  * Path: http://localhost:8099/general-logs/before/general-log-id/{log-id}?page-size={page-size}
+  * Path: http://localhost:8099/general-logs/before/{log-id}?page-size={page-size}
+  * Path Param: *log-id* (id of last *General Log* entry)
+  * Query Param: page-size(result-count) | optional | Default 10 | Max 50
+  * Response: A list of latest *General Log* entries if any or `HttpStatus.NOT_FOUND` for invalid *log-id*.  
+    
+* For *General Log* entries `After` Given Id:
+  * Type: `GET`
+  * Path: http://localhost:8099/general-logs/after/{log-id}?page-size={page-size}
   * Path Param: *log-id* (id of last *General Log* entry)
   * Query Param: page-size(result-count) | optional | Default 10 | Max 50
   * Response: A list of latest *General Log* entries if any or `HttpStatus.NOT_FOUND` for invalid *log-id*.
@@ -37,9 +44,14 @@
     * Path: http://localhost:8099/error-logs?page-size={page-size}
     * Query Param & Response: Format same as [`General Log`](#latest_log) but for `Error Log`
      
-* For *Error Log* entries Before Given Id:
+* For *Error Log* entries `Before` Given Id:
     * Type: `GET`
-    * Path: http://localhost:8099/error-logs/before/error-log-id/{log-id}?page-size={page-size}
+    * Path: http://localhost:8099/error-logs/before/{log-id}?page-size={page-size}
+    * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Error Log`.  
+    
+* For *Error Log* entries `After` Given Id:
+    * Type: `GET`
+    * Path: http://localhost:8099/error-logs/after/{log-id}?page-size={page-size}
     * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Error Log`.  
     
 * For *Error Log* entries deletion token generation request:
@@ -59,9 +71,14 @@
     * Path: http://localhost:8099/article-upload-logs?page-size={page-size}
     * Query Param & Response: Format same as [`General Log`](#latest_log) but for `Article Upload Log`
      
-* For *Article Upload Log* entries Before Given Id:
+* For *Article Upload Log* entries `Before` Given Id:
     * Type: `GET`
-    * Path: http://localhost:8099/article-upload-logs/before/article-upload-log-id/{log-id}?page-size={page-size}
+    * Path: http://localhost:8099/article-upload-logs/before/{log-id}?page-size={page-size}
+    * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Article Upload Log`.  
+     
+* For *Article Upload Log* entries `After` Given Id:
+    * Type: `GET`
+    * Path: http://localhost:8099/article-upload-logs/after/{log-id}?page-size={page-size}
     * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Article Upload Log`.  
     
 * For *Article Upload Log* entries deletion token generation request:
@@ -80,9 +97,14 @@
     * Path: http://localhost:8099/article-download-logs?page-size={page-size}
     * Query Param & Response: Format same as [`General Log`](#latest_log) but for `Article Download Log`
      
-* For *Article Download Log* entries Before Given Id:
+* For *Article Download Log* entries `Before` Given Id:
     * Type: `GET`
-    * Path: http://localhost:8099/article-download-logs/before/article-download-log-id/{log-id}?page-size={page-size}
+    * Path: http://localhost:8099/article-download-logs/before/{log-id}?page-size={page-size}
+    * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Article Download Log`.  
+    
+* For *Article Download Log* entries `After` Given Id:
+    * Type: `GET`
+    * Path: http://localhost:8099/article-download-logs/after/{log-id}?page-size={page-size}
     * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Article Download Log`.  
     
 * For *Article Download Log* entries deletion token generation request:
@@ -101,9 +123,14 @@
     * Path: http://localhost:8099/settings-update-logs?page-size={page-size}
     * Query Param & Response: Format same as [`General Log`](#latest_log) but for `Settings Update Log`
      
-* For *Settings Update Log* entries Before Given Id:
+* For *Settings Update Log* entries `Before` Given Id:
     * Type: `GET`
-    * Path: http://localhost:8099/settings-update-logs/before/settings-update-log-id/{log-id}?page-size={page-size}
+    * Path: http://localhost:8099/settings-update-logs/before/{log-id}?page-size={page-size}
+    * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Settings Update Log`.  
+    
+* For *Settings Update Log* entries `After` Given Id:
+    * Type: `GET`
+    * Path: http://localhost:8099/settings-update-logs/after/{log-id}?page-size={page-size}
     * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Settings Update Log`.  
     
 * For *Settings Update Log* entries deletion token generation request:
@@ -122,9 +149,14 @@
     * Path: http://localhost:8099/settings-upload-logs?page-size={page-size}
     * Query Param & Response: Format same as [`General Log`](#latest_log) but for `Settings Upload Log`
      
-* For *Settings Upload Log* entries Before Given Id:
+* For *Settings Upload Log* entries `Before` Given Id:
     * Type: `GET`
-    * Path: http://localhost:8099/settings-upload-logs/before/settings-upload-log-id/{log-id}?page-size={page-size}
+    * Path: http://localhost:8099/settings-upload-logs/before/{log-id}?page-size={page-size}
+    * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Settings Upload Log`.  
+    
+* For *Settings Upload Log* entries `After` Given Id:
+    * Type: `GET`
+    * Path: http://localhost:8099/settings-upload-logs/after/{log-id}?page-size={page-size}
     * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Settings Upload Log`.  
     
 * For *Settings Upload Log* entries deletion token generation request:
@@ -143,9 +175,14 @@
     * Path: http://localhost:8099/article-uploader-status-change-logs?page-size={page-size}
     * Query Param & Response: Format same as [`General Log`](#latest_log) but for `Article Uploader Status Change Log`
      
-* For *Article Uploader Status Change Log* entries Before Given Id:
+* For *Article Uploader Status Change Log* entries `Before` Given Id:
     * Type: `GET`
-    * Path: http://localhost:8099/article-uploader-status-change-logs/before/article-uploader-status-change-log-id/{log-id}?page-size={page-size}
+    * Path: http://localhost:8099/article-uploader-status-change-logs/before/{log-id}?page-size={page-size}
+    * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Article Uploader Status Change Log`.  
+    
+* For *Article Uploader Status Change Log* entries `After` Given Id:
+    * Type: `GET`
+    * Path: http://localhost:8099/article-uploader-status-change-logs/after/{log-id}?page-size={page-size}
     * Path Param, Query Param & Response: Format same as [`General Log`](#log_before_given_id) but for `Article Uploader Status Change Log`.  
     
 * For *Article Uploader Status Change Log* entry insert token generation request:

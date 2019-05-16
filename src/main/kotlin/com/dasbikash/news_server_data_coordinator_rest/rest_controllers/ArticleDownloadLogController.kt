@@ -36,7 +36,7 @@ constructor(val articleDownloadLogService: ArticleDownloadLogService,
                         ArticleDownloadLogs(articleDownloadLogService.getLatestArticleDownloadLogs(pageSize)))
     }
 
-    @GetMapping("/before/article-download-log-id/{log-id}")
+    @GetMapping("/before/{log-id}")
     fun getArticleDownloadLogsBeforeGivenId(@RequestParam("page-size") pageSizeRequest:Int?,
                                         @PathVariable("log-id") lastArticleDownloadLogId:Int)
             : ResponseEntity<ArticleDownloadLogs> {
@@ -49,6 +49,21 @@ constructor(val articleDownloadLogService: ArticleDownloadLogService,
         }
         return restControllerUtills.entityToResponseEntity(
                         ArticleDownloadLogs(articleDownloadLogService.getArticleDownloadLogsBeforeGivenId(lastArticleDownloadLogId,pageSize)))
+    }
+
+    @GetMapping("/after/{log-id}")
+    fun getArticleDownloadLogsAfterGivenId(@RequestParam("page-size") pageSizeRequest:Int?,
+                                        @PathVariable("log-id") lastArticleDownloadLogId:Int)
+            : ResponseEntity<ArticleDownloadLogs> {
+        var pageSize = defaultPageSize
+        pageSizeRequest?.let {
+            when{
+                it>=maxPageSize -> pageSize = maxPageSize
+                it>0            -> pageSize = it
+            }
+        }
+        return restControllerUtills.entityToResponseEntity(
+                        ArticleDownloadLogs(articleDownloadLogService.getLogsAfterGivenId(lastArticleDownloadLogId,pageSize)))
     }
 
     @DeleteMapping("request_log_delete_token_generation")

@@ -40,7 +40,7 @@ constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChan
                 ArticleUploaderStatusChangeLogs(articleUploaderStatusChangeLogService.getLatestArticleUploaderStatusChangeLogs(pageSize)))
     }
 
-    @GetMapping("/before/article-uploader-status-change-log-id/{log-id}")
+    @GetMapping("/before/{log-id}")
     fun getArticleUploaderStatusChangeLogsBeforeGivenId(@RequestParam("page-size") pageSizeRequest:Int?,
                                         @PathVariable("log-id") lastStatusChangeLogId:Int)
             : ResponseEntity<ArticleUploaderStatusChangeLogs> {
@@ -53,6 +53,21 @@ constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChan
         }
         return restControllerUtills.entityToResponseEntity(ArticleUploaderStatusChangeLogs(
                 articleUploaderStatusChangeLogService.getArticleUploaderStatusChangeLogsBeforeGivenId(lastStatusChangeLogId,pageSize)))
+    }
+
+    @GetMapping("/after/{log-id}")
+    fun getArticleUploaderStatusChangeLogsAfterGivenId(@RequestParam("page-size") pageSizeRequest:Int?,
+                                        @PathVariable("log-id") lastStatusChangeLogId:Int)
+            : ResponseEntity<ArticleUploaderStatusChangeLogs> {
+        var pageSize = defaultPageSize
+        pageSizeRequest?.let {
+            when{
+                it>=maxPageSize -> pageSize = maxPageSize
+                it>0            -> pageSize = it
+            }
+        }
+        return restControllerUtills.entityToResponseEntity(ArticleUploaderStatusChangeLogs(
+                articleUploaderStatusChangeLogService.getArticleUploaderStatusChangeLogsAfterGivenId(lastStatusChangeLogId,pageSize)))
     }
 
     @GetMapping("request_status_change_token_generation")
