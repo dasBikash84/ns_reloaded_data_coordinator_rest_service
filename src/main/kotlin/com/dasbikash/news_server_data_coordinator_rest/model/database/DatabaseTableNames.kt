@@ -30,5 +30,6 @@ object DatabaseTableNames {
     const val ARTICLE_UPLOAD_LOG_TABLE_NAME = "article_upload_log"
     const val GENERAL_LOG_TABLE_NAME = "general_log"
     const val AUTH_TOKEN_TABLE_NAME = "tokens"
-    const val PAGE_GROUP_TABLE_NAME = "page_groups";
+    const val PAGE_GROUP_TABLE_NAME = "page_groups"
+    const val REST_ACTIVITY_LOG_TABLE_NAME = "rest_activity_log"
 }
