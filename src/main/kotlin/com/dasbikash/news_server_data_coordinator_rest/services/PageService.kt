@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class PageService @Autowired
-constructor( val pageRepository: PageRepository,val newspaperRepository: NewspaperRepository) {
+open class PageService @Autowired
+constructor(open var pageRepository: PageRepository,open var newspaperRepository: NewspaperRepository) {
 
     fun getAllActivePages(): List<Page> {
         val allPages= mutableListOf<Page>()

@@ -10,21 +10,24 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("article-download-logs")
-class ArticleDownloadLogController @Autowired
-constructor(val articleDownloadLogService: ArticleDownloadLogService,
-            val restControllerUtills: RestControllerUtills) {
+open class ArticleDownloadLogController
+constructor(open var articleDownloadLogService: ArticleDownloadLogService,
+            open var restControllerUtills: RestControllerUtills) {
 
     @Value("\${log.default_page_size}")
-    var defaultPageSize: Int = 10
+    open var defaultPageSize: Int = 10
 
     @Value("\${log.max_page_size}")
-    var maxPageSize: Int = 50
+    open var maxPageSize: Int = 50
 
     @GetMapping("")
-    fun getLatestArticleDownloadLogs(@RequestParam("page-size") pageSizeRequest:Int?): ResponseEntity<ArticleDownloadLogs> {
+    open fun getLatestArticleDownloadLogsEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
+                                                  @Autowired request: HttpServletRequest):
+            ResponseEntity<ArticleDownloadLogs> {
         var pageSize = defaultPageSize
         pageSizeRequest?.let {
             when{
@@ -37,8 +40,9 @@ constructor(val articleDownloadLogService: ArticleDownloadLogService,
     }
 
     @GetMapping("/before/{log-id}")
-    fun getArticleDownloadLogsBeforeGivenId(@RequestParam("page-size") pageSizeRequest:Int?,
-                                        @PathVariable("log-id") lastArticleDownloadLogId:Int)
+    open fun getArticleDownloadLogsBeforeGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
+                                                        @PathVariable("log-id") lastArticleDownloadLogId:Int,
+                                                         @Autowired request: HttpServletRequest)
             : ResponseEntity<ArticleDownloadLogs> {
         var pageSize = defaultPageSize
         pageSizeRequest?.let {
@@ -52,8 +56,9 @@ constructor(val articleDownloadLogService: ArticleDownloadLogService,
     }
 
     @GetMapping("/after/{log-id}")
-    fun getArticleDownloadLogsAfterGivenId(@RequestParam("page-size") pageSizeRequest:Int?,
-                                        @PathVariable("log-id") lastArticleDownloadLogId:Int)
+    open fun getArticleDownloadLogsAfterGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
+                                                        @PathVariable("log-id") lastArticleDownloadLogId:Int,
+                                                        @Autowired request: HttpServletRequest)
             : ResponseEntity<ArticleDownloadLogs> {
         var pageSize = defaultPageSize
         pageSizeRequest?.let {
@@ -67,12 +72,14 @@ constructor(val articleDownloadLogService: ArticleDownloadLogService,
     }
 
     @DeleteMapping("request_log_delete_token_generation")
-    fun generateLogDeletionToken(): ResponseEntity<LogEntryDeleteRequestFormat> {
+    open fun generateLogDeletionTokenEndPoint(@Autowired request: HttpServletRequest): ResponseEntity<LogEntryDeleteRequestFormat> {
         return restControllerUtills.generateLogDeleteToken(this::class.java)
     }
 
     @DeleteMapping("")
-    fun deleteErrorLogs(@RequestBody logEntryDeleteRequest: LogEntryDeleteRequest?): ResponseEntity<ArticleDownloadLogs> {
+    open fun deleteErrorLogsEndPoint(@RequestBody logEntryDeleteRequest: LogEntryDeleteRequest?,
+                                     @Autowired request: HttpServletRequest)
+            : ResponseEntity<ArticleDownloadLogs> {
         return restControllerUtills.entityToResponseEntity(ArticleDownloadLogs(
                 restControllerUtills.deleteLogEntries(articleDownloadLogService,logEntryDeleteRequest)))
     }

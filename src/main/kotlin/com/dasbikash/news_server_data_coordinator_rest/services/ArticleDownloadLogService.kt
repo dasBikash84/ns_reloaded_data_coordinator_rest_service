@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class ArticleDownloadLogService @Autowired constructor(val articleDownloadLogRepository: ArticleDownloadLogRepository)
+open class ArticleDownloadLogService constructor(open var articleDownloadLogRepository: ArticleDownloadLogRepository)
     :DeletableLogService<ArticleDownloadLog>{
     fun getLatestArticleDownloadLogs(pageSize: Int): List<ArticleDownloadLog> {
         return articleDownloadLogRepository.getLatestArticleDownloadLogs(pageSize)

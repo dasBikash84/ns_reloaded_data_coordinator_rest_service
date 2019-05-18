@@ -9,15 +9,16 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("countries")
-class CountryController @Autowired
-constructor(private val countryService: CountryService,
-            val restControllerUtills: RestControllerUtills) {
+open class CountryController @Autowired
+constructor(open var countryService: CountryService,
+            open var restControllerUtills: RestControllerUtills) {
 
     @GetMapping(value = arrayOf("","/"))
-    fun getAllActiveNewsPapers():ResponseEntity<Countries>{
+    open fun getAllActiveNewsPapersEndPoint(@Autowired request: HttpServletRequest):ResponseEntity<Countries>{
         return restControllerUtills.entityToResponseEntity(Countries(countryService.getAllCountries()))
     }
 

@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class ArticleUploaderStatusChangeLogService @Autowired
-constructor(val articleUploaderStatusChangeLogRepository: ArticleUploaderStatusChangeLogRepository,
-            val authTokenRepository: AuthTokenRepository){
+open class ArticleUploaderStatusChangeLogService
+constructor(open var articleUploaderStatusChangeLogRepository: ArticleUploaderStatusChangeLogRepository,
+            open var authTokenRepository: AuthTokenRepository){
     fun getLatestArticleUploaderStatusChangeLogs(pageSize: Int): List<ArticleUploaderStatusChangeLog> {
         return articleUploaderStatusChangeLogRepository.getLatestArticleUploaderStatusChangeLogs(pageSize)
     }

@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class SettingsUpdateLogService @Autowired constructor(val settingsUpdateLogRepository: SettingsUpdateLogRepository)
+open class SettingsUpdateLogService
+constructor(open var settingsUpdateLogRepository: SettingsUpdateLogRepository)
     :DeletableLogService<SettingsUpdateLog>{
     fun getLatestSettingsUpdateLogs(pageSize: Int): List<SettingsUpdateLog> {
         val settingsUpdateLogs = settingsUpdateLogRepository.getLatestSettingsUpdateLogs(pageSize)

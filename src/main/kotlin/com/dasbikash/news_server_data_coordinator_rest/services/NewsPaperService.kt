@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class NewsPaperService @Autowired
-constructor(val newspaperRepository:NewspaperRepository){
+open class NewsPaperService @Autowired
+constructor(open var newspaperRepository:NewspaperRepository){
 
     fun getAllActiveNewsPapers():List<Newspaper>{
         return newspaperRepository.findAllByActive()

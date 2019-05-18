@@ -5,52 +5,108 @@ import com.dasbikash.news_server_data_coordinator_rest.model.database.log_entiti
 
 class ArticleDownloadLogs(
         val articleDownloadLogs:List<ArticleDownloadLog>
-): DataCoordinatorRestEntity
+): DataCoordinatorRestEntity,OutputWrapper{
+    override fun getOutPutCount(): Int {
+        return articleDownloadLogs.size
+    }
+}
 
 class ArticleUploaderStatusChangeLogs(
         val articleUploaderStatusChangeLogs:List<ArticleUploaderStatusChangeLog>
-): DataCoordinatorRestEntity
+): DataCoordinatorRestEntity,OutputWrapper{
+    override fun getOutPutCount(): Int {
+        return articleUploaderStatusChangeLogs.size
+    }
+}
 
 class ArticleUploadLogs(
         val articleUploadLogs:List<ArticleUploadLog>
-): DataCoordinatorRestEntity
+): DataCoordinatorRestEntity,OutputWrapper{
+    override fun getOutPutCount(): Int {
+        return articleUploadLogs.size
+    }
+}
 
 class ErrorLogs(
         val errorLogs:List<ErrorLog>
-): DataCoordinatorRestEntity
+): DataCoordinatorRestEntity,OutputWrapper{
+    override fun getOutPutCount(): Int {
+        return errorLogs.size
+    }
+}
 
 class GeneralLogs(
         val generalLogs:List<GeneralLog>
-): DataCoordinatorRestEntity
+): DataCoordinatorRestEntity,OutputWrapper{
+    override fun getOutPutCount(): Int {
+        return generalLogs.size
+    }
+}
 
 class SettingsUpdateLogs(
         val settingsUpdateLogs:List<SettingsUpdateLog>
-): DataCoordinatorRestEntity
+): DataCoordinatorRestEntity,OutputWrapper{
+    override fun getOutPutCount(): Int {
+        return settingsUpdateLogs.size
+    }
+}
 
 class SettingsUploadLogs(
         val settingsUploadLogs:List<SettingsUploadLog>
-): DataCoordinatorRestEntity
+): DataCoordinatorRestEntity,OutputWrapper{
+    override fun getOutPutCount(): Int {
+        return settingsUploadLogs.size
+    }
+}
 
 class Articles(
         val articles:List<Article>
-): DataCoordinatorRestEntity
+): DataCoordinatorRestEntity,OutputWrapper{
+    override fun getOutPutCount(): Int {
+        return articles.size
+    }
+}
 
 class Countries(
         val countries:List<Country>
-): DataCoordinatorRestEntity
+): DataCoordinatorRestEntity,OutputWrapper{
+    override fun getOutPutCount(): Int {
+        return countries.size
+    }
+}
 
 class Languages(
         val languages:List<Language>
-): DataCoordinatorRestEntity
+): DataCoordinatorRestEntity,OutputWrapper{
+    override fun getOutPutCount(): Int {
+        return languages.size
+    }
+}
 
 class Newspapers(
         val newspapers:List<Newspaper>
-): DataCoordinatorRestEntity
+): DataCoordinatorRestEntity,OutputWrapper{
+    override fun getOutPutCount(): Int {
+        return newspapers.size
+    }
+}
 
 class Pages(
         val pages:List<Page>
-): DataCoordinatorRestEntity
+): DataCoordinatorRestEntity,OutputWrapper{
+    override fun getOutPutCount(): Int {
+        return pages.size
+    }
+}
 
 class PageGroups(
         val pageGroupMap:Map<String,PageGroup>
-): DataCoordinatorRestEntity
+): DataCoordinatorRestEntity,OutputWrapper{
+    override fun getOutPutCount(): Int {
+        return pageGroupMap.values.size
+    }
+}
+
+interface OutputWrapper{
+    fun getOutPutCount():Int
+}

@@ -12,8 +12,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
-class RestControllerUtills @Autowired
-constructor(val authTokenService: AuthTokenService) {
+open class RestControllerUtills constructor(open var authTokenService: AuthTokenService) {
+
     fun <T : DataCoordinatorRestEntity> listEntityToResponseEntity(entityList: List<T>): ResponseEntity<List<T>> {
         if (entityList.isEmpty()) {
             throw DataNotFoundException()

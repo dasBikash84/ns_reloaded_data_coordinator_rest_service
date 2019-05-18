@@ -10,27 +10,32 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("pages")
-class PageController (@Autowired val pageService: PageService,
-                      val restControllerUtills: RestControllerUtills){
+open class PageController (open var pageService: PageService,
+                           open var restControllerUtills: RestControllerUtills){
 
     @GetMapping(value = arrayOf("","/"))
-    fun getAllActivePages():ResponseEntity<Pages>{
-        return restControllerUtills.entityToResponseEntity(Pages(
-                pageService.getAllActivePages()))
+    open fun getAllActivePagesEndPoint(@Autowired request: HttpServletRequest):ResponseEntity<Pages>{
+        return restControllerUtills.entityToResponseEntity(
+                        Pages(pageService.getAllActivePages()))
     }
 
     @GetMapping("/newspaper-id/{newsPaperId}/top-level-pages")
-    fun getAllTopLevelPagesForNewsPaper(@PathVariable("newsPaperId") newsPaperId:String):ResponseEntity<Pages>{
-        return restControllerUtills.entityToResponseEntity(Pages(
-                pageService.getAllTopLevelPagesForNewsPaper(newsPaperId)))
+    open fun getAllTopLevelPagesForNewsPaperEndPoint(@PathVariable("newsPaperId") newsPaperId:String,
+                                                     @Autowired request: HttpServletRequest)
+            :ResponseEntity<Pages>{
+        return restControllerUtills.entityToResponseEntity(
+                        Pages(pageService.getAllTopLevelPagesForNewsPaper(newsPaperId)))
     }
 
     @GetMapping("/top-level-page-id/{pageId}")
-    fun getAllChildPagesForTopLevelPage(@PathVariable("pageId") pageId:String):ResponseEntity<Pages>{
-        return restControllerUtills.entityToResponseEntity(Pages(
-                pageService.getAllChildPagesForTopLevelPage(pageId)))
+    open fun getAllChildPagesForTopLevelPageEndPoint(@PathVariable("pageId") pageId:String,
+                                                     @Autowired request: HttpServletRequest)
+            :ResponseEntity<Pages>{
+        return restControllerUtills.entityToResponseEntity(
+                        Pages(pageService.getAllChildPagesForTopLevelPage(pageId)))
     }
 }

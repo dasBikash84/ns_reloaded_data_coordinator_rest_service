@@ -13,22 +13,25 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("article-uploader-status-change-logs")
-class ArticleUploaderStatusChangeLogController @Autowired
-constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChangeLogService,
-            val authTokenService: AuthTokenService,
-            val restControllerUtills: RestControllerUtills) {
+open class ArticleUploaderStatusChangeLogController
+constructor(open var articleUploaderStatusChangeLogService: ArticleUploaderStatusChangeLogService,
+            open var authTokenService: AuthTokenService,
+            open var restControllerUtills: RestControllerUtills) {
 
     @Value("\${log.default_page_size}")
-    var defaultPageSize: Int = 10
+    open var defaultPageSize: Int = 10
 
     @Value("\${log.max_page_size}")
-    var maxPageSize: Int = 50
+    open var maxPageSize: Int = 50
 
     @GetMapping("")
-    fun getLatestArticleUploaderStatusChangeLogs(@RequestParam("page-size") pageSizeRequest:Int?): ResponseEntity<ArticleUploaderStatusChangeLogs> {
+    open fun getLatestArticleUploaderStatusChangeLogsEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
+                                                              @Autowired request: HttpServletRequest)
+            : ResponseEntity<ArticleUploaderStatusChangeLogs> {
         var pageSize = defaultPageSize
         pageSizeRequest?.let {
             when{
@@ -41,8 +44,9 @@ constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChan
     }
 
     @GetMapping("/before/{log-id}")
-    fun getArticleUploaderStatusChangeLogsBeforeGivenId(@RequestParam("page-size") pageSizeRequest:Int?,
-                                        @PathVariable("log-id") lastStatusChangeLogId:Int)
+    open fun getArticleUploaderStatusChangeLogsBeforeGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
+                                                                    @PathVariable("log-id") lastStatusChangeLogId:Int,
+                                                                     @Autowired request: HttpServletRequest)
             : ResponseEntity<ArticleUploaderStatusChangeLogs> {
         var pageSize = defaultPageSize
         pageSizeRequest?.let {
@@ -56,8 +60,9 @@ constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChan
     }
 
     @GetMapping("/after/{log-id}")
-    fun getArticleUploaderStatusChangeLogsAfterGivenId(@RequestParam("page-size") pageSizeRequest:Int?,
-                                        @PathVariable("log-id") lastStatusChangeLogId:Int)
+    open fun getArticleUploaderStatusChangeLogsAfterGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
+                                                                    @PathVariable("log-id") lastStatusChangeLogId:Int,
+                                                                    @Autowired request: HttpServletRequest)
             : ResponseEntity<ArticleUploaderStatusChangeLogs> {
         var pageSize = defaultPageSize
         pageSizeRequest?.let {
@@ -71,14 +76,16 @@ constructor(val articleUploaderStatusChangeLogService: ArticleUploaderStatusChan
     }
 
     @GetMapping("request_status_change_token_generation")
-    fun generateStatusChangeToken():ResponseEntity<ArticleUploaderStatusChangeRequestFormat>{
+    open fun generateStatusChangeTokenEndPoint(@Autowired request: HttpServletRequest)
+            :ResponseEntity<ArticleUploaderStatusChangeRequestFormat>{
         val newToken = authTokenService.getNewAuthToken()
         EmailUtils.emailAuthTokenToAdmin(newToken,this::class.java)
         return restControllerUtills.entityToResponseEntity(ArticleUploaderStatusChangeRequestFormat())
     }
 
     @PostMapping("status_change_request")
-    fun changeUploaderStatus(@RequestBody articleUploaderStatusChangeRequest: ArticleUploaderStatusChangeRequest?)
+    open fun changeUploaderStatusEndPoint(@RequestBody articleUploaderStatusChangeRequest: ArticleUploaderStatusChangeRequest?,
+                                          @Autowired request: HttpServletRequest)
             :ResponseEntity<ArticleUploaderStatusChangeRequest>{
         if (articleUploaderStatusChangeRequest == null ||
                 articleUploaderStatusChangeRequest.authToken == null ||

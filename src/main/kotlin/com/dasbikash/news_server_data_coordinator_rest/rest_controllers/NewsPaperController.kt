@@ -10,27 +10,32 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("newspapers")
-class NewsPaperController @Autowired
-constructor(private val newsPaperService: NewsPaperService,
-            val restControllerUtills: RestControllerUtills) {
+open class NewsPaperController @Autowired
+constructor(open var newsPaperService: NewsPaperService,
+            open var restControllerUtills: RestControllerUtills) {
 
     @GetMapping(value = arrayOf("","/"))
-    fun getAllActiveNewsPapers():ResponseEntity<Newspapers>{
+    open fun getAllActiveNewsPapersEndPoint(@Autowired request: HttpServletRequest):ResponseEntity<Newspapers>{
         return restControllerUtills.entityToResponseEntity(Newspapers(
                 newsPaperService.getAllActiveNewsPapers()))
     }
 
     @GetMapping("/country-name/{countryName}")
-    fun getNewPaperByCountryName(@PathVariable("countryName") countryName:String):ResponseEntity<Newspapers>{
+    open fun getNewPaperByCountryNameEndPoint(@PathVariable("countryName") countryName:String,
+                                              @Autowired request: HttpServletRequest)
+            :ResponseEntity<Newspapers>{
         return restControllerUtills.entityToResponseEntity(Newspapers(
                 newsPaperService.getAllNewPaperByCountryName(countryName)))
     }
 
     @GetMapping("/language-id/{languageId}")
-    fun getNewPaperByLanguageId(@PathVariable("languageId") languageId:String):ResponseEntity<Newspapers>{
+    open fun getNewPaperByLanguageIdEndPoint(@PathVariable("languageId") languageId:String,
+                                             @Autowired request: HttpServletRequest)
+            :ResponseEntity<Newspapers>{
         return restControllerUtills.entityToResponseEntity(Newspapers(
                         newsPaperService.getAllNewPaperByLanguageId(languageId)))
     }

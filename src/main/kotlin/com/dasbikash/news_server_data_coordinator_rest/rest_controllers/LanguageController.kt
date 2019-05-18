@@ -9,15 +9,16 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("languages")
-class LanguageController @Autowired
-constructor(private val languageService: LanguageService,
-            val restControllerUtills: RestControllerUtills) {
+open class LanguageController @Autowired
+constructor(open var languageService: LanguageService,
+            open var restControllerUtills: RestControllerUtills) {
 
     @GetMapping(value = arrayOf("","/"))
-    fun getAllActiveNewsPapers():ResponseEntity<Languages>{
+    open fun getAllActiveNewsPapersEndPoint(@Autowired request: HttpServletRequest):ResponseEntity<Languages>{
         return restControllerUtills.entityToResponseEntity(Languages(languageService.getAllLanguages()))
     }
 

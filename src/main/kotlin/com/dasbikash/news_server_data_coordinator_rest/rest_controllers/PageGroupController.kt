@@ -12,14 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("page-groups")
-class PageGroupController @Autowired constructor(val pageGroupService: PageGroupService,
-                                                 val restControllerUtills: RestControllerUtills){
+open class PageGroupController
+constructor(open var pageGroupService: PageGroupService,
+            open var restControllerUtills: RestControllerUtills){
 
     @GetMapping(value = arrayOf("","/"))
-    fun getAllActivePages():ResponseEntity<PageGroups>{
+    open fun getAllActivePagesEndPoint(@Autowired request: HttpServletRequest):ResponseEntity<PageGroups>{
         return restControllerUtills.entityToResponseEntity(pageGroupService.getPageGroups())
     }
 }

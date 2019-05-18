@@ -10,8 +10,8 @@ import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 
 @Service
-class ArticleService
-@Autowired constructor(val pageRepository: PageRepository, val articleRepository: ArticleRepository) {
+open class ArticleService constructor(open var pageRepository: PageRepository,
+                                      open var articleRepository: ArticleRepository){
 
     private fun getArticlesByPage(page: Page, pageSize: Int, lastArticleId: String? = null): List<Article> {
 
@@ -58,6 +58,14 @@ class ArticleService
                 }
 
         return articles
+    }
+
+    fun getLatestArticlesByPageId(pageId: String,pageSize:Int):List<Article>{
+        val pageOptional = pageRepository.findById(pageId)
+        if (!pageOptional.isPresent || !pageOptional.get().hasData!!) {
+            throw DataNotFoundException()
+        }
+        return articleRepository.getLatestArticlesByPageId(pageId,pageSize)
     }
 
     fun getArticlesByPageId(pageId: String, pageSize: Int, lastArticleId: String? = null): List<Article> {
