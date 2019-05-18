@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service
 open class ArticleService constructor(open var pageRepository: PageRepository,
                                       open var articleRepository: ArticleRepository){
 
-    private fun getArticlesByPage(page: Page, pageSize: Int, lastArticleId: String? = null): List<Article> {
+    /*private fun getArticlesByPage(page: Page, pageSize: Int, lastArticleId: String? = null): List<Article> {
 
         val article = Article()
         article.page = page
@@ -58,7 +58,7 @@ open class ArticleService constructor(open var pageRepository: PageRepository,
                 }
 
         return articles
-    }
+    }*/
 
     fun getLatestArticlesByPageId(pageId: String,pageSize:Int):List<Article>{
         val pageOptional = pageRepository.findById(pageId)
@@ -68,7 +68,7 @@ open class ArticleService constructor(open var pageRepository: PageRepository,
         return articleRepository.getLatestArticlesByPageId(pageId,pageSize)
     }
 
-    fun getArticlesByPageId(pageId: String, pageSize: Int, lastArticleId: String? = null): List<Article> {
+    /*fun getArticlesByPageId(pageId: String, pageSize: Int, lastArticleId: String? = null): List<Article> {
 
         val pageOptional = pageRepository.findById(pageId)
         if (!pageOptional.isPresent || !pageOptional.get().hasData!!) {
@@ -77,11 +77,27 @@ open class ArticleService constructor(open var pageRepository: PageRepository,
         val page = pageOptional.get()
 
         return getArticlesByPage(page, pageSize, lastArticleId)
+    }*/
+
+    fun getArticlesForPageBeforeArticleId(pageId: String, pageSize: Int, lastArticleId: String): List<Article> {
+
+        val pageOptional = pageRepository.findById(pageId)
+        if (!pageOptional.isPresent || !pageOptional.get().hasData!!) {
+            throw DataNotFoundException()
+        }
+
+        val articleOptional = articleRepository.findById(lastArticleId)
+        if (!articleOptional.isPresent) {
+            throw DataNotFoundException()
+        }
+        val lastArticle = articleOptional.get()
+
+        return articleRepository.getArticlesForPageBeforeArticleId(pageId, pageSize, lastArticle.publicationTime!!)
     }
 
-    fun getArticlesForPageAfterLast(pageId: String, pageSize: Int, lastArticleId: String): List<Article> {
+    /*fun getArticlesForPageAfterLast(pageId: String, pageSize: Int, lastArticleId: String): List<Article> {
         return getArticlesByPageId(pageId, pageSize, lastArticleId)
-    }
+    }*/
 
     fun getLatestArticleForTopLevelPage(topLevelPageId: String): Article? {
         val pageOptional = pageRepository.findById(topLevelPageId)

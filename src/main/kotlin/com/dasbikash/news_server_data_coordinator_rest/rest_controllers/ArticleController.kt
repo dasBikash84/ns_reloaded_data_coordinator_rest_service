@@ -44,7 +44,7 @@ open class ArticleController constructor(open var articleService: ArticleService
     }
 
     @GetMapping("/page-id/{pageId}/last-article-id/{lastArticleId}")
-    open fun getArticlesForPageAfterArticleIdEndPoint(@PathVariable pageId: String,
+    open fun getArticlesForPageBeforeArticleIdEndPoint(@PathVariable pageId: String,
                                                  @PathVariable lastArticleId: String,
                                                  @RequestParam("article_count") articleCount:Int?,
                                                  @Autowired request: HttpServletRequest): ResponseEntity<Articles> {
@@ -57,7 +57,7 @@ open class ArticleController constructor(open var articleService: ArticleService
                 it>0 -> pageSize = it
             }
         }
-        return restControllerUtills.entityToResponseEntity(Articles(articleService.getArticlesForPageAfterLast(pageId,pageSize,lastArticleId)))
+        return restControllerUtills.entityToResponseEntity(Articles(articleService.getArticlesForPageBeforeArticleId(pageId,pageSize,lastArticleId)))
     }
 
     @GetMapping("/top-level-page-id/{topLevelPageId}/latest-article")
