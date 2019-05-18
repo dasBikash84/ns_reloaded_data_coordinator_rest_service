@@ -17,19 +17,15 @@ class RestActivityLog(
         val methodSignature:String,
         val timeTakenMs:Int,
         val returnedEntiryCount:Int?=null,
-        @Transient
-        val exception: Exception?=null
-//        val created: Date
+        val exceptionClassName:String?=null
 ){
-    fun getExceptionClassName():String?{
-        exception?.let { return it::class.java.canonicalName }
-        return null
-    }
     companion object{
-        fun getInstance(joinPoint: JoinPoint, request: HttpServletRequest, timeTakenMs: Int, exception: Exception?=null, returnedEntiryCount:Int?=null):RestActivityLog{
+        fun getInstance(joinPoint: JoinPoint, request: HttpServletRequest, timeTakenMs: Int,
+                        exceptionClassFullName: String?=null, returnedEntiryCount:Int?=null)
+                :RestActivityLog{
             return RestActivityLog(requestURL = request.requestURL.toString(),methodSignature = joinPoint.signature.toString(),
                     requestMethod = request.method,remoteHost = request.remoteHost,timeTakenMs = timeTakenMs,
-                    exception = exception,returnedEntiryCount = returnedEntiryCount)
+                    exceptionClassName = exceptionClassFullName,returnedEntiryCount = returnedEntiryCount)
         }
     }
 }

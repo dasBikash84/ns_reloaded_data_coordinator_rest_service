@@ -1,0 +1,6 @@
+package com.dasbikash.news_server_data_coordinator_rest.repositories
+
+import com.dasbikash.news_server_data_coordinator_rest.model.database.log_entities.RestActivityLog
+import org.springframework.data.jpa.repository.JpaRepository
+
+interface RestActivityLogRepository : JpaRepository<RestActivityLog, Int>
