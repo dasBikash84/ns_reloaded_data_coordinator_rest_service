@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest
 
 @Configuration
 @Aspect
-open class AfterAspects(open var restActivityLogRepository: RestActivityLogRepository) {
+open class AroundAspects(open var restActivityLogRepository: RestActivityLogRepository) {
 
 //    open var logger = LoggerFactory.getLogger(this.javaClass)
 
