@@ -8,7 +8,7 @@ class LogEntryDeleteRequest(
         var entryDeleteCount: Int? = null
 ) : DataCoordinatorRestEntity {
     companion object {
-        const val MAX_ENTRY_DELETE_LIMIT = 50
+        const val MAX_ENTRY_DELETE_LIMIT = 500
         const val DEFAULT_ENTRY_DELETE_COUNT = 10
     }
 }
