@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletRequest
 
 
 @RestController
-@RequestMapping("articles")
+@RequestMapping("articles",produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
 open class ArticleController constructor(open var articleService: ArticleService,
                                          open var restControllerUtills: RestControllerUtills) {
 
@@ -25,7 +26,7 @@ open class ArticleController constructor(open var articleService: ArticleService
     @Value("\${article.max_page_size}")
     open var maxPageSize: Int = 10
 
-    @GetMapping("/page-id/{pageId}")
+    @GetMapping("/page-id/{pageId}",produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun getLatestArticlesByPageIdEndPoint(@PathVariable pageId: String,
                                                @RequestParam("article_count") articleCount:Int?,
                                                @RequestHeader headers: HttpHeaders,
@@ -43,7 +44,8 @@ open class ArticleController constructor(open var articleService: ArticleService
         return restControllerUtills.entityToResponseEntity(Articles(articleService.getLatestArticlesByPageId(pageId,pageSize)))
     }
 
-    @GetMapping("/page-id/{pageId}/last-article-id/{lastArticleId}")
+    @GetMapping("/page-id/{pageId}/last-article-id/{lastArticleId}",
+                        produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun getArticlesForPageBeforeArticleIdEndPoint(@PathVariable pageId: String,
                                                  @PathVariable lastArticleId: String,
                                                  @RequestParam("article_count") articleCount:Int?,
@@ -60,7 +62,8 @@ open class ArticleController constructor(open var articleService: ArticleService
         return restControllerUtills.entityToResponseEntity(Articles(articleService.getArticlesForPageBeforeArticleId(pageId,pageSize,lastArticleId)))
     }
 
-    @GetMapping("/top-level-page-id/{topLevelPageId}/latest-article")
+    @GetMapping("/top-level-page-id/{topLevelPageId}/latest-article",
+            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun getLatestArticleForTopLevelPageEndPoint(@PathVariable topLevelPageId:String,
                                                 @Autowired request: HttpServletRequest):ResponseEntity<Article>{
         return restControllerUtills.entityToResponseEntity(articleService.getLatestArticleForTopLevelPage(topLevelPageId))

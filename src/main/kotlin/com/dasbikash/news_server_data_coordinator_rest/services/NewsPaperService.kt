@@ -31,7 +31,7 @@ constructor(open var newspaperRepository:NewspaperRepository){
 
         newspaperRepository
                 .findAllByActive()
-                .filter { it.country?.name == countryName }
+                .filter { it.getCountry()?.name == countryName }
                 .toCollection(returnNewspaperList)
         return returnNewspaperList
     }
@@ -42,7 +42,7 @@ constructor(open var newspaperRepository:NewspaperRepository){
 
         newspaperRepository
                 .findAllByActive()
-                .filter { it.language?.id == languageId }
+                .filter { it.getLanguage()?.id == languageId }
                 .toCollection(returnNewspaperList)
         return returnNewspaperList
 

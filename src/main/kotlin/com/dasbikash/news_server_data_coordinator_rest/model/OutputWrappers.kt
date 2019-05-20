@@ -2,108 +2,118 @@ package com.dasbikash.news_server_data_coordinator_rest.model
 
 import com.dasbikash.news_server_data_coordinator_rest.model.database.*
 import com.dasbikash.news_server_data_coordinator_rest.model.database.log_entities.*
+import javax.xml.bind.annotation.XmlRootElement
 
+@XmlRootElement
 class ArticleDownloadLogs(
-        val articleDownloadLogs:List<ArticleDownloadLog>
+        var articleDownloadLogs:List<ArticleDownloadLog>?=null
 ): DataCoordinatorRestEntity,OutputWrapper{
     override fun getOutPutCount(): Int {
-        return articleDownloadLogs.size
+        return articleDownloadLogs?.size ?: 0
     }
 }
 
+@XmlRootElement
 class ArticleUploaderStatusChangeLogs(
-        val articleUploaderStatusChangeLogs:List<ArticleUploaderStatusChangeLog>
+        var articleUploaderStatusChangeLogs:List<ArticleUploaderStatusChangeLog>?=null
 ): DataCoordinatorRestEntity,OutputWrapper{
     override fun getOutPutCount(): Int {
-        return articleUploaderStatusChangeLogs.size
+        return articleUploaderStatusChangeLogs?.size ?: 0
     }
 }
 
+@XmlRootElement
 class ArticleUploadLogs(
-        val articleUploadLogs:List<ArticleUploadLog>
+        var articleUploadLogs:List<ArticleUploadLog>?=null
 ): DataCoordinatorRestEntity,OutputWrapper{
     override fun getOutPutCount(): Int {
-        return articleUploadLogs.size
+        return articleUploadLogs?.size ?: 0
     }
 }
 
+@XmlRootElement
 class ErrorLogs(
-        val errorLogs:List<ErrorLog>
+        var errorLogs:List<ErrorLog>?=null
 ): DataCoordinatorRestEntity,OutputWrapper{
     override fun getOutPutCount(): Int {
-        return errorLogs.size
+        return errorLogs?.size ?: 0
     }
 }
 
+@XmlRootElement
 class GeneralLogs(
-        val generalLogs:List<GeneralLog>
+        var generalLogs:List<GeneralLog>?=null
 ): DataCoordinatorRestEntity,OutputWrapper{
     override fun getOutPutCount(): Int {
-        return generalLogs.size
+        return generalLogs?.size ?: 0
     }
 }
-
+@XmlRootElement
 class SettingsUpdateLogs(
-        val settingsUpdateLogs:List<SettingsUpdateLog>
+        var settingsUpdateLogs:List<SettingsUpdateLog>?=null
 ): DataCoordinatorRestEntity,OutputWrapper{
     override fun getOutPutCount(): Int {
-        return settingsUpdateLogs.size
+        return settingsUpdateLogs?.size ?: 0
     }
 }
-
+@XmlRootElement
 class SettingsUploadLogs(
-        val settingsUploadLogs:List<SettingsUploadLog>
+        var settingsUploadLogs:List<SettingsUploadLog>?=null
 ): DataCoordinatorRestEntity,OutputWrapper{
     override fun getOutPutCount(): Int {
-        return settingsUploadLogs.size
+        return settingsUploadLogs?.size ?: 0
     }
 }
 
+@XmlRootElement
 class Articles(
-        val articles:List<Article>
+        var articles:List<Article>?=null
 ): DataCoordinatorRestEntity,OutputWrapper{
     override fun getOutPutCount(): Int {
-        return articles.size
+        return articles?.size ?: 0
     }
 }
-
+@XmlRootElement
 class Countries(
-        val countries:List<Country>
+        var countries:List<Country>?=null
 ): DataCoordinatorRestEntity,OutputWrapper{
     override fun getOutPutCount(): Int {
-        return countries.size
+        return countries?.size ?: 0
     }
 }
-
+@XmlRootElement
 class Languages(
-        val languages:List<Language>
+        var languages:List<Language>?=null
 ): DataCoordinatorRestEntity,OutputWrapper{
     override fun getOutPutCount(): Int {
-        return languages.size
+        return languages?.size ?: 0
     }
 }
 
+@XmlRootElement
 class Newspapers(
-        val newspapers:List<Newspaper>
+        var newspapers:List<Newspaper>?=null
 ): DataCoordinatorRestEntity,OutputWrapper{
     override fun getOutPutCount(): Int {
-        return newspapers.size
+        return newspapers?.size ?: 0
     }
 }
 
+@XmlRootElement
 class Pages(
-        val pages:List<Page>
+        var pages:List<Page>?=null
 ): DataCoordinatorRestEntity,OutputWrapper{
     override fun getOutPutCount(): Int {
-        return pages.size
+        return pages?.size ?:0
     }
 }
 
+@XmlRootElement
 class PageGroups(
-        val pageGroupMap:Map<String,PageGroup>
+        var pageGroupMap:Map<String,PageGroup>?=null
 ): DataCoordinatorRestEntity,OutputWrapper{
     override fun getOutPutCount(): Int {
-        return pageGroupMap.values.size
+        return pageGroupMap?.values?.size ?: 0
     }
 }
 

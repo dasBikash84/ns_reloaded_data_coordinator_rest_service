@@ -18,6 +18,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.*
 import javax.persistence.*
+import javax.xml.bind.annotation.XmlElement
+import javax.xml.bind.annotation.XmlTransient
 import kotlin.collections.ArrayList
 
 
@@ -29,8 +31,7 @@ data class Article(
 
         @ManyToOne(targetEntity = Page::class, fetch = FetchType.EAGER)
         @JoinColumn(name = "pageId")
-        @JsonIgnore
-        var page: Page? = null,
+        private var page: Page? = null,
 
         var title: String? = null,
         var publicationTime: Date? = null,
@@ -49,14 +50,23 @@ data class Article(
     @Transient
     private var pageId: String? = null
 
-
     override fun toString(): String {
         return "Article(id='$id', page=${page?.name}, title=$title, " +
                 "articleText=${articleText ?: ""}, imageLinkList=$imageLinkList, previewImageLink=$previewImageLink)"
     }
 
     @JsonProperty(value = "pageId")
+    @XmlElement
     fun getPageId(): String? {
         return page?.id
+    }
+
+    @JsonIgnore
+    @XmlTransient
+    fun getPage():Page?{
+        return page
+    }
+    fun setPage(page: Page?){
+        this.page=page
     }
 }

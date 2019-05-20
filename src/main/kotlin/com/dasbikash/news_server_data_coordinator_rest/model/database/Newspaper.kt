@@ -16,43 +16,84 @@ package com.dasbikash.news_server_data_coordinator_rest.model.database
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import javax.persistence.*
+import javax.xml.bind.annotation.XmlAttribute
+import javax.xml.bind.annotation.XmlElement
+import javax.xml.bind.annotation.XmlRootElement
+import javax.xml.bind.annotation.XmlTransient
 
 @Entity
 @Table(name = DatabaseTableNames.NEWSPAPER_TABLE_NAME)
+@XmlRootElement
 data class Newspaper(
-        @Id var id: String="",
-        var name: String?=null,
+        @Id var id: String = "",
+        var name: String? = null,
 
-        @ManyToOne(targetEntity = Country::class,fetch = FetchType.EAGER)
-        @JoinColumn(name="countryName")
-        @JsonIgnore
-        var country: Country?=null,
+        @ManyToOne(targetEntity = Country::class, fetch = FetchType.EAGER)
+        @JoinColumn(name = "countryName")
+        private var country: Country? = null,
 
-        @ManyToOne(targetEntity = Language::class,fetch = FetchType.EAGER)
-        @JoinColumn(name="languageId")
-        @JsonIgnore
-        var language: Language?=null,
+        @ManyToOne(targetEntity = Language::class, fetch = FetchType.EAGER)
+        @JoinColumn(name = "languageId")
+        private var language: Language? = null,
 
-        @JsonIgnore
-        var active: Boolean=true,
+        private var active: Boolean = true,
 
-        @OneToMany(fetch = FetchType.LAZY,mappedBy = "newspaper",targetEntity = Page::class)
-        @JsonIgnore
-        var pageList: List<Page>?=null
+        @OneToMany(fetch = FetchType.LAZY, mappedBy = "newspaper", targetEntity = Page::class)
+        private var pageList: List<Page>? = null
 
+) : DataCoordinatorRestEntity {
 
-):DataCoordinatorRestEntity{
-        override fun toString(): String {
-                return "Newspaper(id='$id', name=$name, country=$country, language=$language, active=$active)"
-        }
-        @Transient
-        @JsonProperty("countryName")
-        fun getNewsPaperCountryId():String{
-                return country?.name ?: ""
-        }
-        @Transient
-        @JsonProperty("languageId")
-        fun getNewsPaperLanguageId():String{
-                return language?.id ?: ""
-        }
+    @XmlElement
+    fun getCountryName():String? {
+        return country?.name
+    }
+
+    @XmlElement
+    fun getLanguageId(): String? {
+        return language?.id
+    }
+
+    @JsonIgnore
+    @XmlTransient
+    fun getActive(): Boolean {
+        return active
+    }
+
+    fun setActive(active: Boolean) {
+        this.active = active
+    }
+
+    @JsonIgnore
+    @XmlTransient
+    fun getCountry(): Country? {
+        return this.country
+    }
+
+    fun setCountry(country: Country?) {
+        this.country = country
+    }
+
+    @JsonIgnore
+    @XmlTransient
+    fun getLanguage(): Language? {
+        return this.language
+    }
+
+    fun setLanguage(language: Language?) {
+        this.language = language
+    }
+
+    @JsonIgnore
+    @XmlTransient
+    fun getPageList(): List<Page>? {
+        return this.pageList
+    }
+
+    fun setPageList(pageList: List<Page>?) {
+        this.pageList = pageList
+    }
+
+    override fun toString(): String {
+        return "Newspaper(id='$id', name=$name, country=$country, language=$language, active=$active)"
+    }
 }

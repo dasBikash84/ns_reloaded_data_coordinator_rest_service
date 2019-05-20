@@ -16,16 +16,28 @@ package com.dasbikash.news_server_data_coordinator_rest.model.database
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import javax.persistence.*
+import javax.xml.bind.annotation.XmlElement
+import javax.xml.bind.annotation.XmlTransient
 
 @Entity
 @Table(name = DatabaseTableNames.PAGE_GROUP_TABLE_NAME)
 data class PageGroup(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @JsonIgnore
-        var id: Int?=null,
+        private var id: Int?=null,
         var name: String?=null
 ){
+
+    @JsonIgnore
+    @XmlTransient
+    fun getId(): Int? {
+        return this.id
+    }
+
+    fun setId(id: Int?) {
+        this.id = id
+    }
+
     var active: Boolean = true
     @OneToMany(fetch = FetchType.LAZY,targetEntity = Page::class)
     @JoinTable(
@@ -33,18 +45,26 @@ data class PageGroup(
             joinColumns = arrayOf(JoinColumn(name = "pageGroupId")),
             inverseJoinColumns = arrayOf(JoinColumn(name = "pageId"))
     )
-    @JsonIgnore
-    var pageList: List<Page>?=null
-    @Transient
-    private var pageIdList: List<String>?=null
+    private var pageList: List<Page>?=null
 
-    override fun toString(): String {
-        return "PageGroup(name=$name, active=$active, pageList=${pageList?.map { it.id }?.toCollection(mutableListOf())})"
+    @JsonIgnore
+    @XmlTransient
+    fun getPageList(): List<Page>? {
+        return this.pageList
+    }
+    fun setPageList(pageList: List<Page>?) {
+        this.pageList = pageList
     }
 
+    @Transient
+    private var pageIdList: List<String>?=null
     @JsonProperty(value = "pageList")
+    @XmlElement
     fun getPageIdList():List<String>{
         return pageList?.map { it.id }?.toList() ?: emptyList()
     }
 
+    override fun toString(): String {
+        return "PageGroup(name=$name, active=$active, pageList=${pageList?.map { it.id }?.toCollection(mutableListOf())})"
+    }
 }
