@@ -24,6 +24,8 @@ open class AroundAspects(open var restActivityLogRepository: RestActivityLogRepo
         var result:Any?=null
         var exception:Exception?=null
         var outputEntityCount:Int?=null
+        var acceptHeader:String?=null
+        var userAgentHeader:String?=null
         try {
             result = proceedingJoinPoint.proceed()
         }catch (ex:Exception){
@@ -34,9 +36,12 @@ open class AroundAspects(open var restActivityLogRepository: RestActivityLogRepo
             outputEntityCount = (result.body as OutputWrapper).getOutPutCount()
         }
 
+        request.headerNames.asSequence().find { it.equals("accept") }?.let { acceptHeader= request.getHeader(it)}
+        request.headerNames.asSequence().find { it.equals("user-agent") }?.let { userAgentHeader= request.getHeader(it) }
+
         val restActivityLog = RestActivityLog.getInstance(
-                                                        proceedingJoinPoint,request,(System.currentTimeMillis() - startTime).toInt(),
-                                                        exception?.let { it::class.java.canonicalName} ,outputEntityCount)
+                proceedingJoinPoint,request,(System.currentTimeMillis() - startTime).toInt(),
+                exception?.let { it::class.java.canonicalName} ,outputEntityCount,acceptHeader, userAgentHeader)
 
         restActivityLogRepository.save(restActivityLog)
 
