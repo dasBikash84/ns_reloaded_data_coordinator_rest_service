@@ -11,12 +11,14 @@ import com.dasbikash.news_server_data_coordinator_rest.utills.EmailUtils
 import com.dasbikash.news_server_data_coordinator_rest.utills.RestControllerUtills
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 
 @RestController
-@RequestMapping("article-uploader-status-change-logs")
+@RequestMapping("article-uploader-status-change-logs",
+        produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
 open class ArticleUploaderStatusChangeLogController
 constructor(open var articleUploaderStatusChangeLogService: ArticleUploaderStatusChangeLogService,
             open var authTokenService: AuthTokenService,
@@ -28,7 +30,8 @@ constructor(open var articleUploaderStatusChangeLogService: ArticleUploaderStatu
     @Value("\${log.max_page_size}")
     open var maxPageSize: Int = 50
 
-    @GetMapping("")
+    @GetMapping("",
+            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun getLatestArticleUploaderStatusChangeLogsEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                               @Autowired request: HttpServletRequest)
             : ResponseEntity<ArticleUploaderStatusChangeLogs> {
@@ -43,7 +46,8 @@ constructor(open var articleUploaderStatusChangeLogService: ArticleUploaderStatu
                 ArticleUploaderStatusChangeLogs(articleUploaderStatusChangeLogService.getLatestArticleUploaderStatusChangeLogs(pageSize)))
     }
 
-    @GetMapping("/before/{log-id}")
+    @GetMapping("/before/{log-id}",
+            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun getArticleUploaderStatusChangeLogsBeforeGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                                     @PathVariable("log-id") lastStatusChangeLogId:Int,
                                                                      @Autowired request: HttpServletRequest)
@@ -59,7 +63,8 @@ constructor(open var articleUploaderStatusChangeLogService: ArticleUploaderStatu
                 articleUploaderStatusChangeLogService.getArticleUploaderStatusChangeLogsBeforeGivenId(lastStatusChangeLogId,pageSize)))
     }
 
-    @GetMapping("/after/{log-id}")
+    @GetMapping("/after/{log-id}",
+            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun getArticleUploaderStatusChangeLogsAfterGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                                     @PathVariable("log-id") lastStatusChangeLogId:Int,
                                                                     @Autowired request: HttpServletRequest)
@@ -75,7 +80,8 @@ constructor(open var articleUploaderStatusChangeLogService: ArticleUploaderStatu
                 articleUploaderStatusChangeLogService.getArticleUploaderStatusChangeLogsAfterGivenId(lastStatusChangeLogId,pageSize)))
     }
 
-    @GetMapping("request_status_change_token_generation")
+    @GetMapping("request_status_change_token_generation",
+            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun generateStatusChangeTokenEndPoint(@Autowired request: HttpServletRequest)
             :ResponseEntity<ArticleUploaderStatusChangeRequestFormat>{
         val newToken = authTokenService.getNewAuthToken()
@@ -83,7 +89,8 @@ constructor(open var articleUploaderStatusChangeLogService: ArticleUploaderStatu
         return restControllerUtills.entityToResponseEntity(ArticleUploaderStatusChangeRequestFormat())
     }
 
-    @PostMapping("status_change_request")
+    @PostMapping("status_change_request",
+            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun changeUploaderStatusEndPoint(@RequestBody articleUploaderStatusChangeRequest: ArticleUploaderStatusChangeRequest?,
                                           @Autowired request: HttpServletRequest)
             :ResponseEntity<ArticleUploaderStatusChangeRequest>{

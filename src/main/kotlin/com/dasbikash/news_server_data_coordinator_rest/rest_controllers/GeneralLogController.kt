@@ -11,12 +11,14 @@ import com.dasbikash.news_server_data_coordinator_rest.services.GeneralLogServic
 import com.dasbikash.news_server_data_coordinator_rest.utills.RestControllerUtills
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 
 @RestController
-@RequestMapping("general-logs")
+@RequestMapping("general-logs",
+        produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
 open class GeneralLogController @Autowired
 constructor(open var generalLogService: GeneralLogService,
             open var restControllerUtills: RestControllerUtills) {
@@ -27,7 +29,7 @@ constructor(open var generalLogService: GeneralLogService,
     @Value("\${log.max_page_size}")
     open var maxPageSize: Int = 50
 
-    @GetMapping("")
+    @GetMapping("",produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun getLatestGeneralLogsEndPoint(@RequestParam("page-size") pageSizeRequest: Int?,
                                           @Autowired request: HttpServletRequest): ResponseEntity<GeneralLogs> {
         var pageSize = defaultPageSize
@@ -40,7 +42,7 @@ constructor(open var generalLogService: GeneralLogService,
         return restControllerUtills.entityToResponseEntity(GeneralLogs(generalLogService.getLatestGeneralLogs(pageSize)))
     }
 
-    @GetMapping("/before/{log-id}")
+    @GetMapping("/before/{log-id}",produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun getGeneralLogsBeforeGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest: Int?,
                                                 @PathVariable("log-id") lastGeneralLogId: Int,
                                                  @Autowired request: HttpServletRequest)
@@ -56,7 +58,7 @@ constructor(open var generalLogService: GeneralLogService,
                 generalLogService.getGeneralLogsBeforeGivenId(lastGeneralLogId, pageSize)))
     }
 
-    @GetMapping("/after/{log-id}")
+    @GetMapping("/after/{log-id}",produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun getGeneralLogsAfterGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest: Int?,
                                                 @PathVariable("log-id") lastGeneralLogId: Int,
                                                 @Autowired request: HttpServletRequest)
@@ -72,12 +74,13 @@ constructor(open var generalLogService: GeneralLogService,
                 generalLogService.getLogsAfterGivenId(lastGeneralLogId, pageSize)))
     }
 
-    @DeleteMapping("request_log_delete_token_generation")
+    @DeleteMapping("request_log_delete_token_generation",produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun generateLogDeletionTokenEndPoint(@Autowired request: HttpServletRequest): ResponseEntity<LogEntryDeleteRequestFormat> {
         return restControllerUtills.generateLogDeleteToken(this::class.java)
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("",
+            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun deleteGeneralLogsEndPoint(@RequestBody logEntryDeleteRequest: LogEntryDeleteRequest?,
                                        @Autowired request: HttpServletRequest)
             : ResponseEntity<GeneralLogs> {

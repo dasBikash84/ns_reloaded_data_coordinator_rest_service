@@ -9,12 +9,14 @@ import com.dasbikash.news_server_data_coordinator_rest.services.ErrorLogService
 import com.dasbikash.news_server_data_coordinator_rest.utills.RestControllerUtills
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 
 @RestController
-@RequestMapping("error-logs")
+@RequestMapping("error-logs",
+        produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
 open class ErrorLogController @Autowired
 constructor(open var errorLogService: ErrorLogService,
             open var restControllerUtills: RestControllerUtills) {
@@ -25,7 +27,8 @@ constructor(open var errorLogService: ErrorLogService,
     @Value("\${log.max_page_size}")
     open var maxPageSize: Int = 50
 
-    @GetMapping("")
+    @GetMapping("",
+            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun getLatestErrorLogsEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                         @Autowired request: HttpServletRequest): ResponseEntity<ErrorLogs> {
         var pageSize = defaultPageSize
@@ -38,7 +41,8 @@ constructor(open var errorLogService: ErrorLogService,
         return restControllerUtills.entityToResponseEntity(ErrorLogs(errorLogService.getLatestErrorLogs(pageSize)))
     }
 
-    @GetMapping("/before/{log-id}")
+    @GetMapping("/before/{log-id}",
+            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun getErrorLogsBeforeGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                 @PathVariable("log-id") lastErrorLogId:Int,
                                                @Autowired request: HttpServletRequest)
@@ -54,7 +58,8 @@ constructor(open var errorLogService: ErrorLogService,
                         errorLogService.getErrorLogsBeforeGivenId(lastErrorLogId,pageSize)))
     }
 
-    @GetMapping("/after/{log-id}")
+    @GetMapping("/after/{log-id}",
+            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun getErrorLogsAfterGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                 @PathVariable("log-id") lastErrorLogId:Int,
                                               @Autowired request: HttpServletRequest)
@@ -70,12 +75,14 @@ constructor(open var errorLogService: ErrorLogService,
                         errorLogService.getLogsAfterGivenId(lastErrorLogId,pageSize)))
     }
 
-    @DeleteMapping("request_log_delete_token_generation")
+    @DeleteMapping("request_log_delete_token_generation",
+            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun generateLogDeletionTokenEndPoint(@Autowired request: HttpServletRequest): ResponseEntity<LogEntryDeleteRequestFormat> {
         return restControllerUtills.generateLogDeleteToken(this::class.java)
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("",
+            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun deleteErrorLogsEndPoint(@RequestBody logEntryDeleteRequest: LogEntryDeleteRequest?,
                                      @Autowired request: HttpServletRequest)
             : ResponseEntity<ErrorLogs> {

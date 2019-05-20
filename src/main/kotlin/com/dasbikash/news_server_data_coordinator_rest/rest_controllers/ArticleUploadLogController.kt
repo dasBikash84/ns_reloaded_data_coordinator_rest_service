@@ -8,12 +8,14 @@ import com.dasbikash.news_server_data_coordinator_rest.services.ArticleUploadLog
 import com.dasbikash.news_server_data_coordinator_rest.utills.RestControllerUtills
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 
 @RestController
-@RequestMapping("article-upload-logs")
+@RequestMapping("article-upload-logs",
+        produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
 open class ArticleUploadLogController
 constructor(open var  articleUploadLogService: ArticleUploadLogService,
             open var  restControllerUtills: RestControllerUtills) {
@@ -24,7 +26,8 @@ constructor(open var  articleUploadLogService: ArticleUploadLogService,
     @Value("\${log.max_page_size}")
     open var  maxPageSize: Int = 50
 
-    @GetMapping("")
+    @GetMapping("",
+            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun getLatestArticleUploadLogsEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                 @Autowired request: HttpServletRequest)
             : ResponseEntity<ArticleUploadLogs> {
@@ -39,7 +42,8 @@ constructor(open var  articleUploadLogService: ArticleUploadLogService,
                         articleUploadLogService.getLatestArticleUploadLogs(pageSize)))
     }
 
-    @GetMapping("/before/{log-id}")
+    @GetMapping("/before/{log-id}",
+            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun getArticleUploadLogsBeforeGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                         @PathVariable("log-id") lastArticleUploadLogId:Int,
                                                        @Autowired request: HttpServletRequest)
@@ -55,7 +59,8 @@ constructor(open var  articleUploadLogService: ArticleUploadLogService,
                         articleUploadLogService.getArticleUploadLogsBeforeGivenId(lastArticleUploadLogId,pageSize)))
     }
 
-    @GetMapping("/after/{log-id}")
+    @GetMapping("/after/{log-id}",
+            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun getArticleUploadLogsAfterGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                     @PathVariable("log-id") lastArticleUploadLogId:Int,
                                                       @Autowired request: HttpServletRequest)
@@ -71,12 +76,14 @@ constructor(open var  articleUploadLogService: ArticleUploadLogService,
                         articleUploadLogService.getLogsAfterGivenId(lastArticleUploadLogId,pageSize)))
     }
 
-    @DeleteMapping("request_log_delete_token_generation")
+    @DeleteMapping("request_log_delete_token_generation",
+            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun generateLogDeletionTokenEndPoint(@Autowired request: HttpServletRequest): ResponseEntity<LogEntryDeleteRequestFormat> {
         return restControllerUtills.generateLogDeleteToken(this::class.java)
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("",
+            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
     open fun deleteErrorLogsEndPoint(@RequestBody logEntryDeleteRequest: LogEntryDeleteRequest?,
                                      @Autowired request: HttpServletRequest)
             : ResponseEntity<ArticleUploadLogs> {

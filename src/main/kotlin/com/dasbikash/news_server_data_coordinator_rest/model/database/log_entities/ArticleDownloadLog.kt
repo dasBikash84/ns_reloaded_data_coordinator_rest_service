@@ -18,9 +18,11 @@ import com.dasbikash.news_server_data_coordinator_rest.model.database.DatabaseTa
 import org.hibernate.annotations.UpdateTimestamp
 import java.util.*
 import javax.persistence.*
+import javax.xml.bind.annotation.XmlRootElement
 
 @Entity
 @Table(name = DatabaseTableNames.ARTICLE_DOWNLOAD_LOG_TABLE_NAME)
+@XmlRootElement
 class ArticleDownloadLog():DataCoordinatorRestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

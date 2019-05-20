@@ -17,9 +17,11 @@ import com.dasbikash.news_server_data_coordinator_rest.model.database.DataCoordi
 import com.dasbikash.news_server_data_coordinator_rest.model.database.DatabaseTableNames
 import java.util.*
 import javax.persistence.*
+import javax.xml.bind.annotation.XmlRootElement
 
 @Entity
 @Table(name = DatabaseTableNames.ARTICLE_UPLOAD_LOG_TABLE_NAME)
+@XmlRootElement
 class ArticleUploadLog():DataCoordinatorRestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
