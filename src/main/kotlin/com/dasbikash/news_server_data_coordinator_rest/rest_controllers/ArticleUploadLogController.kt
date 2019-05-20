@@ -3,7 +3,6 @@ package com.dasbikash.news_server_data_coordinator_rest.rest_controllers
 import com.dasbikash.news_server_data_coordinator_rest.model.ArticleUploadLogs
 import com.dasbikash.news_server_data_coordinator_rest.model.LogEntryDeleteRequest
 import com.dasbikash.news_server_data_coordinator_rest.model.LogEntryDeleteRequestFormat
-import com.dasbikash.news_server_data_coordinator_rest.model.database.log_entities.ArticleUploadLog
 import com.dasbikash.news_server_data_coordinator_rest.services.ArticleUploadLogService
 import com.dasbikash.news_server_data_coordinator_rest.utills.RestControllerUtills
 import org.springframework.beans.factory.annotation.Autowired

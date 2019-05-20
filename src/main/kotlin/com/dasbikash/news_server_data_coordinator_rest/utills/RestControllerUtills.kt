@@ -7,7 +7,6 @@ import com.dasbikash.news_server_data_coordinator_rest.model.LogEntryDeleteReque
 import com.dasbikash.news_server_data_coordinator_rest.model.database.DataCoordinatorRestEntity
 import com.dasbikash.news_server_data_coordinator_rest.services.AuthTokenService
 import com.dasbikash.news_server_data_coordinator_rest.services.DeletableLogService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 

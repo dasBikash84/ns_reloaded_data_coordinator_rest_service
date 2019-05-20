@@ -1,7 +1,6 @@
 package com.dasbikash.news_server_data_coordinator_rest.rest_controllers
 
 import com.dasbikash.news_server_data_coordinator_rest.model.Countries
-import com.dasbikash.news_server_data_coordinator_rest.model.database.Country
 import com.dasbikash.news_server_data_coordinator_rest.services.CountryService
 import com.dasbikash.news_server_data_coordinator_rest.utills.RestControllerUtills
 import org.springframework.beans.factory.annotation.Autowired

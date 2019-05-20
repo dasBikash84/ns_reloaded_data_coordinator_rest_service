@@ -3,7 +3,6 @@ package com.dasbikash.news_server_data_coordinator_rest.services
 import com.dasbikash.news_server_data_coordinator_rest.exceptions.DataNotFoundException
 import com.dasbikash.news_server_data_coordinator_rest.model.database.log_entities.GeneralLog
 import com.dasbikash.news_server_data_coordinator_rest.repositories.GeneralLogRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service

@@ -14,9 +14,7 @@
 package com.dasbikash.news_server_data_coordinator_rest.model.database
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonProperty
 import javax.persistence.*
-import javax.xml.bind.annotation.XmlAttribute
 import javax.xml.bind.annotation.XmlElement
 import javax.xml.bind.annotation.XmlRootElement
 import javax.xml.bind.annotation.XmlTransient
@@ -43,11 +41,13 @@ data class Newspaper(
 
 ) : DataCoordinatorRestEntity {
 
+    @Transient
     @XmlElement
     fun getCountryName():String? {
         return country?.name
     }
 
+    @Transient
     @XmlElement
     fun getLanguageId(): String? {
         return language?.id

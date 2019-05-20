@@ -3,7 +3,6 @@ package com.dasbikash.news_server_data_coordinator_rest.repositories
 import com.dasbikash.news_server_data_coordinator_rest.model.database.Article
 import com.dasbikash.news_server_data_coordinator_rest.model.database.DatabaseTableNames
 import com.dasbikash.news_server_data_coordinator_rest.model.database.Page
-import org.springframework.data.domain.AfterDomainEventPublication
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import java.util.*

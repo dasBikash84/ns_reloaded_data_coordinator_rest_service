@@ -1,7 +1,6 @@
 package com.dasbikash.news_server_data_coordinator_rest.rest_controllers
 
 import com.dasbikash.news_server_data_coordinator_rest.model.Languages
-import com.dasbikash.news_server_data_coordinator_rest.model.database.Language
 import com.dasbikash.news_server_data_coordinator_rest.services.LanguageService
 import com.dasbikash.news_server_data_coordinator_rest.utills.RestControllerUtills
 import org.springframework.beans.factory.annotation.Autowired

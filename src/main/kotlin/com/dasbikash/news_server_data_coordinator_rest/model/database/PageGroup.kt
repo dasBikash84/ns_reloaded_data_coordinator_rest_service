@@ -59,7 +59,7 @@ data class PageGroup(
     @Transient
     private var pageIdList: List<String>?=null
     @JsonProperty(value = "pageList")
-    @XmlElement
+    @XmlElement(name = "pageList")
     fun getPageIdList():List<String>{
         return pageList?.map { it.id }?.toList() ?: emptyList()
     }

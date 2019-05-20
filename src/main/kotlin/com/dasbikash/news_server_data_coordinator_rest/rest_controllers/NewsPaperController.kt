@@ -1,7 +1,6 @@
 package com.dasbikash.news_server_data_coordinator_rest.rest_controllers
 
 import com.dasbikash.news_server_data_coordinator_rest.model.Newspapers
-import com.dasbikash.news_server_data_coordinator_rest.model.database.Newspaper
 import com.dasbikash.news_server_data_coordinator_rest.services.NewsPaperService
 import com.dasbikash.news_server_data_coordinator_rest.utills.RestControllerUtills
 import org.springframework.beans.factory.annotation.Autowired

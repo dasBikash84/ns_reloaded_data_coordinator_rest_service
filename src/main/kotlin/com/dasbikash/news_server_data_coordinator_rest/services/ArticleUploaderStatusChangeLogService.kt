@@ -5,7 +5,6 @@ import com.dasbikash.news_server_data_coordinator_rest.model.database.AuthToken
 import com.dasbikash.news_server_data_coordinator_rest.model.database.log_entities.ArticleUploaderStatusChangeLog
 import com.dasbikash.news_server_data_coordinator_rest.repositories.ArticleUploaderStatusChangeLogRepository
 import com.dasbikash.news_server_data_coordinator_rest.repositories.AuthTokenRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
 

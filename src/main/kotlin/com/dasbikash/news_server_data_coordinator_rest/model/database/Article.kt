@@ -57,6 +57,7 @@ data class Article(
 
     @JsonProperty(value = "pageId")
     @XmlElement
+    @Transient
     fun getPageId(): String? {
         return page?.id
     }

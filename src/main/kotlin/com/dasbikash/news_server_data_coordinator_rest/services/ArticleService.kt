@@ -5,8 +5,6 @@ import com.dasbikash.news_server_data_coordinator_rest.model.database.Article
 import com.dasbikash.news_server_data_coordinator_rest.model.database.Page
 import com.dasbikash.news_server_data_coordinator_rest.repositories.ArticleRepository
 import com.dasbikash.news_server_data_coordinator_rest.repositories.PageRepository
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 
 @Service
