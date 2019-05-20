@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletRequest
 
 @RestController
-@RequestMapping("pages",produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+@RequestMapping("pages",produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
 open class PageController (open var pageService: PageService,
                            open var restControllerUtills: RestControllerUtills){
 
-    @GetMapping(value = arrayOf("","/"),produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+    @GetMapping(value = arrayOf("","/"),produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getAllActivePagesEndPoint(@Autowired request: HttpServletRequest):ResponseEntity<Pages>{
         return restControllerUtills.entityToResponseEntity(
                         Pages(pageService.getAllActivePages()))
     }
 
-    @GetMapping("/newspaper-id/{newsPaperId}/top-level-pages",produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+    @GetMapping("/newspaper-id/{newsPaperId}/top-level-pages",produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getAllTopLevelPagesForNewsPaperEndPoint(@PathVariable("newsPaperId") newsPaperId:String,
                                                      @Autowired request: HttpServletRequest)
             :ResponseEntity<Pages>{
@@ -32,7 +32,7 @@ open class PageController (open var pageService: PageService,
                         Pages(pageService.getAllTopLevelPagesForNewsPaper(newsPaperId)))
     }
 
-    @GetMapping("/top-level-page-id/{pageId}",produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+    @GetMapping("/top-level-page-id/{pageId}",produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getAllChildPagesForTopLevelPageEndPoint(@PathVariable("pageId") pageId:String,
                                                      @Autowired request: HttpServletRequest)
             :ResponseEntity<Pages>{

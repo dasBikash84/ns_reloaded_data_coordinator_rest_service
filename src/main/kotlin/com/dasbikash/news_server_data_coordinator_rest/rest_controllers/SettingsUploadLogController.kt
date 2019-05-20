@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("settings-upload-logs",
-        produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+        produces = arrayOf(MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE))
 open class SettingsUploadLogController
 constructor(open var settingsUploadLogService: SettingsUploadLogService,
             open var restControllerUtills: RestControllerUtills) {
@@ -27,7 +27,7 @@ constructor(open var settingsUploadLogService: SettingsUploadLogService,
     open var maxPageSize: Int = 50
 
     @GetMapping("",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE))
     open fun getLatestSettingsUploadLogsEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                  @Autowired request: HttpServletRequest)
             : ResponseEntity<SettingsUploadLogs> {
@@ -43,7 +43,7 @@ constructor(open var settingsUploadLogService: SettingsUploadLogService,
     }
 
     @GetMapping("/before/{log-id}",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE))
     open fun getSettingsUploadLogsBeforeGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                         @PathVariable("log-id") lastErrorLogId:Int,
                                                         @Autowired request: HttpServletRequest)
@@ -60,7 +60,7 @@ constructor(open var settingsUploadLogService: SettingsUploadLogService,
     }
 
     @GetMapping("/after/{log-id}",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE))
     open fun getSettingsUploadLogsAfterGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                         @PathVariable("log-id") lastErrorLogId:Int,
                                                        @Autowired request: HttpServletRequest)
@@ -77,13 +77,13 @@ constructor(open var settingsUploadLogService: SettingsUploadLogService,
     }
 
     @DeleteMapping("request_log_delete_token_generation",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE))
     open fun generateLogDeletionTokenEndPoint(@Autowired request: HttpServletRequest): ResponseEntity<LogEntryDeleteRequestFormat> {
         return restControllerUtills.generateLogDeleteToken(this::class.java)
     }
 
     @DeleteMapping("",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE))
     open fun deleteErrorLogsEndPoint(@RequestBody logEntryDeleteRequest: LogEntryDeleteRequest?,
                                      @Autowired request: HttpServletRequest)
             : ResponseEntity<SettingsUploadLogs> {

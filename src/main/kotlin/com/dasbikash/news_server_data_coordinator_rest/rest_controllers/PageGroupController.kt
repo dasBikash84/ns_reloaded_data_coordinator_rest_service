@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletRequest
 
 @RestController
-@RequestMapping("page-groups",produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+@RequestMapping("page-groups",produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
 open class PageGroupController
 constructor(open var pageGroupService: PageGroupService,
             open var restControllerUtills: RestControllerUtills){
 
-    @GetMapping(value = arrayOf("","/"),produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+    @GetMapping(value = arrayOf("","/"),produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getAllActivePagesEndPoint(@Autowired request: HttpServletRequest):ResponseEntity<PageGroups>{
         return restControllerUtills.entityToResponseEntity(pageGroupService.getPageGroups())
     }

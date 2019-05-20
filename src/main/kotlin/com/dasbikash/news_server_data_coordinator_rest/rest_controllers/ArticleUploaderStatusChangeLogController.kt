@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("article-uploader-status-change-logs",
-        produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+        produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
 open class ArticleUploaderStatusChangeLogController
 constructor(open var articleUploaderStatusChangeLogService: ArticleUploaderStatusChangeLogService,
             open var authTokenService: AuthTokenService,
@@ -31,7 +31,7 @@ constructor(open var articleUploaderStatusChangeLogService: ArticleUploaderStatu
     open var maxPageSize: Int = 50
 
     @GetMapping("",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getLatestArticleUploaderStatusChangeLogsEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                               @Autowired request: HttpServletRequest)
             : ResponseEntity<ArticleUploaderStatusChangeLogs> {
@@ -47,7 +47,7 @@ constructor(open var articleUploaderStatusChangeLogService: ArticleUploaderStatu
     }
 
     @GetMapping("/before/{log-id}",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getArticleUploaderStatusChangeLogsBeforeGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                                     @PathVariable("log-id") lastStatusChangeLogId:Int,
                                                                      @Autowired request: HttpServletRequest)
@@ -64,7 +64,7 @@ constructor(open var articleUploaderStatusChangeLogService: ArticleUploaderStatu
     }
 
     @GetMapping("/after/{log-id}",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getArticleUploaderStatusChangeLogsAfterGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                                     @PathVariable("log-id") lastStatusChangeLogId:Int,
                                                                     @Autowired request: HttpServletRequest)
@@ -81,7 +81,7 @@ constructor(open var articleUploaderStatusChangeLogService: ArticleUploaderStatu
     }
 
     @GetMapping("request_status_change_token_generation",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun generateStatusChangeTokenEndPoint(@Autowired request: HttpServletRequest)
             :ResponseEntity<ArticleUploaderStatusChangeRequestFormat>{
         val newToken = authTokenService.getNewAuthToken()
@@ -90,7 +90,7 @@ constructor(open var articleUploaderStatusChangeLogService: ArticleUploaderStatu
     }
 
     @PostMapping("status_change_request",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun changeUploaderStatusEndPoint(@RequestBody articleUploaderStatusChangeRequest: ArticleUploaderStatusChangeRequest?,
                                           @Autowired request: HttpServletRequest)
             :ResponseEntity<ArticleUploaderStatusChangeRequest>{

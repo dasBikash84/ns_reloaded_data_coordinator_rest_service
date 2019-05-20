@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletRequest
 
 @RestController
-@RequestMapping("newspapers",produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+@RequestMapping("newspapers",produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
 open class NewsPaperController @Autowired
 constructor(open var newsPaperService: NewsPaperService,
             open var restControllerUtills: RestControllerUtills) {
 
-    @GetMapping(value = arrayOf("","/"),produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+    @GetMapping(value = arrayOf("","/"),produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getAllActiveNewsPapersEndPoint(@Autowired request: HttpServletRequest):ResponseEntity<Newspapers>{
         return restControllerUtills.entityToResponseEntity(Newspapers(
                 newsPaperService.getAllActiveNewsPapers()))
     }
 
-    @GetMapping("/country-name/{countryName}",produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+    @GetMapping("/country-name/{countryName}",produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getNewPaperByCountryNameEndPoint(@PathVariable("countryName") countryName:String,
                                               @Autowired request: HttpServletRequest)
             :ResponseEntity<Newspapers>{
@@ -33,7 +33,7 @@ constructor(open var newsPaperService: NewsPaperService,
                 newsPaperService.getAllNewPaperByCountryName(countryName)))
     }
 
-    @GetMapping("/language-id/{languageId}",produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+    @GetMapping("/language-id/{languageId}",produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getNewPaperByLanguageIdEndPoint(@PathVariable("languageId") languageId:String,
                                              @Autowired request: HttpServletRequest)
             :ResponseEntity<Newspapers>{

@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletRequest
 
 @RestController
-@RequestMapping("languages",produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+@RequestMapping("languages",produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
 open class LanguageController @Autowired
 constructor(open var languageService: LanguageService,
             open var restControllerUtills: RestControllerUtills) {
 
-    @GetMapping(value = arrayOf("","/"),produces = arrayOf(MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE))
+    @GetMapping(value = arrayOf("","/"),produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getAllLanguagesEndPoint(@Autowired request: HttpServletRequest):ResponseEntity<Languages>{
         return restControllerUtills.entityToResponseEntity(Languages(languageService.getAllLanguages()))
     }

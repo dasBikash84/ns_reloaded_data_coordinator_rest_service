@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletRequest
 
 @RestController
-@RequestMapping("countries",produces = arrayOf(MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE))
+@RequestMapping("countries",produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
 open class CountryController @Autowired
 constructor(open var countryService: CountryService,
             open var restControllerUtills: RestControllerUtills) {
 
-    @GetMapping(value = arrayOf("","/"),produces = arrayOf(MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE))
+    @GetMapping(value = arrayOf("","/"),produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getAllCountriesEndPoint(@Autowired request: HttpServletRequest):ResponseEntity<Countries>{
         return restControllerUtills.entityToResponseEntity(Countries(countryService.getAllCountries()))
     }

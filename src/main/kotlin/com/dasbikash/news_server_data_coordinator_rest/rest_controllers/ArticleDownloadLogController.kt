@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("article-download-logs",
-        produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+        produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
 open class ArticleDownloadLogController
 constructor(open var articleDownloadLogService: ArticleDownloadLogService,
             open var restControllerUtills: RestControllerUtills) {
@@ -27,7 +27,7 @@ constructor(open var articleDownloadLogService: ArticleDownloadLogService,
     open var maxPageSize: Int = 50
 
     @GetMapping("",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getLatestArticleDownloadLogsEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                   @Autowired request: HttpServletRequest):
             ResponseEntity<ArticleDownloadLogs> {
@@ -43,7 +43,7 @@ constructor(open var articleDownloadLogService: ArticleDownloadLogService,
     }
 
     @GetMapping("/before/{log-id}",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getArticleDownloadLogsBeforeGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                         @PathVariable("log-id") lastArticleDownloadLogId:Int,
                                                          @Autowired request: HttpServletRequest)
@@ -60,7 +60,7 @@ constructor(open var articleDownloadLogService: ArticleDownloadLogService,
     }
 
     @GetMapping("/after/{log-id}",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getArticleDownloadLogsAfterGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                         @PathVariable("log-id") lastArticleDownloadLogId:Int,
                                                         @Autowired request: HttpServletRequest)
@@ -77,13 +77,13 @@ constructor(open var articleDownloadLogService: ArticleDownloadLogService,
     }
 
     @DeleteMapping("request_log_delete_token_generation",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun generateLogDeletionTokenEndPoint(@Autowired request: HttpServletRequest): ResponseEntity<LogEntryDeleteRequestFormat> {
         return restControllerUtills.generateLogDeleteToken(this::class.java)
     }
 
     @DeleteMapping("",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun deleteErrorLogsEndPoint(@RequestBody logEntryDeleteRequest: LogEntryDeleteRequest?,
                                      @Autowired request: HttpServletRequest)
             : ResponseEntity<ArticleDownloadLogs> {

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest
 
 
 @RestController
-@RequestMapping("articles",produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+@RequestMapping("articles",produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
 open class ArticleController constructor(open var articleService: ArticleService,
                                          open var restControllerUtills: RestControllerUtills) {
 
@@ -26,7 +26,7 @@ open class ArticleController constructor(open var articleService: ArticleService
     @Value("\${article.max_page_size}")
     open var maxPageSize: Int = 10
 
-    @GetMapping("/page-id/{pageId}",produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+    @GetMapping("/page-id/{pageId}",produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getLatestArticlesByPageIdEndPoint(@PathVariable pageId: String,
                                                @RequestParam("article_count") articleCount:Int?,
                                                @RequestHeader headers: HttpHeaders,
@@ -45,7 +45,7 @@ open class ArticleController constructor(open var articleService: ArticleService
     }
 
     @GetMapping("/page-id/{pageId}/last-article-id/{lastArticleId}",
-                        produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+                        produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getArticlesForPageBeforeArticleIdEndPoint(@PathVariable pageId: String,
                                                  @PathVariable lastArticleId: String,
                                                  @RequestParam("article_count") articleCount:Int?,
@@ -63,7 +63,7 @@ open class ArticleController constructor(open var articleService: ArticleService
     }
 
     @GetMapping("/top-level-page-id/{topLevelPageId}/latest-article",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getLatestArticleForTopLevelPageEndPoint(@PathVariable topLevelPageId:String,
                                                 @Autowired request: HttpServletRequest):ResponseEntity<Article>{
         return restControllerUtills.entityToResponseEntity(articleService.getLatestArticleForTopLevelPage(topLevelPageId))

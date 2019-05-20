@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("settings-update-logs",
-        produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+        produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
 open class SettingsUpdateLogController
 constructor(open var settingsUpdateLogService: SettingsUpdateLogService,
             open var restControllerUtills: RestControllerUtills) {
@@ -27,7 +27,7 @@ constructor(open var settingsUpdateLogService: SettingsUpdateLogService,
     open var maxPageSize: Int = 50
 
     @GetMapping("",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getLatestSettingsUpdateLogsEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                  @Autowired request: HttpServletRequest)
             : ResponseEntity<SettingsUpdateLogs> {
@@ -43,7 +43,7 @@ constructor(open var settingsUpdateLogService: SettingsUpdateLogService,
     }
 
     @GetMapping("/before/{log-id}",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getSettingsUpdateLogsBeforeGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                         @PathVariable("log-id") lastErrorLogId:Int,
                                                         @Autowired request: HttpServletRequest)
@@ -60,7 +60,7 @@ constructor(open var settingsUpdateLogService: SettingsUpdateLogService,
     }
 
     @GetMapping("/after/{log-id}",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun getSettingsUpdateLogsAfterGivenIdEndPoint(@RequestParam("page-size") pageSizeRequest:Int?,
                                                         @PathVariable("log-id") lastErrorLogId:Int,
                                                        @Autowired request: HttpServletRequest)
@@ -77,13 +77,13 @@ constructor(open var settingsUpdateLogService: SettingsUpdateLogService,
     }
 
     @DeleteMapping("request_log_delete_token_generation",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun generateLogDeletionTokenEndPoint(@Autowired request: HttpServletRequest): ResponseEntity<LogEntryDeleteRequestFormat> {
         return restControllerUtills.generateLogDeleteToken(this::class.java)
     }
 
     @DeleteMapping("",
-            produces = arrayOf(MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE))
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE))
     open fun deleteErrorLogsEndPoint(@RequestBody logEntryDeleteRequest: LogEntryDeleteRequest?,
                                      @Autowired request: HttpServletRequest)
             : ResponseEntity<SettingsUpdateLogs> {
